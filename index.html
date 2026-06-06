@@ -3079,7 +3079,6 @@ function setLang(l){
 function showPage(name){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('show'));
   document.getElementById('page-'+name).classList.add('show');
-  // update tabs + mob menu active states
   document.querySelectorAll('.pt,[data-page]').forEach(el=>{
     el.classList.toggle('on', el.getAttribute('data-page')===name);
     el.classList.toggle('active', el.getAttribute('data-page')===name);
@@ -3088,11 +3087,8 @@ function showPage(name){
     el.classList.toggle('mob-active', el.getAttribute('data-page')===name);
   });
   window.scrollTo({top:0,behavior:'smooth'});
-  // After page is visible, mark all .fu elements as .in so they show up
-  // Use two timeouts: short one for elements near top, longer one for rest
   setTimeout(()=>{
-    const page = document.getElementById('page-'+name);
-    page.querySelectorAll('.fu').forEach(el=>el.classList.add('in'));
+    document.getElementById('page-'+name).querySelectorAll('.fu').forEach(el=>el.classList.add('in'));
   }, 80);
 }
 
@@ -3111,6 +3107,8 @@ window.addEventListener('DOMContentLoaded',()=>{
   const nav=document.getElementById('nav');
   window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>20));
 
+  // init observer on home page
+  document.querySelectorAll('#page-home .fu').forEach(el=>obs.observe(el));
   // init vocab grid with saved lang
   const initLang = (()=>{ try{ return localStorage.getItem('tk-lang')||'zh-TW'; }catch(e){ return 'zh-TW'; } })();
   currentLang = initLang;
@@ -3759,9 +3757,9 @@ const _rfI18nPh = () => {
 };
 
 // Hook into setLang
-const _origSetLang = setLang;
+const _origSetLang2 = setLang;
 setLang = function(l){
-  _origSetLang(l);
+  _origSetLang2(l);
   _rfI18nPh();
 };
 
