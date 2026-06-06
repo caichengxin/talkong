@@ -3696,12 +3696,8 @@ async function submitRegForm(){
       // Demo mode: just show success without real submission
       await new Promise(r=>setTimeout(r,800));
     } else {
-      await fetch(GAS_ENDPOINT, {
-        method: 'POST',
-        mode: 'no-cors', // GAS requires no-cors
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
+      const params = new URLSearchParams(payload);
+      await fetch(`${GAS_ENDPOINT}?${params.toString()}`, { method: 'GET', mode: 'no-cors' });
     }
 
     // success
