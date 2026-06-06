@@ -1759,6 +1759,108 @@ html[lang="en"] .vc-zh-tw{font-family:var(--hand);font-weight:600;font-size:22px
   .brand-name .sep{width:4px;height:4px;margin:0 6px;}
   .nav-mob-lang .lb{padding:5px 7px;font-size:11px;}
 }
+
+
+/* ─── FINAL MOBILE HOME HERO BREATHING ROOM ─── */
+@media(max-width:640px){
+  #page-home .hero-banner{
+    min-height:560px!important;
+    height:auto!important;
+    align-items:flex-start;
+    padding-top:28px;
+    padding-bottom:92px;
+  }
+  #page-home .hero-inner{
+    padding-top:0;
+    padding-bottom:0;
+    transform:none!important;
+  }
+  #page-home .hero-badge{
+    max-width:min(86vw,420px);
+    margin:0 auto 28px;
+    padding:7px 12px;
+    font-size:12px;
+    letter-spacing:.08em;
+    white-space:normal;
+    line-height:1.5;
+  }
+  #page-home .hero-title{margin-bottom:8px;}
+  #page-home .hero-title .en{
+    font-size:clamp(58px,15vw,76px)!important;
+    line-height:.9;
+    margin-bottom:4px;
+  }
+  #page-home .hero-title em{
+    font-size:clamp(78px,20vw,104px)!important;
+    line-height:.9;
+    letter-spacing:.04em;
+  }
+  #page-home .hero-title-en{
+    font-size:16px;
+    margin-top:4px;
+    margin-bottom:16px;
+  }
+  #page-home .hero-subtitle{
+    font-size:14px;
+    line-height:1.5;
+    margin-bottom:22px;
+  }
+  #page-home .hero-btns{gap:10px;}
+  #page-home .btn-g,#page-home .btn-o{
+    font-size:17px;
+    padding:11px 22px;
+  }
+  /* On phones, the vertical neon boards were crowding the title/buttons.
+     Turn the three keywords into a neat row of small neon chips. */
+  #page-home .hero-keyword-sign{
+    writing-mode:horizontal-tb!important;
+    text-orientation:mixed!important;
+    top:auto!important;
+    bottom:118px!important;
+    left:auto!important;
+    right:auto!important;
+    padding:6px 10px!important;
+    min-width:54px;
+    font-size:16px!important;
+    letter-spacing:.08em!important;
+    border-width:1px;
+    background:rgba(0,0,0,.28);
+    z-index:6;
+  }
+  #page-home .neon-1{left:calc(50% - 102px)!important;color:var(--neon-pink);}
+  #page-home .neon-2{left:50%!important;transform:translateX(-50%);color:var(--neon-cyan);}
+  #page-home .neon-3{right:calc(50% - 102px)!important;color:var(--gold-l);}
+  #page-home .hero-street{height:82px!important;opacity:.9;}
+  #page-home .hero-bg-word{font-size:clamp(240px,74vw,360px);bottom:22px;}
+}
+@media(max-width:380px){
+  #page-home .hero-banner{min-height:540px!important;}
+  #page-home .hero-keyword-sign{bottom:112px!important;font-size:14px!important;min-width:48px;}
+  #page-home .neon-1{left:calc(50% - 88px)!important;}
+  #page-home .neon-3{right:calc(50% - 88px)!important;}
+}
+
+/* More reliable animation full-screen support
+   Desktop browsers use the native Fullscreen API. iOS/Safari fallback uses
+   an overlay class because iOS does not fullscreen arbitrary div/canvas. */
+.stage.stage-full,
+.stage:fullscreen,
+.stage:-webkit-full-screen{
+  position:fixed!important;
+  top:0!important;left:0!important;right:0!important;bottom:0!important;
+  width:100vw!important;height:100vh!important;height:100dvh!important;
+  max-width:none!important;max-height:none!important;aspect-ratio:auto!important;
+  border-radius:0!important;box-shadow:none!important;z-index:2147483000!important;
+  background:var(--dark)!important;
+  margin:0!important;
+}
+.stage:fullscreen #cv,
+.stage:-webkit-full-screen #cv,
+.stage.stage-full #cv{width:100%!important;height:100%!important;}
+.stage-full-placeholder{width:100%;aspect-ratio:16/9;}
+body.stage-full-lock{overflow:hidden!important;touch-action:none;}
+body.stage-full-lock nav,body.stage-full-lock .mob-tab-bar{visibility:hidden;}
+@supports(height:100svh){.stage.stage-full,.stage:fullscreen,.stage:-webkit-full-screen{height:100svh!important;}}
 </style>
 <div class="stage" id="stage">
   <canvas id="cv"></canvas>
@@ -2408,18 +2510,74 @@ const ui=document.getElementById('ui');
 function start(){startT=null;if(af)cancelAnimationFrame(af);af=requestAnimationFrame(main);}
 document.getElementById('rb').addEventListener('click',start);
 const fsb=document.getElementById('fsb');
-function syncFullBtn(){ if(fsb) fsb.textContent = stage.classList.contains('stage-full') ? '× 退出' : '⛶ 全屏'; }
-function toggleStageFull(){
-  // requestFullscreen is unavailable for normal divs in iOS Safari, so this
-  // fixed-position mode works everywhere and still feels fullscreen on mobile.
-  stage.classList.toggle('stage-full');
-  document.body.style.overflow = stage.classList.contains('stage-full') ? 'hidden' : '';
+let _stageHome=null,_stageNext=null,_stagePh=null,_stageOverlay=false;
+const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+function getFullEl(){return document.fullscreenElement||document.webkitFullscreenElement||null;}
+function isStageFull(){return stage.classList.contains('stage-full')||getFullEl()===stage;}
+function syncFullBtn(){ if(fsb) fsb.textContent = isStageFull() ? '× 退出' : '⛶ 全屏'; }
+function fitStageSoon(delay=60){setTimeout(rsz,delay);setTimeout(rsz,delay+180);}
+function enterStageOverlay(){
+  if(stage.classList.contains('stage-full')) return;
+  _stageHome = stage.parentNode;
+  _stageNext = stage.nextSibling;
+  _stagePh = document.createElement('div');
+  _stagePh.className='stage-full-placeholder';
+  _stageHome.insertBefore(_stagePh, stage);
+  document.body.appendChild(stage);
+  document.body.classList.add('stage-full-lock');
+  stage.classList.add('stage-full');
+  _stageOverlay=true;
   syncFullBtn();
-  setTimeout(rsz,60);
+  fitStageSoon();
 }
+function exitStageOverlay(){
+  if(!stage.classList.contains('stage-full')) return;
+  stage.classList.remove('stage-full');
+  document.body.classList.remove('stage-full-lock');
+  if(_stageHome){ _stageHome.insertBefore(stage, _stageNext || null); }
+  if(_stagePh){ _stagePh.remove(); _stagePh=null; }
+  _stageHome=null; _stageNext=null; _stageOverlay=false;
+  syncFullBtn();
+  fitStageSoon();
+}
+function requestNativeFull(){
+  const req=stage.requestFullscreen||stage.webkitRequestFullscreen||stage.webkitEnterFullscreen;
+  if(!req||isIOS) return false;
+  try{
+    document.body.classList.add('stage-full-lock');
+    const ret=req.call(stage);
+    if(ret&&typeof ret.catch==='function'){ret.catch(()=>{document.body.classList.remove('stage-full-lock');enterStageOverlay();});}
+    syncFullBtn();
+    fitStageSoon();
+    return true;
+  }catch(e){document.body.classList.remove('stage-full-lock');return false;}
+}
+function enterStageFull(){
+  if(isStageFull()) return;
+  if(!requestNativeFull()) enterStageOverlay();
+}
+function exitStageFull(){
+  if(getFullEl()===stage){
+    const ex=document.exitFullscreen||document.webkitExitFullscreen;
+    if(ex){try{ex.call(document);}catch(e){}}
+    return;
+  }
+  exitStageOverlay();
+}
+function toggleStageFull(){ isStageFull() ? exitStageFull() : enterStageFull(); }
 if(fsb) fsb.addEventListener('click',toggleStageFull);
-window.addEventListener('orientationchange',()=>setTimeout(rsz,180));
-window.addEventListener('keydown',e=>{ if(e.key==='Escape' && stage.classList.contains('stage-full')) toggleStageFull(); });
+['fullscreenchange','webkitfullscreenchange'].forEach(ev=>document.addEventListener(ev,()=>{
+  if(getFullEl()===stage){
+    document.body.classList.add('stage-full-lock');
+  }else if(!_stageOverlay){
+    document.body.classList.remove('stage-full-lock');
+  }
+  syncFullBtn();
+  fitStageSoon();
+}));
+window.addEventListener('orientationchange',()=>fitStageSoon(220));
+window.addEventListener('resize',()=>fitStageSoon(60));
+window.addEventListener('keydown',e=>{ if(e.key==='Escape') exitStageFull(); });
 start();
 </script>
       </div>
@@ -3606,38 +3764,82 @@ function _isMobileAudioHostile(){
   return /iPhone|iPad|iPod|Android|Mobile/i.test(navigator.userAgent||'');
 }
 
+function _tryIframeTTS(url, token, onDone, onFail){
+  if(token !== _ttsToken) return;
+  try{
+    const old=document.getElementById('ttsFrame');
+    if(old) old.remove();
+    const frame=document.createElement('iframe');
+    frame.id='ttsFrame';
+    frame.setAttribute('aria-hidden','true');
+    frame.style.cssText='position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;border:0;opacity:0;pointer-events:none;';
+    frame.onload=()=>setTimeout(()=>{ if(token===_ttsToken && onDone) onDone(); },1200);
+    frame.onerror=()=>{ if(onFail) onFail(); };
+    document.body.appendChild(frame);
+    frame.src=url;
+    setTimeout(()=>{ if(token===_ttsToken && onDone) onDone(); },4200);
+  }catch(e){ if(onFail) onFail(); }
+}
+
 function _tryRemoteTTS(text, lang, btn, token, onFail){
   const finish = () => { if(token === _ttsToken) _finishSpeak(btn); };
   if(_ttsAudio){ _ttsAudio.pause(); _ttsAudio = null; }
 
   const q = encodeURIComponent(text);
-  const urls = (lang === 'zh-HK')
-    ? [
-        // Cantonese first. zh-HK can resolve to Mandarin on some devices.
-        `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=yue&q=${q}&ttsspeed=0.85`,
-        `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=yue-Hant-HK&q=${q}&ttsspeed=0.85`,
-        `https://translate.googleapis.com/translate_tts?ie=UTF-8&client=gtx&tl=yue&q=${q}&ttsspeed=0.85`,
-        `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=zh-HK&q=${q}&ttsspeed=0.85`
-      ]
-    : [`https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=${lang.split('-')[0]}&q=${q}&ttsspeed=0.85`];
+  const customEndpoint = window.TALKONG_TTS_ENDPOINT || '';
+  const urls = [];
+
+  // Production hook: set window.TALKONG_TTS_ENDPOINT to an endpoint that returns
+  // mp3 audio, e.g. /api/tts?voice=yue-HK-HiuMaanNeural&text=...
+  if(customEndpoint){
+    urls.push(`${customEndpoint}${customEndpoint.includes('?')?'&':'?'}lang=yue-HK&text=${q}`);
+  }
+
+  if(lang === 'zh-HK'){
+    // zh-HK is the most reliable no-key Google TTS route. tl=yue is kept as
+    // fallback because it works in some regions but fails silently in others.
+    urls.push(
+      `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=zh-HK&q=${q}&ttsspeed=0.82`,
+      `https://translate.googleapis.com/translate_tts?ie=UTF-8&client=tw-ob&tl=zh-HK&q=${q}&ttsspeed=0.82`,
+      `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=yue&q=${q}&ttsspeed=0.82`,
+      `https://translate.googleapis.com/translate_tts?ie=UTF-8&client=gtx&tl=yue&q=${q}&ttsspeed=0.82`
+    );
+  }else{
+    urls.push(`https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=${lang.split('-')[0]}&q=${q}&ttsspeed=0.9`);
+  }
 
   let i = 0;
   const tryAudio = () => {
     if(token !== _ttsToken) return;
-    if(i >= urls.length){ if(onFail) onFail(); else finish(); return; }
-    const audio = new Audio(urls[i++]);
+    if(i >= urls.length){
+      // Last resort for mobile browsers that block Audio() but allow media in an iframe.
+      if(lang === 'zh-HK'){
+        _tryIframeTTS(`https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=zh-HK&q=${q}&ttsspeed=0.82`, token, finish, onFail);
+      }else if(onFail) onFail(); else finish();
+      return;
+    }
+    const url = urls[i++];
+    const audio = new Audio();
     _ttsAudio = audio;
+    let settled=false;
+    const fail=()=>{ if(settled) return; settled=true; tryAudio(); };
+    const ok=()=>{ settled=true; };
     audio.preload = 'auto';
     audio.playsInline = true;
+    audio.setAttribute('playsinline','');
+    audio.oncanplaythrough = ok;
+    audio.onplaying = ok;
     audio.onended = finish;
-    audio.onerror = tryAudio;
-    audio.onstalled = tryAudio;
+    audio.onerror = fail;
+    audio.onstalled = fail;
+    audio.onabort = fail;
+    audio.src = url;
     const playPromise = audio.play();
-    if(playPromise && playPromise.catch){ playPromise.catch(tryAudio); }
+    if(playPromise && playPromise.catch){ playPromise.catch(fail); }
+    setTimeout(()=>{ if(!settled && token === _ttsToken) fail(); },2800);
   };
   tryAudio();
 }
-
 function _doSpeak(text, lang, btn){
   const token = ++_ttsToken;
 
