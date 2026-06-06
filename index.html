@@ -1620,7 +1620,7 @@ function interpSc(){return{sky:lerpHex(scA.sky,scB.sky,scLerp),mid:lerpHex(scA.m
 
 // ── TIME ──
 let startT=null, tick=0, lastT=0, af=null;
-const DUR=22; // total seconds — slower homepage intro pacing
+const DUR=25.5; // total seconds — slower homepage intro pacing
 
 // ── PHASES ──
 // 0-3s: bus intro + hook
@@ -1631,13 +1631,13 @@ const DUR=22; // total seconds — slower homepage intro pacing
 // 19-23s: office scene
 // 23-28s: CTA
 const TIMELINE=[
-  ['bus',0,2.8],
-  ['brand',2.8,5.8],
-  ['yumcha',5.8,9],
-  ['temple',9,12.2],
-  ['island',12.2,15.4],
-  ['office',15.4,18.6],
-  ['cta',18.6,22],
+  ['bus',0,3],
+  ['brand',3,6.7],
+  ['yumcha',6.7,10.4],
+  ['temple',10.4,14.1],
+  ['island',14.1,17.8],
+  ['office',17.8,21.5],
+  ['cta',21.5,25.5],
 ];
 function phase(t){
   for(const [name,start,end] of TIMELINE){ if(t>=start && t<end) return name; }
@@ -3117,6 +3117,7 @@ window.addEventListener('DOMContentLoaded',()=>{
   window._tkLang = initLang;
   filteredVocab = [...VOCAB];
   buildVocabGrid(VOCAB);
+  showPage('home');
 });
 
 /* ─── VOCAB DATA ─── */
