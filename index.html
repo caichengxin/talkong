@@ -1159,6 +1159,64 @@ html[lang="en"] .vc-zh-tw{font-family:var(--hand);font-weight:600;font-size:22px
   .video-block.animation-video-block{margin-top:40px;}
 }
 
+
+
+/* ─── CLIENT TWEAKS 2026-06-06 ─── */
+/* Mobile hero: avoid overlapping/crowded keyword boards. Use compact inline chips instead. */
+.hero-mobile-keywords{display:none;}
+@media(max-width:640px){
+  #page-home .hero-banner{
+    min-height:600px!important;
+    padding-top:36px!important;
+    padding-bottom:96px!important;
+  }
+  #page-home .hero-keyword-sign{display:none!important;}
+  #page-home .hero-mobile-keywords{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    margin:12px auto 18px;
+    width:100%;
+  }
+  #page-home .hero-mobile-keywords span{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:58px;
+    padding:7px 10px;
+    border-radius:4px;
+    font-family:var(--brush);
+    font-size:17px;
+    font-weight:900;
+    letter-spacing:.08em;
+    background:rgba(0,0,0,.28);
+    border:1px solid rgba(255,248,232,.28);
+    color:#fff8e8;
+    box-shadow:0 0 14px rgba(225,88,72,.18);
+  }
+  #page-home .hero-mobile-keywords span:nth-child(1){color:var(--neon-pink);border-color:rgba(255,77,141,.65);text-shadow:0 0 10px var(--neon-pink);}
+  #page-home .hero-mobile-keywords span:nth-child(2){color:var(--neon-cyan);border-color:rgba(77,214,255,.65);text-shadow:0 0 10px var(--neon-cyan);}
+  #page-home .hero-mobile-keywords span:nth-child(3){color:var(--gold-l);border-color:rgba(212,165,90,.7);text-shadow:0 0 10px var(--gold-l);}
+  #page-home .hero-btns{margin-top:0;gap:12px;}
+  #page-home .btn-g,#page-home .btn-o{min-width:128px;text-align:center;}
+  #page-home .hero-subtitle{margin-bottom:0!important;}
+}
+@media(max-width:380px){
+  #page-home .hero-mobile-keywords{gap:7px;margin:10px auto 16px;}
+  #page-home .hero-mobile-keywords span{min-width:50px;font-size:15px;padding:6px 8px;}
+  #page-home .btn-g,#page-home .btn-o{min-width:116px;padding:10px 16px!important;}
+}
+/* Home intro title requested copy and cleaner wrapping. */
+#page-home .sec-h2[data-i18n="we-title"]{line-height:1.18;}
+@media(max-width:640px){
+  #page-home .sec-h2[data-i18n="we-title"]{
+    font-size:clamp(34px,10vw,46px);
+    line-height:1.18;
+    letter-spacing:.01em;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1179,7 +1237,7 @@ html[lang="en"] .vc-zh-tw{font-family:var(--hand);font-weight:600;font-size:22px
       <button class="lb" onclick="setLang('zh-CN')">简</button>
       <button class="lb" onclick="setLang('en')">EN</button>
     </div>
-    <a href="#" class="nav-cta" data-i18n="nav-cta" onclick="showPage('events');setTimeout(()=>{const el=document.getElementById('reg-form-anchor');if(el)el.scrollIntoView({behavior:'smooth'});},120);return false;">填表</a>
+    <a href="#" class="nav-cta" data-i18n="nav-cta" onclick="showPage('events');setTimeout(()=>{const el=document.getElementById('reg-form-anchor');if(el)el.scrollIntoView({behavior:'smooth'});},120);return false;">立即報名</a>
   </div>
 </nav>
 <!-- Mobile menu removed — bottom tab bar handles page navigation -->
@@ -1250,6 +1308,7 @@ html[lang="en"] .vc-zh-tw{font-family:var(--hand);font-weight:600;font-size:22px
       <h1 class="hero-title"><span class="en">TalKong</span><em>港聲</em></h1>
       <div class="hero-title-en">Learn Cantonese, the Hong Kong way</div>
       <p class="hero-subtitle" data-i18n="hero-sub">學廣東話　融入香港生活</p>
+      <div class="hero-mobile-keywords" aria-hidden="true"><span>粵語</span><span>文化</span><span>共融</span></div>
       <div class="hero-btns">
         <a href="#" onclick="showPage('events');return false;" class="btn-g" data-i18n="hero-btn1">探索活動</a>
         <a href="#" onclick="showPage('about');return false;" class="btn-o" data-i18n="hero-btn2">認識我們</a>
@@ -1508,7 +1567,7 @@ html[lang="en"] .vc-zh-tw{font-family:var(--hand);font-weight:600;font-size:22px
     <!-- 我們是 / We are -->
     <div class="section fu">
       <div class="eyebrow" data-i18n="we-eyebrow">我們是... · We are...</div>
-      <h2 class="sec-h2" data-i18n="we-title">TalKong 旨在通過體驗香港獨特人文<br>來幫助人們學習廣東話</h2>
+      <h2 class="sec-h2" data-i18n="we-title">TalKong旨在通過體驗<br>香港獨特文化來幫助人們學習廣東話</h2>
       <p class="sec-lead" data-i18n="we-lead">並快速適應香港生活。</p>
 
       <!-- Split 1: 突破傳統 -->
@@ -1861,6 +1920,64 @@ html[lang="en"] .vc-zh-tw{font-family:var(--hand);font-weight:600;font-size:22px
 body.stage-full-lock{overflow:hidden!important;touch-action:none;}
 body.stage-full-lock nav,body.stage-full-lock .mob-tab-bar{visibility:hidden;}
 @supports(height:100svh){.stage.stage-full,.stage:fullscreen,.stage:-webkit-full-screen{height:100svh!important;}}
+
+
+/* ─── CLIENT TWEAKS 2026-06-06 ─── */
+/* Mobile hero: avoid overlapping/crowded keyword boards. Use compact inline chips instead. */
+.hero-mobile-keywords{display:none;}
+@media(max-width:640px){
+  #page-home .hero-banner{
+    min-height:600px!important;
+    padding-top:36px!important;
+    padding-bottom:96px!important;
+  }
+  #page-home .hero-keyword-sign{display:none!important;}
+  #page-home .hero-mobile-keywords{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    margin:12px auto 18px;
+    width:100%;
+  }
+  #page-home .hero-mobile-keywords span{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:58px;
+    padding:7px 10px;
+    border-radius:4px;
+    font-family:var(--brush);
+    font-size:17px;
+    font-weight:900;
+    letter-spacing:.08em;
+    background:rgba(0,0,0,.28);
+    border:1px solid rgba(255,248,232,.28);
+    color:#fff8e8;
+    box-shadow:0 0 14px rgba(225,88,72,.18);
+  }
+  #page-home .hero-mobile-keywords span:nth-child(1){color:var(--neon-pink);border-color:rgba(255,77,141,.65);text-shadow:0 0 10px var(--neon-pink);}
+  #page-home .hero-mobile-keywords span:nth-child(2){color:var(--neon-cyan);border-color:rgba(77,214,255,.65);text-shadow:0 0 10px var(--neon-cyan);}
+  #page-home .hero-mobile-keywords span:nth-child(3){color:var(--gold-l);border-color:rgba(212,165,90,.7);text-shadow:0 0 10px var(--gold-l);}
+  #page-home .hero-btns{margin-top:0;gap:12px;}
+  #page-home .btn-g,#page-home .btn-o{min-width:128px;text-align:center;}
+  #page-home .hero-subtitle{margin-bottom:0!important;}
+}
+@media(max-width:380px){
+  #page-home .hero-mobile-keywords{gap:7px;margin:10px auto 16px;}
+  #page-home .hero-mobile-keywords span{min-width:50px;font-size:15px;padding:6px 8px;}
+  #page-home .btn-g,#page-home .btn-o{min-width:116px;padding:10px 16px!important;}
+}
+/* Home intro title requested copy and cleaner wrapping. */
+#page-home .sec-h2[data-i18n="we-title"]{line-height:1.18;}
+@media(max-width:640px){
+  #page-home .sec-h2[data-i18n="we-title"]{
+    font-size:clamp(34px,10vw,46px);
+    line-height:1.18;
+    letter-spacing:.01em;
+  }
+}
+
 </style>
 <div class="stage" id="stage">
   <canvas id="cv"></canvas>
@@ -2595,7 +2712,7 @@ start();
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
             @talkong_hk
           </a>
-          <a href="#reg-form-anchor" class="ci-btn ci-fill" data-i18n="ci-cta" onclick="showPage('events');setTimeout(()=>{const el=document.getElementById('reg-form-anchor');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});},120);return false;">填表</a>
+          <a href="#reg-form-anchor" class="ci-btn ci-fill" data-i18n="ci-cta" onclick="showPage('events');setTimeout(()=>{const el=document.getElementById('reg-form-anchor');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});},120);return false;">立即報名</a>
         </div>
       </div>
     </div>
@@ -2706,7 +2823,7 @@ start();
           </div>
           <div class="tc-body">
             <h3 class="tc-title" data-i18n="t1-title">茶樓主題</h3>
-            <p class="tc-desc" data-i18n="t1-desc">了解香港茶樓文化，喝茶禮儀和所需的點餐用語。在最地道的港式早茶環境中學習廣東話。</p>
+            <p class="tc-desc" data-i18n="t1-desc">了解香港茶樓文化，喝茶禮儀和所需的寫嘢用語。在最地道的港式早茶環境中學習廣東話。</p>
           </div>
         </div>
 
@@ -3071,7 +3188,7 @@ start();
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
             @talkong_hk
           </a>
-          <a href="#reg-form-anchor" class="ci-btn ci-fill" data-i18n="ci-cta" onclick="showPage('events');setTimeout(()=>{const el=document.getElementById('reg-form-anchor');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});},120);return false;">填表</a>
+          <a href="#reg-form-anchor" class="ci-btn ci-fill" data-i18n="ci-cta" onclick="showPage('events');setTimeout(()=>{const el=document.getElementById('reg-form-anchor');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});},120);return false;">立即報名</a>
         </div>
       </div>
     </div>
@@ -3159,7 +3276,7 @@ start();
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
             @talkong_hk
           </a>
-          <a href="#reg-form-anchor" class="ci-btn ci-fill" data-i18n="ci-cta" onclick="showPage('events');setTimeout(()=>{const el=document.getElementById('reg-form-anchor');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});},120);return false;">填表</a>
+          <a href="#reg-form-anchor" class="ci-btn ci-fill" data-i18n="ci-cta" onclick="showPage('events');setTimeout(()=>{const el=document.getElementById('reg-form-anchor');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});},120);return false;">立即報名</a>
         </div>
       </div>
     </div>
@@ -3203,12 +3320,12 @@ start();
 const T = {
 'zh-TW':{
   'brand-tag':'Cantonese · Culture · Community',
-  'nav-home':'首頁','nav-events':'活動','nav-about':'關於','nav-cta':'填表',
+  'nav-home':'首頁','nav-events':'活動','nav-about':'關於','nav-cta':'立即報名',
   'hero-badge':'創新粵語教育與文化融合工作坊',
   'hero-sub':'學廣東話，融入香港生活',
   'hero-btn1':'探索活動','hero-btn2':'認識我們',
   'we-eyebrow':'我們是... · We are...',
-  'we-title':'TalKong 旨在通過體驗香港獨特人文<br>來幫助人們學習廣東話',
+  'we-title':'TalKong旨在通過體驗<br>香港獨特文化來幫助人們學習廣東話',
   'we-lead':'並快速適應香港生活。',
   's1-title':'突破傳統語言學習模式',
   's1-body':'在廣東話學習方面，我們致力於突破傳統語言學習模式，發掘更高效的學習廣東話的方法。我們設計不同主題的活動並提供各式各樣的全廣東話語言環境幫助人們去使用並練習所學知識。',
@@ -3218,12 +3335,12 @@ const T = {
   'vid-label':'S14 TalKong 港聲 MVP Video',
   'vid-title':'觀看我們的介紹短片',
   'vid-note':'請前往 Google Drive 觀看完整視頻',
-  'ci-label':'與我們聯繫 · Get in touch','ci-cta':'填表',
+  'ci-label':'與我們聯繫 · Get in touch','ci-cta':'立即報名',
   'ev-badge':'活動 · Events','ev-title':'主題粵語學習','ev-sub':'在真實香港情境中學習廣東話',
   'cat1-ey':'主題文化活動','cat1-title':'沉浸式文化體驗工作坊',
   'cat1-lead':'每次工作坊圍繞真實香港生活場景設計，在地道情境中學習廣東話，讓語言在生活中自然流露。',
   'cat1-label':'主題文化活動','cat2-label':'商務粵語工坊',
-  't1-title':'茶樓主題','t1-desc':'了解香港茶樓文化，喝茶禮儀和所需的點餐用語。在最地道的港式早茶環境中學習廣東話。',
+  't1-title':'茶樓主題','t1-desc':'了解香港茶樓文化，喝茶禮儀和所需的寫嘢用語。在最地道的港式早茶環境中學習廣東話。',
   't2-title':'道教文化主題','t2-desc':'參觀黃大仙祠以及車公廟等道觀，了解並感受香港特色道教文化，學習相關粵語詞彙與文化背景。',
   't3-title':'文化主題','t3-desc':'乘坐半山扶梯進行遊覽，參觀大館，了解香港殖民歷史，在歷史場景中感受廣東話語言的深厚根源。',
   't4-title':'離島主題','t4-desc':'領略香港離島區豐富獨特的文化特色，在長洲、梅窩、南丫島等地感受傳統漁村風情、獨特節慶活動和多元文化融合。',
@@ -3283,23 +3400,23 @@ const T = {
 },
 'zh-CN':{
   'brand-tag':'Cantonese · Culture · Community',
-  'nav-home':'首页','nav-events':'活动','nav-about':'关于','nav-cta':'填表',
+  'nav-home':'首页','nav-events':'活动','nav-about':'关于','nav-cta':'立即报名',
   'hero-badge':'创新粤语教育与文化融合工作坊',
   'hero-sub':'学广东话，融入香港生活',
   'hero-btn1':'探索活动','hero-btn2':'认识我们',
   'we-eyebrow':'我们是... · We are...',
-  'we-title':'TalKong 旨在通过体验香港独特人文<br>来帮助人们学习广东话',
+  'we-title':'TalKong旨在通过体验<br>香港独特文化来帮助人们学习广东话',
   'we-lead':'并快速适应香港生活。',
   's1-title':'突破传统语言学习模式',
   's1-body':'在广东话学习方面，我们致力于突破传统语言学习模式，发掘更高效的学习广东话的方法。我们设计不同主题的活动并提供各式各样的全广东话语言环境帮助人们去使用并练习所学知识。',
   's2-title':'语言是文化的精华',
   's2-body':'语言是文化的精华，一种语言背后是一个地区丰富且独特的文化。TalKong港声不仅帮助人们学习广东话，更是香港文化的传承者和宣扬者。我们致力于将传承香港独特人文与广东话语言学习进行有机结合，使每一次学习广东话的活动都是一次传承并宣扬香港文化的机会。让人们在TalKong港声的每一次学习广东话的活动中都能深刻感受香港独特人文的魅力与风采。',
   'vid-eyebrow':'介绍及活动视频','vid-label':'S14 TalKong 港声 MVP Video','vid-title':'观看我们的介绍短片','vid-note':'请前往 Google Drive 观看完整视频',
-  'ci-label':'与我们联系 · Get in touch','ci-cta':'填表',
+  'ci-label':'与我们联系 · Get in touch','ci-cta':'立即报名',
   'ev-badge':'活动 · Events','ev-title':'主题粤语学习','ev-sub':'在真实香港情境中学习广东话',
   'cat1-ey':'主题文化活动','cat1-title':'沉浸式文化体验工作坊','cat1-lead':'每次工作坊围绕真实香港生活场景设计，在地道情境中学习广东话，让语言在生活中自然流露。',
   'cat1-label':'主题文化活动','cat2-label':'商务粤语工坊',
-  't1-title':'茶楼主题','t1-desc':'了解香港茶楼文化，喝茶礼仪和所需的点餐用语。在最地道的港式早茶环境中学习广东话。',
+  't1-title':'茶楼主题','t1-desc':'了解香港茶楼文化，喝茶礼仪和所需的写嘢用语。在最地道的港式早茶环境中学习广东话。',
   't2-title':'道教文化主题','t2-desc':'参观黄大仙祠以及车公庙等道观，了解并感受香港特色道教文化，学习相关粤语词汇与文化背景。',
   't3-title':'文化主题','t3-desc':'乘坐半山扶梯进行游览，参观大馆，了解香港殖民历史，在历史场景中感受广东话语言的深厚根源。',
   't4-title':'离岛主题','t4-desc':'领略香港离岛区丰富独特的文化特色，在长洲、梅窝、南丫岛等地感受传统渔村风情、独特节庆活动和多元文化融合。',
@@ -3510,7 +3627,7 @@ const VOCAB = [
   {cat:'food',  emoji:'🍵', tw:'飲茶',     cn:'饮茶',         en:'Yum cha / Dim sum', jyutping:'jam2 caa4'},
   {cat:'food',  emoji:'🍚', tw:'好食',     cn:'好吃',         en:'Delicious',         jyutping:'hou2 sik6'},
   {cat:'food',  emoji:'🧾', tw:'埋單',     cn:'结账',         en:'Bill please',       jyutping:'maai4 daan1'},
-  {cat:'food',  emoji:'🥢', tw:'點餐',     cn:'点餐',         en:'Order food',        jyutping:'dim2 caan1'},
+  {cat:'food',  emoji:'🥢', tw:'寫嘢',     cn:'写东西',       en:'Write things',      jyutping:'se2 je5'  },
   {cat:'food',  emoji:'🍺', tw:'乾杯',     cn:'干杯',         en:'Cheers!',           jyutping:'gon1 bui1'},
   {cat:'food',  emoji:'🛍️', tw:'外賣',    cn:'外卖',         en:'Takeaway',          jyutping:'ngoi6 maai6'},
   {cat:'daily', emoji:'💰', tw:'幾錢',     cn:'多少钱',       en:'How much?',         jyutping:'gei2 cin2'},
