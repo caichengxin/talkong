@@ -13,7 +13,6 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TalKong 港聲 · Cantonese Culture Workshop">
 <meta name="twitter:description" content="沉浸式粵語文化工作坊。Learn Cantonese through authentic Hong Kong experiences.">
-<script src="https://code.responsivevoice.org/responsivevoice.js?key=FREE"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Yuji+Mai&family=ZCOOL+XiaoWei&family=Noto+Serif+HK:wght@500;700;900&family=Noto+Sans+HK:wght@300;400;500;700&family=Caveat:wght@500;600;700&family=Caveat+Brush&display=swap" rel="stylesheet">
@@ -842,8 +841,11 @@ html[lang="en"] .vc-zh-tw{font-family:var(--hand);font-weight:600;font-size:22px
   nav{padding:0 16px;}
   .brand-tag{display:none;}
   /* ── Hero: tighter on small screens ── */
-  .hero-banner{min-height:420px;}
-  .hero-street{height:120px;opacity:.75;}
+  .hero-banner{min-height:360px;}
+  .hero-street{height:90px;opacity:.75;}
+  /* Scale down vehicles for mobile */
+  .bus-drive{animation:drive-rl 18s linear infinite;}
+  .tram-drive{animation:drive-lr 22s linear infinite;}
   .hero-badge{font-size:11px;letter-spacing:.08em;padding:5px 14px;margin-bottom:18px;}
   .hero-title .en{font-size:56px;}
   .hero-title em{font-size:84px;}
@@ -851,6 +853,11 @@ html[lang="en"] .vc-zh-tw{font-family:var(--hand);font-weight:600;font-size:22px
   .hero-title-en{font-size:16px;}
   .btn-g,.btn-o{font-size:17px;padding:12px 22px;}
   .lantern-1,.lantern-2,.lantern-3,.lantern-4{display:none;}
+  /* Street scene: hide on very small screens to avoid clutter */
+  .hero-street{height:70px;}
+  /* Hero title size on home */
+  #page-home .hero-title .en{font-size:clamp(52px,14vw,80px);}
+  #page-home .hero-title em{font-size:clamp(72px,20vw,110px);}
   /* ── Activity cards: info-first on mobile ── */
   .theme-grid{grid-template-columns:1fr;}
   .theme-card{display:flex;flex-direction:column;}
@@ -1246,7 +1253,7 @@ html[lang="en"] .vc-zh-tw{font-family:var(--hand);font-weight:600;font-size:22px
       </svg>
 
       <!-- Double-decker bus driving right→left -->
-      <svg viewBox="0 0 240 100" style="position:absolute;bottom:14px;width:240px;height:100px;" class="bus-drive">
+      <svg viewBox="0 0 240 100" style="position:absolute;bottom:10px;width:clamp(140px,32vw,240px);height:auto;" class="bus-drive">
         <!-- Body -->
         <rect x="6" y="14" width="218" height="68" rx="6" fill="#c8362b" stroke="#1a0805" stroke-width="1.2"/>
         <!-- Top deck divider -->
@@ -1293,7 +1300,7 @@ html[lang="en"] .vc-zh-tw{font-family:var(--hand);font-weight:600;font-size:22px
       </svg>
 
       <!-- Ding ding tram driving left→right -->
-      <svg viewBox="-20 -22 240 122" style="position:absolute;bottom:14px;width:340px;height:174px;overflow:visible;" class="tram-drive">
+      <svg viewBox="-20 -22 240 122" style="position:absolute;bottom:10px;width:clamp(160px,38vw,340px);height:auto;overflow:visible;" class="tram-drive">
         <!-- Trolley pole -->
         <line x1="100" y1="6" x2="100" y2="22" stroke="#c8a868" stroke-width="1"/>
         <circle cx="100" cy="6" r="2" fill="#d4a55a"/>
@@ -3361,45 +3368,53 @@ function resetAllCards(){
 let _speaking = null;
 let _ttsAudio = null;
 
-// ── Unified TTS: ResponsiveVoice → Google TTS → Web Speech ──
+// ── TTS: Google Translate Audio → Web Speech API fallback ──
 function _doSpeak(text, lang, btn){
   const onEnd = () => {
     if(btn){ btn.classList.remove('speaking'); if(_speaking===btn) _speaking=null; }
   };
 
-  // 1. ResponsiveVoice — best mobile Cantonese
-  if(typeof responsiveVoice !== 'undefined' && responsiveVoice.voiceSupport()){
-    let rvVoice = 'Chinese (Hong Kong) Female';
-    if(lang === 'zh-CN') rvVoice = 'Chinese Female';
-    else if(lang === 'en-US') rvVoice = 'US English Female';
-    responsiveVoice.cancel();
-    responsiveVoice.speak(text, rvVoice, { rate: 0.9, onend: onEnd, onerror: onEnd });
-    return;
-  }
-
-  // 2. Google Translate TTS
+  // Google Translate TTS — works on mobile, real Cantonese (yue)
   if(_ttsAudio){ _ttsAudio.pause(); _ttsAudio = null; }
   const ttsLang = (lang === 'zh-HK') ? 'yue' : lang.split('-')[0];
   const url = `https://translate.googleapis.com/translate_tts?ie=UTF-8&client=gtx&tl=${ttsLang}&q=${encodeURIComponent(text)}&ttsspeed=0.85`;
   _ttsAudio = new Audio(url);
+  _ttsAudio.crossOrigin = 'anonymous';
   _ttsAudio.onended = onEnd;
   _ttsAudio.onerror = () => {
-    onEnd();
-    // 3. Web Speech API
-    if(window.speechSynthesis){
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang = lang; u.rate = 0.85;
+    // Fallback: Web Speech API
+    if(!window.speechSynthesis){ onEnd(); return; }
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = lang; u.rate = 0.85;
+    u.onend = onEnd; u.onerror = onEnd;
+    // Wait for voices if not ready yet (iOS Safari)
+    const trySpeak = () => {
+      const voices = window.speechSynthesis.getVoices();
+      const match = voices.find(v=>v.lang===lang)
+        || (lang==='zh-HK' ? voices.find(v=>v.lang==='zh-TW')||voices.find(v=>v.lang.startsWith('zh')) : null);
+      if(match) u.voice = match;
       window.speechSynthesis.cancel();
       window.speechSynthesis.speak(u);
-    }
+    };
+    if(window.speechSynthesis.getVoices().length){ trySpeak(); }
+    else { window.speechSynthesis.onvoiceschanged = trySpeak; }
   };
-  _ttsAudio.play().catch(onEnd);
+  _ttsAudio.play().catch(()=>{
+    // play() blocked (autoplay policy) — go straight to Web Speech
+    _ttsAudio = null;
+    if(!window.speechSynthesis){ onEnd(); return; }
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = lang; u.rate = 0.85;
+    u.onend = onEnd; u.onerror = onEnd;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(u);
+  });
 }
 
 // ── Main speak function ───────────────────────────────────────
 function speakWord(btn, side){
-  if(typeof responsiveVoice !== 'undefined') responsiveVoice.cancel();
   if(_ttsAudio){ _ttsAudio.pause(); _ttsAudio = null; }
+  if(window.speechSynthesis) window.speechSynthesis.cancel();
 
   if(_speaking === btn){
     btn.classList.remove('speaking');
@@ -3616,8 +3631,8 @@ async function doTrans(){
 
 function transSpeakResult(){
   if(!_transLastResult) return;
-  if(typeof responsiveVoice !== 'undefined') responsiveVoice.cancel();
   if(_ttsAudio){ _ttsAudio.pause(); _ttsAudio = null; }
+  if(window.speechSynthesis) window.speechSynthesis.cancel();
   _doSpeak(_transLastResult, 'zh-HK', null);
 }
 
