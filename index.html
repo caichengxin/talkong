@@ -1080,6 +1080,75 @@ html[lang="en"] .vc-zh-tw{font-family:var(--hand);font-weight:600;font-size:22px
 }
 
 
+/* ─── HOME HERO REQUESTED TWEAKS ─── */
+.hero-keyword-sign{
+  min-height:118px;
+  min-width:48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:rgba(8,10,12,.56);
+  border-width:2px;
+}
+.neon-1,.neon-2,.neon-3{font-size:28px;}
+.neon-3{
+  top:305px;
+  left:15%;
+  color:var(--gold-l);
+  font-size:24px;
+}
+
+/* Red plastic market pendant lamps, closer to the reference photo. */
+.lantern{
+  width:74px;
+  height:48px;
+  border-radius:50% 50% 42% 42% / 56% 56% 38% 38%;
+  background:
+    radial-gradient(ellipse at 50% 100%, rgba(255,245,210,.95) 0 12%, rgba(255,105,48,.72) 13% 20%, transparent 28%),
+    radial-gradient(ellipse at 50% 18%, rgba(255,130,92,.95) 0 20%, rgba(215,28,18,.98) 48%, rgba(120,12,8,.96) 100%);
+  box-shadow:0 0 28px rgba(255,62,32,.55), inset 0 -14px 18px rgba(70,0,0,.38), inset 0 8px 10px rgba(255,190,150,.25);
+}
+.lantern::before{
+  height:140px;
+  top:-140px;
+  background:rgba(255,248,232,.22);
+}
+.lantern::after{
+  bottom:-13px;
+  width:44px;
+  height:14px;
+  border-radius:0 0 22px 22px;
+  background:radial-gradient(ellipse at 50% 0%, #fff5ca 0 30%, #ff6b33 35%, #9a2418 100%);
+  box-shadow:0 8px 18px rgba(255,70,35,.42);
+}
+.lantern-tassel{
+  top:1px;
+  width:52px;
+  height:6px;
+  background:#7a120d;
+}
+
+/* Make the vehicles start outside the left edge instead of popping in near center. */
+.hero-street .bus-drive,
+.hero-street .tram-drive{
+  left:0;
+  right:auto;
+  will-change:transform;
+  animation-name:drive-lr-screen!important;
+}
+@keyframes drive-lr-screen{
+  0%{transform:translateX(-45vw);}
+  100%{transform:translateX(115vw);}
+}
+@media(max-width:560px){
+  @keyframes drive-lr-screen{
+    0%{transform:translateX(-62vw);}
+    100%{transform:translateX(112vw);}
+  }
+}
+
+
 /* ─── OPTIMIZED HOMEPAGE ANIMATION ─── */
 .video-block.animation-video-block{
   padding:0;background:transparent;border:none;box-shadow:none;overflow:visible;
@@ -1172,9 +1241,9 @@ html[lang="en"] .vc-zh-tw{font-family:var(--hand);font-weight:600;font-size:22px
     <div class="lantern lantern-4"><div class="lantern-tassel"></div></div>
 
     <!-- Neon signs -->
-    <div class="neon-sign neon-1">茶餐廳</div>
-    <div class="neon-sign neon-2">學廣東話</div>
-    <div class="neon-sign neon-3">叮叮·巴士·港聲</div>
+    <div class="neon-sign neon-1 hero-keyword-sign">粵語</div>
+    <div class="neon-sign neon-2 hero-keyword-sign">文化</div>
+    <div class="neon-sign neon-3 hero-keyword-sign">共融</div>
 
     <div class="hero-inner">
       <div class="hero-badge" data-i18n="hero-badge">創新粵語教育與文化融合工作坊</div>
@@ -3491,12 +3560,21 @@ function _pickVoice(lang){
   const voices = window.speechSynthesis.getVoices() || [];
   if(!voices.length) return null;
   const lc = lang.toLowerCase();
+
+  // For Cantonese, never fall through to generic zh / zh-CN voices; many
+  // mobile browsers label Mandarin voices as generic Chinese, which made
+  // the cards read simplified Mandarin. Only accept clearly HK/Cantonese
+  // voices as the native fallback.
+  if(lang === 'zh-HK'){
+    return voices.find(v => /cantonese|香港|粵|粤|hong kong|yue/i.test((v.name||'')+' '+(v.lang||'')))
+      || voices.find(v => (v.lang||'').toLowerCase() === 'zh-hk')
+      || voices.find(v => (v.lang||'').toLowerCase().startsWith('zh-hk'))
+      || voices.find(v => (v.lang||'').toLowerCase().startsWith('zh-yue'))
+      || null;
+  }
+
   return voices.find(v => (v.lang||'').toLowerCase() === lc)
-    || (lang === 'zh-HK' ? voices.find(v => /cantonese|香港|粵|粤|hong kong/i.test((v.name||'')+' '+(v.lang||''))) : null)
-    || (lang === 'zh-HK' ? voices.find(v => (v.lang||'').toLowerCase().startsWith('zh-hk')) : null)
-    || (lang === 'zh-HK' ? voices.find(v => (v.lang||'').toLowerCase().startsWith('zh-yue')) : null)
-    || (lang === 'zh-HK' ? voices.find(v => (v.lang||'').toLowerCase().startsWith('zh-tw')) : null)
-    || (lang.startsWith('zh') ? voices.find(v => (v.lang||'').toLowerCase().startsWith('zh')) : null)
+    || (lang.startsWith('zh') ? voices.find(v => (v.lang||'').toLowerCase().startsWith(lc)) : null)
     || voices.find(v => (v.lang||'').toLowerCase().startsWith(lc.split('-')[0]));
 }
 
@@ -3535,11 +3613,11 @@ function _tryRemoteTTS(text, lang, btn, token, onFail){
   const q = encodeURIComponent(text);
   const urls = (lang === 'zh-HK')
     ? [
-        // Different mobile browsers accept different Cantonese/Chinese-HK labels.
-        `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=zh-HK&q=${q}&ttsspeed=0.85`,
-        `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=yue-Hant-HK&q=${q}&ttsspeed=0.85`,
+        // Cantonese first. zh-HK can resolve to Mandarin on some devices.
         `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=yue&q=${q}&ttsspeed=0.85`,
-        `https://translate.googleapis.com/translate_tts?ie=UTF-8&client=gtx&tl=zh-HK&q=${q}&ttsspeed=0.85`
+        `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=yue-Hant-HK&q=${q}&ttsspeed=0.85`,
+        `https://translate.googleapis.com/translate_tts?ie=UTF-8&client=gtx&tl=yue&q=${q}&ttsspeed=0.85`,
+        `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=zh-HK&q=${q}&ttsspeed=0.85`
       ]
     : [`https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=${lang.split('-')[0]}&q=${q}&ttsspeed=0.85`];
 
@@ -3563,20 +3641,13 @@ function _tryRemoteTTS(text, lang, btn, token, onFail){
 function _doSpeak(text, lang, btn){
   const token = ++_ttsToken;
 
-  // On mobile, keep the first action inside the user's tap by starting the
-  // native SpeechSynthesis path first. Remote MP3 fallbacks often lose the
-  // user-gesture permission after a redirected TTS request.
-  if(lang === 'zh-HK' && _isMobileAudioHostile() && window.speechSynthesis){
-    let finished = false;
-    const oldFinish = _finishSpeak;
-    _synthSpeak(text, 'zh-HK', btn, token);
-    // Some Android browsers expose SpeechSynthesis but never actually speak;
-    // if it is still marked speaking shortly after, try remote TTS too.
-    setTimeout(()=>{
-      if(token === _ttsToken && _speaking === btn && !window.speechSynthesis.speaking){
-        _tryRemoteTTS(text, 'zh-HK', btn, token, ()=>_finishSpeak(btn));
-      }
-    }, 650);
+  if(lang === 'zh-HK'){
+    // Use remote Cantonese first. Native mobile voices often read Cantonese
+    // words with a Mandarin voice unless a real HK/Cantonese voice exists.
+    _tryRemoteTTS(text, 'zh-HK', btn, token, () => {
+      if(_pickVoice('zh-HK')) _synthSpeak(text, 'zh-HK', btn, token);
+      else _finishSpeak(btn);
+    });
     return;
   }
 
