@@ -1110,7 +1110,7 @@ html[lang="en"] .vc-zh-tw{font-family:var(--hand);font-weight:600;font-size:22px
       <button class="lb" onclick="setLang('zh-CN')">简</button>
       <button class="lb" onclick="setLang('en')">EN</button>
     </div>
-    <a href="#" class="nav-cta" data-i18n="nav-cta" onclick="showPage('events');setTimeout(()=>{const el=document.getElementById('reg-form-anchor');if(el)el.scrollIntoView({behavior:'smooth'});},120);return false;">立即報名</a>
+    <a href="#" class="nav-cta" data-i18n="nav-cta" onclick="showPage('events');setTimeout(()=>{const el=document.getElementById('reg-form-anchor');if(el)el.scrollIntoView({behavior:'smooth'});},120);return false;">填表</a>
   </div>
 </nav>
 <!-- Mobile menu removed — bottom tab bar handles page navigation -->
@@ -1597,9 +1597,14 @@ html[lang="en"] .vc-zh-tw{font-family:var(--hand);font-weight:600;font-size:22px
 .ui{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:7px;z-index:30;opacity:.7;}
 .dp{width:7px;height:7px;border-radius:50%;background:rgba(255,248,232,.28);transition:all .3s;}
 .dp.on{background:var(--hk-red-l);transform:scale(1.35);}
-.rb{position:absolute;bottom:12px;right:14px;background:rgba(250,245,232,.84);border:1.5px solid rgba(200,54,43,.35);color:rgba(154,36,24,.86);font-size:11px;padding:6px 11px;border-radius:4px;cursor:pointer;z-index:30;font-family:var(--sans);backdrop-filter:blur(8px);}
-.rb:hover{border-color:var(--hk-red);color:var(--hk-red);background:rgba(250,245,232,.95);}
-@media(max-width:640px){.stage{width:100%;max-width:100%;aspect-ratio:16/9;height:auto;min-height:0;border-radius:6px;box-shadow:5px 5px 0 rgba(200,54,43,.14)}.rb{display:none}.ui{display:none}}
+.stage-controls{position:absolute;bottom:12px;right:14px;display:flex;gap:8px;z-index:30;}
+.rb,.fsb{background:rgba(250,245,232,.88);border:1.5px solid rgba(200,54,43,.35);color:rgba(154,36,24,.9);font-size:11px;padding:6px 11px;border-radius:4px;cursor:pointer;font-family:var(--sans);backdrop-filter:blur(8px);}
+.rb:hover,.fsb:hover{border-color:var(--hk-red);color:var(--hk-red);background:rgba(250,245,232,.96);}
+.stage.stage-full{position:fixed!important;inset:0!important;width:100vw!important;height:100svh!important;max-width:none!important;max-height:none!important;aspect-ratio:auto!important;border-radius:0!important;box-shadow:none!important;z-index:9999!important;}
+.stage.stage-full #cv{width:100%!important;height:100%!important;}
+.stage.stage-full .ui{display:flex;}
+.stage.stage-full .stage-controls{bottom:calc(14px + env(safe-area-inset-bottom,0));right:14px;}
+@media(max-width:640px){.stage{width:100%;max-width:100%;aspect-ratio:16/9;height:auto;min-height:0;border-radius:6px;box-shadow:5px 5px 0 rgba(200,54,43,.14)}.ui{display:none}.stage-controls{left:10px;right:10px;bottom:10px;justify-content:flex-end}.rb,.fsb{font-size:12px;padding:7px 10px}.stage.stage-full .ui{display:flex}.stage.stage-full .stage-controls{left:auto;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0));}}
 @media(prefers-reduced-motion:reduce){.ui,.rb{display:none}}
 
 
@@ -1689,7 +1694,7 @@ html[lang="en"] .vc-zh-tw{font-family:var(--hand);font-weight:600;font-size:22px
 <div class="stage" id="stage">
   <canvas id="cv"></canvas>
   <div class="ui" id="ui"></div>
-  <button class="rb" id="rb">↺ 重播</button>
+  <div class="stage-controls"><button class="rb" id="rb">↺ 重播</button><button class="fsb" id="fsb" type="button">⛶ 全屏</button></div>
 </div>
 <script>
 const cv=document.getElementById('cv'), ctx=cv.getContext('2d'), stage=document.getElementById('stage');
@@ -2333,6 +2338,19 @@ const ui=document.getElementById('ui');
 
 function start(){startT=null;if(af)cancelAnimationFrame(af);af=requestAnimationFrame(main);}
 document.getElementById('rb').addEventListener('click',start);
+const fsb=document.getElementById('fsb');
+function syncFullBtn(){ if(fsb) fsb.textContent = stage.classList.contains('stage-full') ? '× 退出' : '⛶ 全屏'; }
+function toggleStageFull(){
+  // requestFullscreen is unavailable for normal divs in iOS Safari, so this
+  // fixed-position mode works everywhere and still feels fullscreen on mobile.
+  stage.classList.toggle('stage-full');
+  document.body.style.overflow = stage.classList.contains('stage-full') ? 'hidden' : '';
+  syncFullBtn();
+  setTimeout(rsz,60);
+}
+if(fsb) fsb.addEventListener('click',toggleStageFull);
+window.addEventListener('orientationchange',()=>setTimeout(rsz,180));
+window.addEventListener('keydown',e=>{ if(e.key==='Escape' && stage.classList.contains('stage-full')) toggleStageFull(); });
 start();
 </script>
       </div>
@@ -2350,7 +2368,7 @@ start();
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
             @talkong_hk
           </a>
-          <a href="mailto:hello@talkong.com" class="ci-btn ci-fill" data-i18n="ci-cta">立即報名</a>
+          <a href="#reg-form-anchor" class="ci-btn ci-fill" data-i18n="ci-cta" onclick="showPage('events');setTimeout(()=>{const el=document.getElementById('reg-form-anchor');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});},120);return false;">填表</a>
         </div>
       </div>
     </div>
@@ -2826,7 +2844,7 @@ start();
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
             @talkong_hk
           </a>
-          <a href="mailto:hello@talkong.com" class="ci-btn ci-fill" data-i18n="ci-cta">立即報名</a>
+          <a href="#reg-form-anchor" class="ci-btn ci-fill" data-i18n="ci-cta" onclick="showPage('events');setTimeout(()=>{const el=document.getElementById('reg-form-anchor');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});},120);return false;">填表</a>
         </div>
       </div>
     </div>
@@ -2914,7 +2932,7 @@ start();
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
             @talkong_hk
           </a>
-          <a href="mailto:hello@talkong.com" class="ci-btn ci-fill" data-i18n="ci-cta">立即報名</a>
+          <a href="#reg-form-anchor" class="ci-btn ci-fill" data-i18n="ci-cta" onclick="showPage('events');setTimeout(()=>{const el=document.getElementById('reg-form-anchor');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});},120);return false;">填表</a>
         </div>
       </div>
     </div>
@@ -2958,7 +2976,7 @@ start();
 const T = {
 'zh-TW':{
   'brand-tag':'Cantonese · Culture · Community',
-  'nav-home':'首頁','nav-events':'活動','nav-about':'關於','nav-cta':'立即報名',
+  'nav-home':'首頁','nav-events':'活動','nav-about':'關於','nav-cta':'填表',
   'hero-badge':'創新粵語教育與文化融合工作坊',
   'hero-sub':'學廣東話，融入香港生活',
   'hero-btn1':'探索活動','hero-btn2':'認識我們',
@@ -2973,7 +2991,7 @@ const T = {
   'vid-label':'S14 TalKong 港聲 MVP Video',
   'vid-title':'觀看我們的介紹短片',
   'vid-note':'請前往 Google Drive 觀看完整視頻',
-  'ci-label':'與我們聯繫 · Get in touch','ci-cta':'立即報名',
+  'ci-label':'與我們聯繫 · Get in touch','ci-cta':'填表',
   'ev-badge':'活動 · Events','ev-title':'主題粵語學習','ev-sub':'在真實香港情境中學習廣東話',
   'cat1-ey':'主題文化活動','cat1-title':'沉浸式文化體驗工作坊',
   'cat1-lead':'每次工作坊圍繞真實香港生活場景設計，在地道情境中學習廣東話，讓語言在生活中自然流露。',
@@ -3038,7 +3056,7 @@ const T = {
 },
 'zh-CN':{
   'brand-tag':'Cantonese · Culture · Community',
-  'nav-home':'首页','nav-events':'活动','nav-about':'关于','nav-cta':'立即报名',
+  'nav-home':'首页','nav-events':'活动','nav-about':'关于','nav-cta':'填表',
   'hero-badge':'创新粤语教育与文化融合工作坊',
   'hero-sub':'学广东话，融入香港生活',
   'hero-btn1':'探索活动','hero-btn2':'认识我们',
@@ -3050,7 +3068,7 @@ const T = {
   's2-title':'语言是文化的精华',
   's2-body':'语言是文化的精华，一种语言背后是一个地区丰富且独特的文化。TalKong港声不仅帮助人们学习广东话，更是香港文化的传承者和宣扬者。我们致力于将传承香港独特人文与广东话语言学习进行有机结合，使每一次学习广东话的活动都是一次传承并宣扬香港文化的机会。让人们在TalKong港声的每一次学习广东话的活动中都能深刻感受香港独特人文的魅力与风采。',
   'vid-eyebrow':'介绍及活动视频','vid-label':'S14 TalKong 港声 MVP Video','vid-title':'观看我们的介绍短片','vid-note':'请前往 Google Drive 观看完整视频',
-  'ci-label':'与我们联系 · Get in touch','ci-cta':'立即报名',
+  'ci-label':'与我们联系 · Get in touch','ci-cta':'填表',
   'ev-badge':'活动 · Events','ev-title':'主题粤语学习','ev-sub':'在真实香港情境中学习广东话',
   'cat1-ey':'主题文化活动','cat1-title':'沉浸式文化体验工作坊','cat1-lead':'每次工作坊围绕真实香港生活场景设计，在地道情境中学习广东话，让语言在生活中自然流露。',
   'cat1-label':'主题文化活动','cat2-label':'商务粤语工坊',
@@ -3506,39 +3524,63 @@ function _synthSpeak(text, lang, btn, token){
   }
 }
 
-function _doSpeak(text, lang, btn){
-  const token = ++_ttsToken;
-  const finish = () => { if(token === _ttsToken) _finishSpeak(btn); };
+function _isMobileAudioHostile(){
+  return /iPhone|iPad|iPod|Android|Mobile/i.test(navigator.userAgent||'');
+}
 
+function _tryRemoteTTS(text, lang, btn, token, onFail){
+  const finish = () => { if(token === _ttsToken) _finishSpeak(btn); };
   if(_ttsAudio){ _ttsAudio.pause(); _ttsAudio = null; }
 
-  const ttsLang = (lang === 'zh-HK') ? 'yue' : lang.split('-')[0];
   const q = encodeURIComponent(text);
   const urls = (lang === 'zh-HK')
     ? [
+        // Different mobile browsers accept different Cantonese/Chinese-HK labels.
+        `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=zh-HK&q=${q}&ttsspeed=0.85`,
+        `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=yue-Hant-HK&q=${q}&ttsspeed=0.85`,
         `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=yue&q=${q}&ttsspeed=0.85`,
-        `https://translate.googleapis.com/translate_tts?ie=UTF-8&client=gtx&tl=yue&q=${q}&ttsspeed=0.85`,
-        `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=zh-HK&q=${q}&ttsspeed=0.85`
+        `https://translate.googleapis.com/translate_tts?ie=UTF-8&client=gtx&tl=zh-HK&q=${q}&ttsspeed=0.85`
       ]
-    : [`https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=${ttsLang}&q=${q}&ttsspeed=0.85`];
+    : [`https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=${lang.split('-')[0]}&q=${q}&ttsspeed=0.85`];
 
   let i = 0;
   const tryAudio = () => {
     if(token !== _ttsToken) return;
-    if(i >= urls.length){ _synthSpeak(text, lang, btn, token); return; }
-    const audio = new Audio();
+    if(i >= urls.length){ if(onFail) onFail(); else finish(); return; }
+    const audio = new Audio(urls[i++]);
     _ttsAudio = audio;
     audio.preload = 'auto';
+    audio.playsInline = true;
     audio.onended = finish;
-    audio.onerror = () => { i++; tryAudio(); };
-    audio.src = urls[i++];
+    audio.onerror = tryAudio;
+    audio.onstalled = tryAudio;
     const playPromise = audio.play();
-    if(playPromise && playPromise.catch){
-      playPromise.catch(() => { tryAudio(); });
-    }
+    if(playPromise && playPromise.catch){ playPromise.catch(tryAudio); }
   };
-
   tryAudio();
+}
+
+function _doSpeak(text, lang, btn){
+  const token = ++_ttsToken;
+
+  // On mobile, keep the first action inside the user's tap by starting the
+  // native SpeechSynthesis path first. Remote MP3 fallbacks often lose the
+  // user-gesture permission after a redirected TTS request.
+  if(lang === 'zh-HK' && _isMobileAudioHostile() && window.speechSynthesis){
+    let finished = false;
+    const oldFinish = _finishSpeak;
+    _synthSpeak(text, 'zh-HK', btn, token);
+    // Some Android browsers expose SpeechSynthesis but never actually speak;
+    // if it is still marked speaking shortly after, try remote TTS too.
+    setTimeout(()=>{
+      if(token === _ttsToken && _speaking === btn && !window.speechSynthesis.speaking){
+        _tryRemoteTTS(text, 'zh-HK', btn, token, ()=>_finishSpeak(btn));
+      }
+    }, 650);
+    return;
+  }
+
+  _tryRemoteTTS(text, lang, btn, token, () => _synthSpeak(text, lang, btn, token));
 }
 
 // ── Main speak function ───────────────────────────────────────
