@@ -1227,6 +1227,61 @@ html[lang="en"] .vc-zh-tw{font-family:var(--hand);font-weight:600;font-size:22px
   }
 }
 
+
+/* ─── YouTube video + comments section ─── */
+.video-showcase-section{overflow:hidden;}
+.tk-video-shell{
+  margin-top:46px;background:var(--dark);border-radius:10px;padding:28px;
+  border:1px solid rgba(200,54,43,.25);box-shadow:8px 8px 0 rgba(200,54,43,.14);
+  position:relative;overflow:hidden;
+}
+.tk-video-shell::before{content:'影';position:absolute;right:-24px;top:-46px;font-family:var(--brush);font-size:190px;line-height:1;color:rgba(200,54,43,.055);pointer-events:none;}
+.tk-video-copy{position:relative;z-index:1;text-align:center;margin-bottom:22px;}
+.tk-video-copy .video-title{margin-bottom:10px;}
+.tk-video-note{font-family:var(--chinese);font-size:14px;line-height:1.8;color:rgba(255,248,232,.55);max-width:680px;margin:0 auto;}
+.tk-youtube-wrap{position:relative;z-index:1;width:100%;aspect-ratio:16/9;border-radius:8px;overflow:hidden;background:#050403;border:1px solid rgba(255,248,232,.14);}
+.tk-youtube-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;background:#050403;}
+.video-comments-area{margin-top:42px;position:relative;}
+.vc-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:22px;}
+.vc-kicker{font-family:var(--hand);font-size:20px;color:var(--hk-red);}
+.vc-head h3{font-family:var(--brush);font-size:34px;line-height:1.2;color:var(--dark);letter-spacing:.02em;}
+.comment-bubbles{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.comment-bubble{position:relative;background:var(--paper);border:1px solid rgba(200,54,43,.2);border-radius:18px 18px 18px 4px;padding:24px 24px 26px;box-shadow:5px 5px 0 rgba(200,54,43,.1);}
+.comment-bubble::before{content:'';position:absolute;left:22px;bottom:-10px;width:20px;height:20px;background:var(--paper);border-left:1px solid rgba(200,54,43,.2);border-bottom:1px solid rgba(200,54,43,.2);transform:rotate(-12deg);}
+.comment-role{font-family:var(--brush);font-size:19px;color:var(--hk-red);margin-bottom:10px;letter-spacing:.03em;}
+.comment-bubble p{font-family:var(--chinese);font-size:15px;line-height:1.9;color:var(--mid);}
+.comment-marquee{margin-top:30px;overflow:hidden;border-top:1px dashed rgba(200,54,43,.2);border-bottom:1px dashed rgba(200,54,43,.2);padding:14px 0;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);}
+.comment-track{display:flex;gap:16px;width:max-content;animation:comment-scroll 26s linear infinite;}
+.comment-track span{font-family:var(--chinese);font-size:14px;color:var(--mid);background:var(--gold-f);border:1px solid rgba(184,135,58,.22);border-radius:999px;padding:8px 16px;white-space:nowrap;}
+@keyframes comment-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.video-cta-row{display:flex;justify-content:center;margin-top:34px;}
+.video-events-btn{color:#fff8e8!important;text-decoration:none;}
+@media(max-width:960px){
+  .tk-video-shell{padding:18px;margin-top:32px;border-radius:8px;box-shadow:5px 5px 0 rgba(200,54,43,.12);}
+  .tk-video-copy{text-align:left;margin-bottom:16px;}
+  .tk-video-copy .video-label{font-size:18px;margin-bottom:8px;}
+  .tk-video-copy .video-title{font-size:28px;line-height:1.25;margin-bottom:8px;}
+  .tk-video-note{font-size:13px;margin:0;}
+  .comment-bubbles{grid-template-columns:1fr;gap:14px;}
+  .vc-head{display:block;margin-bottom:18px;}
+  .vc-head h3{font-size:28px;margin-top:6px;}
+  .comment-bubble{padding:20px 20px 22px;border-radius:16px 16px 16px 4px;}
+  .comment-role{font-size:18px;}
+  .comment-bubble p{font-size:14px;}
+}
+@media(max-width:640px){
+  .tk-video-shell{margin-left:-4px;margin-right:-4px;padding:12px;border-radius:8px;}
+  .tk-youtube-wrap{border-radius:6px;}
+  .video-comments-area{margin-top:34px;}
+  .video-cta-row{justify-content:stretch;}
+  .video-events-btn{width:100%;text-align:center;font-size:18px;padding:13px 18px;}
+}
+@media(max-height:520px) and (orientation:landscape){
+  .tk-video-shell{max-width:760px;margin-left:auto;margin-right:auto;}
+  .tk-video-copy{display:none;}
+  .tk-youtube-wrap{max-height:calc(100vh - 110px);aspect-ratio:16/9;}
+}
+
 </style>
 </head>
 <body>
@@ -1606,1008 +1661,60 @@ html[lang="en"] .vc-zh-tw{font-family:var(--hand);font-weight:600;font-size:22px
     </div>
 
     <!-- 介紹及活動視頻 -->
-    <div class="section fu">
+    <div class="section fu video-showcase-section">
       <div class="eyebrow" data-i18n="vid-eyebrow">介紹及活動視頻</div>
-      <div class="video-block animation-video-block">
-<style>
-.stage{
-  width:100%;max-width:960px;aspect-ratio:16/9;height:auto;min-height:0;max-height:none;
-  position:relative;overflow:hidden;background:var(--dark);font-family:var(--sans);
-  border-radius:8px;border:1px solid rgba(200,54,43,.25);
-  box-shadow:8px 8px 0 rgba(200,54,43,.15);
-  isolation:isolate;
-}
-.stage::before{
-  content:'港聲';position:absolute;left:-24px;bottom:-52px;z-index:0;
-  font:900 180px Noto Serif HK, serif;line-height:.8;letter-spacing:-.06em;
-  color:rgba(200,54,43,.055);pointer-events:none;user-select:none;
-}
-.stage::after{
-  content:'';position:absolute;inset:0;z-index:2;pointer-events:none;
-  background:
-    radial-gradient(circle at 18% 12%, rgba(200,54,43,.06), transparent 34%),
-    radial-gradient(circle at 82% 75%, rgba(184,135,58,.08), transparent 42%);
-  mix-blend-mode:multiply;
-}
-#cv{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;}
-.ui{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:7px;z-index:30;opacity:.7;}
-.dp{width:7px;height:7px;border-radius:50%;background:rgba(255,248,232,.28);transition:all .3s;}
-.dp.on{background:var(--hk-red-l);transform:scale(1.35);}
-.stage-controls{position:absolute;bottom:12px;right:14px;display:flex;gap:8px;z-index:30;}
-.rb,.fsb{background:rgba(250,245,232,.88);border:1.5px solid rgba(200,54,43,.35);color:rgba(154,36,24,.9);font-size:11px;padding:6px 11px;border-radius:4px;cursor:pointer;font-family:var(--sans);backdrop-filter:blur(8px);}
-.rb:hover,.fsb:hover{border-color:var(--hk-red);color:var(--hk-red);background:rgba(250,245,232,.96);}
-.stage.stage-full{position:fixed!important;inset:0!important;width:100vw!important;height:100svh!important;max-width:none!important;max-height:none!important;aspect-ratio:auto!important;border-radius:0!important;box-shadow:none!important;z-index:9999!important;}
-.stage.stage-full #cv{width:100%!important;height:100%!important;}
-.stage.stage-full .ui{display:flex;}
-.stage.stage-full .stage-controls{bottom:calc(14px + env(safe-area-inset-bottom,0));right:14px;}
-@media(max-width:640px){.stage{width:100%;max-width:100%;aspect-ratio:16/9;height:auto;min-height:0;border-radius:6px;box-shadow:5px 5px 0 rgba(200,54,43,.14)}.ui{display:none}.stage-controls{left:10px;right:10px;bottom:10px;justify-content:flex-end}.rb,.fsb{font-size:12px;padding:7px 10px}.stage.stage-full .ui{display:flex}.stage.stage-full .stage-controls{left:auto;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0));}}
-@media(prefers-reduced-motion:reduce){.ui,.rb{display:none}}
+      <div class="tk-video-shell">
+        <div class="tk-video-copy">
+          <div class="video-label" data-i18n="vid-label">TalKong 港聲 Workshop Video</div>
+          <h3 class="video-title" data-i18n="vid-title">觀看我們的介紹短片</h3>
+          <p class="tk-video-note" data-i18n="vid-note">透過真實活動片段，看看 TalKong 如何把粵語學習帶入香港生活場景。</p>
+        </div>
+        <div class="tk-youtube-wrap" aria-label="TalKong YouTube video">
+          <iframe
+            src="https://www.youtube.com/embed/Q3-Hu1vJbYU?rel=0&modestbranding=1&playsinline=1"
+            title="TalKong 港聲 introduction video"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
 
+      <div class="video-comments-area">
+        <div class="vc-head">
+          <span class="vc-kicker" data-i18n="comment-kicker">真實回饋 · Comments</span>
+          <h3 data-i18n="comment-title">來自參與者與合作方的聲音</h3>
+        </div>
+        <div class="comment-bubbles">
+          <article class="comment-bubble">
+            <div class="comment-role" data-i18n="comment-role-1">活動參與者</div>
+            <p data-i18n="comment-1">參加完 TalKong 的活動之後，讓我更有自信在日常生活中使用粵語。</p>
+          </article>
+          <article class="comment-bubble">
+            <div class="comment-role" data-i18n="comment-role-2">大學學生事務處</div>
+            <p data-i18n="comment-2">本地學生與非本地學生的融合需要更有效的解決方案。</p>
+          </article>
+          <article class="comment-bubble">
+            <div class="comment-role" data-i18n="comment-role-3">企業</div>
+            <p data-i18n="comment-3">來港就業的同事若能夠熟練使用粵語，工作方面的溝通會更高效。</p>
+          </article>
+        </div>
+        <div class="comment-marquee" aria-hidden="true">
+          <div class="comment-track">
+            <span data-i18n="marquee-1">更敢開口講廣東話</span>
+            <span data-i18n="marquee-2">活動很貼近日常香港生活</span>
+            <span data-i18n="marquee-3">文化背景讓詞彙更容易記住</span>
+            <span data-i18n="marquee-4">適合初學者融入香港</span>
+            <span data-i18n="marquee-1">更敢開口講廣東話</span>
+            <span data-i18n="marquee-2">活動很貼近日常香港生活</span>
+          </div>
+        </div>
+      </div>
 
-/* ─── MOBILE HORIZONTAL BLANK / OVERFLOW FIX ───
-   Keeps every mobile section inside the visual viewport. This prevents the
-   hero/canvas area or oversized brand/title elements from widening the page
-   and leaving a large blank strip on the right side. */
-@media(max-width:960px){
-  html,body{
-    width:100%;
-    max-width:100%;
-    overflow-x:hidden!important;
-  }
-  body{position:relative;}
-  nav,.page,.site-footer,.mob-tab-bar{
-    width:100%;
-    max-width:100vw;
-    overflow-x:hidden;
-  }
-  nav{
-    left:0;right:0;
-    gap:8px;
-  }
-  .brand{
-    min-width:0;
-    flex:1 1 auto;
-    gap:8px;
-  }
-  .brand-name{
-    min-width:0;
-    flex:1 1 auto;
-    white-space:nowrap;
-    overflow:hidden;
-  }
-  .brand-name .en{font-size:clamp(24px,7vw,30px);}
-  .brand-name .cn{font-size:clamp(24px,7vw,30px);}
-  .brand-name .sep{margin:0 7px 0 9px;}
-  .nav-right{flex:0 0 auto;}
-  .nav-mob-lang .lb{padding:5px 8px;}
-
-  .page,.hero-banner,.wrap,.section,.video-block,.animation-video-block,.stage{
-    max-width:100vw;
-  }
-  .hero-banner{
-    width:100%;
-    overflow:hidden;
-  }
-  .hero-inner{
-    width:100%;
-    max-width:100%;
-    padding-left:16px;
-    padding-right:16px;
-  }
-  .hero-bg-word{
-    left:50%;
-    transform:translateX(-50%);
-    font-size:clamp(220px,74vw,420px);
-    bottom:-34px;
-    letter-spacing:-.08em;
-  }
-  .hero-title,.sec-h2,.split-text h3{
-    max-width:100%;
-    overflow-wrap:anywhere;
-  }
-  .video-block.animation-video-block{
-    width:100%;
-    overflow:hidden;
-  }
-  .video-block.animation-video-block .stage{
-    width:100%;
-    max-width:100%;
-    margin-left:0;
-    margin-right:0;
-  }
-  #cv{max-width:100%;}
-}
-
-@media(max-width:420px){
-  nav{padding-left:12px;padding-right:12px;}
-  .brand-mark.brand-logo{width:40px;height:40px;}
-  .brand-name .en{font-size:24px;}
-  .brand-name .cn{font-size:24px;}
-  .brand-name .sep{width:4px;height:4px;margin:0 6px;}
-  .nav-mob-lang .lb{padding:5px 7px;font-size:11px;}
-}
-
-
-/* ─── FINAL MOBILE HOME HERO BREATHING ROOM ─── */
-@media(max-width:640px){
-  #page-home .hero-banner{
-    min-height:560px!important;
-    height:auto!important;
-    align-items:flex-start;
-    padding-top:28px;
-    padding-bottom:92px;
-  }
-  #page-home .hero-inner{
-    padding-top:0;
-    padding-bottom:0;
-    transform:none!important;
-  }
-  #page-home .hero-badge{
-    max-width:min(86vw,420px);
-    margin:0 auto 28px;
-    padding:7px 12px;
-    font-size:12px;
-    letter-spacing:.08em;
-    white-space:normal;
-    line-height:1.5;
-  }
-  #page-home .hero-title{margin-bottom:8px;}
-  #page-home .hero-title .en{
-    font-size:clamp(58px,15vw,76px)!important;
-    line-height:.9;
-    margin-bottom:4px;
-  }
-  #page-home .hero-title em{
-    font-size:clamp(78px,20vw,104px)!important;
-    line-height:.9;
-    letter-spacing:.04em;
-  }
-  #page-home .hero-title-en{
-    font-size:16px;
-    margin-top:4px;
-    margin-bottom:16px;
-  }
-  #page-home .hero-subtitle{
-    font-size:14px;
-    line-height:1.5;
-    margin-bottom:22px;
-  }
-  #page-home .hero-btns{gap:10px;}
-  #page-home .btn-g,#page-home .btn-o{
-    font-size:17px;
-    padding:11px 22px;
-  }
-  /* On phones, the vertical neon boards were crowding the title/buttons.
-     Turn the three keywords into a neat row of small neon chips. */
-  #page-home .hero-keyword-sign{
-    writing-mode:horizontal-tb!important;
-    text-orientation:mixed!important;
-    top:auto!important;
-    bottom:118px!important;
-    left:auto!important;
-    right:auto!important;
-    padding:6px 10px!important;
-    min-width:54px;
-    font-size:16px!important;
-    letter-spacing:.08em!important;
-    border-width:1px;
-    background:rgba(0,0,0,.28);
-    z-index:6;
-  }
-  #page-home .neon-1{left:calc(50% - 102px)!important;color:var(--neon-pink);}
-  #page-home .neon-2{left:50%!important;transform:translateX(-50%);color:var(--neon-cyan);}
-  #page-home .neon-3{right:calc(50% - 102px)!important;color:var(--gold-l);}
-  #page-home .hero-street{height:82px!important;opacity:.9;}
-  #page-home .hero-bg-word{font-size:clamp(240px,74vw,360px);bottom:22px;}
-}
-@media(max-width:380px){
-  #page-home .hero-banner{min-height:540px!important;}
-  #page-home .hero-keyword-sign{bottom:112px!important;font-size:14px!important;min-width:48px;}
-  #page-home .neon-1{left:calc(50% - 88px)!important;}
-  #page-home .neon-3{right:calc(50% - 88px)!important;}
-}
-
-/* More reliable animation full-screen support
-   Desktop browsers use the native Fullscreen API. iOS/Safari fallback uses
-   an overlay class because iOS does not fullscreen arbitrary div/canvas. */
-.stage.stage-full,
-.stage:fullscreen,
-.stage:-webkit-full-screen{
-  position:fixed!important;
-  top:0!important;left:0!important;right:0!important;bottom:0!important;
-  width:100vw!important;height:100vh!important;height:100dvh!important;
-  max-width:none!important;max-height:none!important;aspect-ratio:auto!important;
-  border-radius:0!important;box-shadow:none!important;z-index:2147483000!important;
-  background:var(--dark)!important;
-  margin:0!important;
-}
-.stage:fullscreen #cv,
-.stage:-webkit-full-screen #cv,
-.stage.stage-full #cv{width:100%!important;height:100%!important;}
-.stage-full-placeholder{width:100%;aspect-ratio:16/9;}
-body.stage-full-lock{overflow:hidden!important;touch-action:none;}
-body.stage-full-lock nav,body.stage-full-lock .mob-tab-bar{visibility:hidden;}
-@supports(height:100svh){.stage.stage-full,.stage:fullscreen,.stage:-webkit-full-screen{height:100svh!important;}}
-
-
-/* ─── CLIENT TWEAKS 2026-06-06 ─── */
-/* Mobile hero: avoid overlapping/crowded keyword boards. Use compact inline chips instead. */
-.hero-mobile-keywords{display:none;}
-@media(max-width:640px){
-  #page-home .hero-banner{
-    min-height:600px!important;
-    padding-top:36px!important;
-    padding-bottom:96px!important;
-  }
-  #page-home .hero-keyword-sign{display:none!important;}
-  #page-home .hero-mobile-keywords{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:10px;
-    margin:12px auto 18px;
-    width:100%;
-  }
-  #page-home .hero-mobile-keywords span{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    min-width:58px;
-    padding:7px 10px;
-    border-radius:4px;
-    font-family:var(--brush);
-    font-size:17px;
-    font-weight:900;
-    letter-spacing:.08em;
-    background:rgba(0,0,0,.28);
-    border:1px solid rgba(255,248,232,.28);
-    color:#fff8e8;
-    box-shadow:0 0 14px rgba(225,88,72,.18);
-  }
-  #page-home .hero-mobile-keywords span:nth-child(1){color:var(--neon-pink);border-color:rgba(255,77,141,.65);text-shadow:0 0 10px var(--neon-pink);}
-  #page-home .hero-mobile-keywords span:nth-child(2){color:var(--neon-cyan);border-color:rgba(77,214,255,.65);text-shadow:0 0 10px var(--neon-cyan);}
-  #page-home .hero-mobile-keywords span:nth-child(3){color:var(--gold-l);border-color:rgba(212,165,90,.7);text-shadow:0 0 10px var(--gold-l);}
-  #page-home .hero-btns{margin-top:0;gap:12px;}
-  #page-home .btn-g,#page-home .btn-o{min-width:128px;text-align:center;}
-  #page-home .hero-subtitle{margin-bottom:0!important;}
-}
-@media(max-width:380px){
-  #page-home .hero-mobile-keywords{gap:7px;margin:10px auto 16px;}
-  #page-home .hero-mobile-keywords span{min-width:50px;font-size:15px;padding:6px 8px;}
-  #page-home .btn-g,#page-home .btn-o{min-width:116px;padding:10px 16px!important;}
-}
-/* Home intro title requested copy and cleaner wrapping. */
-#page-home .sec-h2[data-i18n="we-title"]{line-height:1.18;}
-@media(max-width:640px){
-  #page-home .sec-h2[data-i18n="we-title"]{
-    font-size:clamp(34px,10vw,46px);
-    line-height:1.18;
-    letter-spacing:.01em;
-  }
-}
-
-</style>
-<div class="stage" id="stage">
-  <canvas id="cv"></canvas>
-  <div class="ui" id="ui"></div>
-  <div class="stage-controls"><button class="rb" id="rb">↺ 重播</button><button class="fsb" id="fsb" type="button">⛶ 全屏</button></div>
-</div>
-<script>
-const cv=document.getElementById('cv'), ctx=cv.getContext('2d'), stage=document.getElementById('stage');
-let W,H,DPR=1;
-const LOG_W=960, LOG_H=540;
-function rsz(){
-  DPR=Math.min(window.devicePixelRatio||1,2);
-  const cssW=stage.clientWidth||stage.offsetWidth;
-  const cssH=stage.clientHeight||Math.round(cssW*LOG_H/LOG_W);
-  cv.width=Math.floor(cssW*DPR);
-  cv.height=Math.floor(cssH*DPR);
-  cv.style.width=cssW+'px';
-  cv.style.height=cssH+'px';
-  const scale=Math.min(cssW/LOG_W, cssH/LOG_H);
-  const ox=(cssW-LOG_W*scale)/2;
-  const oy=(cssH-LOG_H*scale)/2;
-  ctx.setTransform(DPR*scale,0,0,DPR*scale,DPR*ox,DPR*oy);
-  W=LOG_W;
-  H=LOG_H;
-}
-window.addEventListener('resize',rsz);
-rsz();
-
-// ── PALETTE: reads homepage variables first, then falls back ──
-const rootStyle=getComputedStyle(document.documentElement);
-const cssVar=(name,fallback)=>rootStyle.getPropertyValue(name).trim()||fallback;
-const RED=cssVar('--hk-red','#c8362b'), RED_L=cssVar('--hk-red-l','#e15848'), RED_D=cssVar('--hk-red-d','#9a2418');
-const CREAM=cssVar('--cream','#f6efe0'), CREAM2=cssVar('--cream2','#ecdfc4'), PAPER=cssVar('--paper','#faf5e8');
-const GOLD=cssVar('--gold','#b8873a'), GOLD_L=cssVar('--gold-l','#d4a55a'), DARK=cssVar('--dark','#1a1410'), DARK2=cssVar('--dark2','#28201a');
-const GREEN=cssVar('--hk-green','#2d5e3e');
-const SKIN_S='#E8B89A', SKIN_C='#D4A882';
-
-// ── UTILS ──
-function t(s,x,y,font,color,align='center',base='alphabetic'){
-  ctx.save();ctx.font=font;ctx.fillStyle=color;ctx.textAlign=align;ctx.textBaseline=base;ctx.fillText(s,x,y);ctx.restore();
-}
-function lerp(a,b,t){return a+(b-a)*t;}
-function easeOut(t){return 1-Math.pow(1-t,3);}
-function easeInOut(t){return t<.5?4*t*t*t:(t-1)*(2*t-2)*(2*t-2)+1;}
-function bounce(t){const n=7.5625,d=2.75;if(t<1/d)return n*t*t;if(t<2/d){t-=1.5/d;return n*t*t+.75;}if(t<2.5/d){t-=2.25/d;return n*t*t+.9375;}t-=2.625/d;return n*t*t+.984375;}
-function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
-function lerpHex(a,b,t){
-  const p=parseInt(a.slice(1),16),q=parseInt(b.slice(1),16);
-  const r=Math.round(((p>>16)&255)*(1-t)+((q>>16)&255)*t);
-  const g=Math.round(((p>>8)&255)*(1-t)+((q>>8)&255)*t);
-  const v=Math.round((p&255)*(1-t)+(q&255)*t);
-  return '#'+[r,g,v].map(x=>x.toString(16).padStart(2,'0')).join('');
-}
-
-// ── SCENE COLORS ──
-const SCENES={
-  street:{sky:DARK,mid:'#3a2e22',floor:'#5c4428'},
-  yumcha:{sky:CREAM,mid:'#efd8b4',floor:CREAM2},
-  temple:{sky:'#e9f0df',mid:'#c8d8a8',floor:'#d9dec4'},
-  island:{sky:'#dcebf6',mid:'#bfd9e8',floor:'#d7dcc4'},
-  office:{sky:'#e8e4dc',mid:'#d6d0c4',floor:'#c9bfac'},
-  cta:   {sky:CREAM,mid:PAPER,floor:CREAM2},
-};
-let scA=SCENES.street,scB=SCENES.street,scLerp=1;
-function switchSc(name){scA={...interpSc()};scB={...SCENES[name]};scLerp=0;}
-function interpSc(){return{sky:lerpHex(scA.sky,scB.sky,scLerp),mid:lerpHex(scA.mid,scB.mid,scLerp),floor:lerpHex(scA.floor,scB.floor,scLerp)};}
-
-// ── TIME ──
-let startT=null, tick=0, lastT=0, af=null;
-const DUR=25.5; // total seconds — slower homepage intro pacing
-
-// ── PHASES ──
-// 0-3s: bus intro + hook
-// 3-7s: brand reveal
-// 7-11s: yumcha scene
-// 11-15s: temple scene
-// 15-19s: island scene
-// 19-23s: office scene
-// 23-28s: CTA
-const TIMELINE=[
-  ['bus',0,3],
-  ['brand',3,6.7],
-  ['yumcha',6.7,10.4],
-  ['temple',10.4,14.1],
-  ['island',14.1,17.8],
-  ['office',17.8,21.5],
-  ['cta',21.5,25.5],
-];
-function phase(t){
-  for(const [name,start,end] of TIMELINE){ if(t>=start && t<end) return name; }
-  return 'cta';
-}
-function phaseT(t){
-  for(const [name,start,end] of TIMELINE){
-    if(t>=start && t<end) return clamp((t-start)/(end-start),0,1);
-  }
-  return 1;
-}
-
-// ── DRAW BACKGROUNDS ──
-function drawSky(sc){
-  const g=ctx.createLinearGradient(0,0,0,H);
-  g.addColorStop(0,sc.sky);g.addColorStop(.72,sc.mid);g.addColorStop(1,sc.floor);
-  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-}
-function drawBuildings(sc,scale=1){
-  const blds=[[0,250],[80,210],[150,270],[255,215],[330,280],[448,220],[535,252],[635,215]];
-  const ws=   [78,     58,    108,    66,    110,    80,    94,   W-635];
-  blds.forEach(([x,hh],i)=>{
-    const w=ws[i];
-    ctx.fillStyle=sc.mid;ctx.strokeStyle='rgba(0,0,0,.06)';ctx.lineWidth=1;
-    ctx.beginPath();ctx.rect(x,H-hh*scale,w,hh*scale);ctx.fill();ctx.stroke();
-    for(let wy=H-hh*scale+14;wy<H-28;wy+=18)
-      for(let wx=x+8;wx<x+w-14;wx+=16){ctx.fillStyle='rgba(180,140,60,.2)';ctx.fillRect(wx,wy,10,6);}
-  });
-}
-function drawFloor(sc){
-  ctx.fillStyle=sc.floor;ctx.fillRect(0,H-108,W,108);
-  ctx.strokeStyle='rgba(0,0,0,.07)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,H-108);ctx.lineTo(W,H-108);ctx.stroke();
-}
-
-// ── STREET PROPS ──
-function drawStreetProps(){
-  ctx.save();
-  // Tram tracks
-  ctx.strokeStyle='rgba(100,80,60,.2)';ctx.lineWidth=2;
-  [H-115,H-128].forEach(y=>{ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();});
-  // Neon signs
-  const signs=[{x:155,y:97,w:65,h:22,col:RED,txt:'茶餐廳'},{x:338,y:90,w:82,h:22,col:'rgba(30,80,160,.85)',txt:'粵語工作坊'}];
-  signs.forEach(s=>{ctx.fillStyle=s.col;ctx.beginPath();ctx.roundRect(s.x,s.y,s.w,s.h,3);ctx.fill();t(s.txt,s.x+s.w/2,s.y+s.h-5,'bold 10px serif','#fff8e8');});
-  // Lanterns
-  [80,W-80].forEach(lx=>{
-    ctx.strokeStyle='rgba(200,54,43,.4)';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(lx,0);ctx.lineTo(lx,30);ctx.stroke();
-    ctx.fillStyle='rgba(200,54,43,.85)';ctx.beginPath();ctx.ellipse(lx,50,13,26,0,0,Math.PI*2);ctx.fill();
-  });
-  ctx.restore();
-}
-
-// ── BUS ──
-function drawBus(bx,by,shake=0){
-  ctx.save();
-  if(shake>0){ctx.translate(Math.sin(tick*.8)*shake,Math.cos(tick*.6)*shake*.5);}
-  const bw=340,bh=122;
-  ctx.fillStyle=RED;ctx.strokeStyle='rgba(140,28,18,.6)';ctx.lineWidth=2;ctx.beginPath();ctx.roundRect(bx,by,bw,bh,11);ctx.fill();ctx.stroke();
-  // Top strip
-  ctx.fillStyle='rgba(0,0,0,.12)';ctx.beginPath();ctx.roundRect(bx,by,bw,24,[11,11,0,0]);ctx.fill();
-  // Windows
-  [[bx+12,by+36],[bx+64,by+36],[bx+116,by+36],[bx+168,by+36]].forEach(([wx,wy])=>{
-    ctx.fillStyle='rgba(210,235,255,.72)';ctx.strokeStyle='rgba(140,28,18,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(wx,wy,44,32,4);ctx.fill();ctx.stroke();
-  });
-  // Destination sign
-  ctx.fillStyle='rgba(255,220,50,.92)';ctx.beginPath();ctx.roundRect(bx+12,by+7,130,15,3);ctx.fill();
-  t('學廣東話？TALKONG',bx+77,by+18,'bold 8.5px Arial','#1a0a00');
-  // Route number
-  ctx.fillStyle='rgba(255,220,50,.92)';ctx.beginPath();ctx.roundRect(bx+280,by+6,50,20,4);ctx.fill();
-  t('HK1',bx+305,by+20,'bold 12px Arial','#1a0a00');
-  // Door
-  ctx.fillStyle='rgba(140,28,18,.3)';ctx.strokeStyle='rgba(255,190,150,.25)';ctx.lineWidth=1.5;ctx.beginPath();ctx.roundRect(bx+252,by+28,68,86,4);ctx.fill();ctx.stroke();
-  ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(bx+286,by+28);ctx.lineTo(bx+286,by+114);ctx.stroke();
-  // Wheels
-  [[bx+58,by+bh],[bx+255,by+bh]].forEach(([wx,wy])=>{
-    ctx.fillStyle='#1a0a00';ctx.strokeStyle='rgba(140,28,18,.5)';ctx.lineWidth=2;ctx.beginPath();ctx.arc(wx,wy,17,0,Math.PI*2);ctx.fill();ctx.stroke();
-    ctx.fillStyle='#2a1a0a';ctx.beginPath();ctx.arc(wx,wy,8,0,Math.PI*2);ctx.fill();
-  });
-  // Headlight glow
-  ctx.fillStyle='rgba(255,240,160,.6)';ctx.beginPath();ctx.ellipse(bx+6,by+72,5,9,0,0,Math.PI*2);ctx.fill();
-  ctx.restore();
-}
-
-// ── SUSAN ──
-function drawSusan(cx,baseY,alpha,opts={}){
-  const {scaleY=1,waveArm=0,blink=0,mouthOpen=0,jumpY=0,squash=1}=opts;
-  ctx.save();ctx.globalAlpha=alpha;
-  const y=baseY-jumpY;
-  const sy=scaleY*squash, sx=1/squash;
-  ctx.translate(cx,y+90);ctx.scale(sx,sy);ctx.translate(-cx,-(y+90));
-
-  // hair back panels
-  ctx.fillStyle=DARK;
-  ctx.beginPath();ctx.moveTo(cx-24,y+18);ctx.bezierCurveTo(cx-36,y+32,cx-39,y+52,cx-37,y+68);ctx.bezierCurveTo(cx-35,y+78,cx-29,y+84,cx-18,y+86);ctx.bezierCurveTo(cx-12,y+88,cx-6,y+87,cx-2,y+85);ctx.bezierCurveTo(cx-8,y+80,cx-13,y+72,cx-13,y+62);ctx.bezierCurveTo(cx-14,y+44,cx-15,y+26,cx-18,y+18);ctx.closePath();ctx.fill();
-  ctx.beginPath();ctx.moveTo(cx+24,y+18);ctx.bezierCurveTo(cx+36,y+32,cx+39,y+54,cx+37,y+70);ctx.bezierCurveTo(cx+35,y+80,cx+29,y+86,cx+16,y+88);ctx.bezierCurveTo(cx+10,y+90,cx+4,y+89,cx,y+87);ctx.bezierCurveTo(cx+8,y+82,cx+13,y+74,cx+13,y+64);ctx.bezierCurveTo(cx+14,y+46,cx+15,y+28,cx+18,y+18);ctx.closePath();ctx.fill();
-
-  // body
-  ctx.fillStyle=RED;ctx.beginPath();ctx.roundRect(cx-27,y+96,54,60,8);ctx.fill();
-  ctx.fillStyle='rgba(255,248,232,.9)';ctx.beginPath();ctx.moveTo(cx,y+96);ctx.lineTo(cx-11,y+112);ctx.lineTo(cx,y+103);ctx.lineTo(cx+11,y+112);ctx.closePath();ctx.fill();
-
-  // wave arm (right arm raised)
-  if(waveArm>0){
-    ctx.fillStyle=RED;
-    const ang=-Math.PI*.6-Math.sin(tick*.18)*0.4*waveArm;
-    ctx.save();ctx.translate(cx+27,y+100);ctx.rotate(ang);ctx.beginPath();ctx.roundRect(-9,0,18,44,9);ctx.fill();ctx.restore();
-    ctx.fillStyle=SKIN_S;ctx.save();ctx.translate(cx+27,y+100);ctx.rotate(ang);ctx.beginPath();ctx.ellipse(0,48,10,9,0,0,Math.PI*2);ctx.fill();ctx.restore();
-    // left arm normal
-    ctx.fillStyle=RED;ctx.beginPath();ctx.roundRect(cx-47,y+100,18,46,9);ctx.fill();
-    ctx.fillStyle=SKIN_S;ctx.beginPath();ctx.ellipse(cx-38,y+148,10,9,0,0,Math.PI*2);ctx.fill();
-  } else {
-    ctx.fillStyle=RED;ctx.beginPath();ctx.roundRect(cx-47,y+100,18,46,9);ctx.fill();ctx.beginPath();ctx.roundRect(cx+29,y+100,18,46,9);ctx.fill();
-    ctx.fillStyle=SKIN_S;ctx.beginPath();ctx.ellipse(cx-38,y+148,10,9,0,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.ellipse(cx+38,y+148,10,9,0,0,Math.PI*2);ctx.fill();
-  }
-
-  // legs
-  ctx.fillStyle='#2a1e14';ctx.beginPath();ctx.roundRect(cx-21,y+153,15,13,4);ctx.fill();ctx.beginPath();ctx.roundRect(cx+6,y+153,15,13,4);ctx.fill();
-  // neck
-  ctx.fillStyle=SKIN_S;ctx.beginPath();ctx.roundRect(cx-9,y+80,18,20,4);ctx.fill();
-  // head
-  ctx.fillStyle=SKIN_S;ctx.beginPath();ctx.ellipse(cx,y+42,30,33,0,0,Math.PI*2);ctx.fill();
-  // crown
-  ctx.fillStyle=DARK;ctx.beginPath();ctx.ellipse(cx,y+12,30,19,0,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.ellipse(cx,y+19,30,13,0,0,Math.PI*2);ctx.fill();
-  // eyes - softer blink: keep pupils stable and close with eyelid lines
-  const lid = clamp(blink, 0, 1);
-  if(lid < .88){
-    const open = 1 - lid;
-    ctx.fillStyle='white';
-    ctx.beginPath();ctx.ellipse(cx-13,y+41,10,12*open,0,0,Math.PI*2);ctx.fill();
-    ctx.beginPath();ctx.ellipse(cx+13,y+41,10,12*open,0,0,Math.PI*2);ctx.fill();
-    if(open > .18){
-      ctx.fillStyle=DARK;
-      ctx.beginPath();ctx.ellipse(cx-13,y+43,6.2,7.2,0,0,Math.PI*2);ctx.fill();
-      ctx.beginPath();ctx.ellipse(cx+13,y+43,6.2,7.2,0,0,Math.PI*2);ctx.fill();
-      ctx.fillStyle='white';
-      ctx.beginPath();ctx.arc(cx-15,y+40,2.1,0,Math.PI*2);ctx.fill();
-      ctx.beginPath();ctx.arc(cx+11,y+40,2.1,0,Math.PI*2);ctx.fill();
-    }
-  } else {
-    ctx.strokeStyle=DARK;ctx.lineWidth=2;ctx.lineCap='round';
-    ctx.beginPath();ctx.moveTo(cx-22,y+42);ctx.quadraticCurveTo(cx-13,y+45,cx-4,y+42);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(cx+4,y+42);ctx.quadraticCurveTo(cx+13,y+45,cx+22,y+42);ctx.stroke();
-  }
-  // lashes
-  ctx.strokeStyle=DARK;ctx.lineWidth=1.5;ctx.lineCap='round';
-  [[-20,y+30,-23,y+24],[-13,y+29,-13,y+23],[-6,y+30,-3,y+24]].forEach(([x1,y1,x2,y2])=>{
-    ctx.beginPath();ctx.moveTo(cx+x1,y1);ctx.lineTo(cx+x2,y2);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(cx-x1,y1);ctx.lineTo(cx-x2,y2);ctx.stroke();
-  });
-  // blush
-  ctx.fillStyle='rgba(220,100,80,.28)';ctx.beginPath();ctx.ellipse(cx-22,y+51,7,4,0,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.ellipse(cx+22,y+51,7,4,0,0,Math.PI*2);ctx.fill();
-  // mouth
-  ctx.strokeStyle=RED;ctx.lineWidth=2;ctx.lineCap='round';
-  if(mouthOpen>.3){ctx.fillStyle='rgba(180,40,40,.7)';ctx.beginPath();ctx.ellipse(cx,y+60,7,4*mouthOpen,0,0,Math.PI*2);ctx.fill();}
-  ctx.beginPath();ctx.moveTo(cx-8,y+59);ctx.quadraticCurveTo(cx,y+67+mouthOpen*3,cx+8,y+59);ctx.stroke();
-  // bangs
-  ctx.fillStyle=DARK;ctx.beginPath();ctx.moveTo(cx+22,y+10);ctx.bezierCurveTo(cx+14,y+5,cx+1,y+5,cx-10,y+9);ctx.bezierCurveTo(cx-19,y+13,cx-26,y+20,cx-26,y+25);ctx.bezierCurveTo(cx-21,y+35,cx-10,y+36,cx+1,y+35);ctx.bezierCurveTo(cx+11,y+34,cx+19,y+30,cx+22,y+24);ctx.closePath();ctx.fill();
-  ctx.restore();
-  drawNameTag('Susan',cx,baseY+182,alpha);
-}
-
-// ── CANDISE ──
-function drawCandise(cx,baseY,alpha,opts={}){
-  const {waveArm=0,blink=0,mouthOpen=0,jumpY=0,pushGlasses=0,squash=1}=opts;
-  ctx.save();ctx.globalAlpha=alpha;
-  const y=baseY-jumpY;
-  ctx.translate(cx,y+90);ctx.scale(1/squash,squash);ctx.translate(-cx,-(y+90));
-
-  // hair back
-  ctx.fillStyle=DARK;
-  ctx.beginPath();ctx.ellipse(cx,y+12,30,17,0,0,Math.PI*2);ctx.fill();
-  ctx.beginPath();ctx.ellipse(cx,y+18,30,11,0,0,Math.PI*2);ctx.fill();
-  ctx.beginPath();ctx.ellipse(cx-22,y+30,8,16,0,0,Math.PI*2);ctx.fill();
-  ctx.beginPath();ctx.ellipse(cx+22,y+30,8,16,0,0,Math.PI*2);ctx.fill();
-  ctx.beginPath();ctx.roundRect(cx+16,y+2,14,10,5);ctx.fill();
-  ctx.strokeStyle=DARK;ctx.lineWidth=9;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(cx+23,y+12);ctx.quadraticCurveTo(cx+42,y+24,cx+38,y+48);ctx.quadraticCurveTo(cx+34,y+62,cx+24,y+56);ctx.stroke();
-  ctx.fillStyle=RED;ctx.beginPath();ctx.arc(cx+23,y+13,5,0,Math.PI*2);ctx.fill();
-
-  // body
-  ctx.fillStyle='#1a3a5c';ctx.beginPath();ctx.roundRect(cx-27,y+96,54,60,8);ctx.fill();
-  ctx.fillStyle='rgba(255,248,232,.9)';ctx.beginPath();ctx.moveTo(cx,y+96);ctx.lineTo(cx-11,y+112);ctx.lineTo(cx,y+103);ctx.lineTo(cx+11,y+112);ctx.closePath();ctx.fill();
-
-  // arms
-  if(waveArm>0){
-    ctx.fillStyle='#1a3a5c';
-    const ang=-Math.PI*.55-Math.sin(tick*.2)*0.35*waveArm;
-    ctx.save();ctx.translate(cx+27,y+100);ctx.rotate(ang);ctx.beginPath();ctx.roundRect(-9,0,18,44,9);ctx.fill();ctx.restore();
-    ctx.fillStyle=SKIN_C;ctx.save();ctx.translate(cx+27,y+100);ctx.rotate(ang);ctx.beginPath();ctx.ellipse(0,48,10,9,0,0,Math.PI*2);ctx.fill();ctx.restore();
-    ctx.fillStyle='#1a3a5c';ctx.beginPath();ctx.roundRect(cx-47,y+100,18,46,9);ctx.fill();
-    ctx.fillStyle=SKIN_C;ctx.beginPath();ctx.ellipse(cx-38,y+148,10,9,0,0,Math.PI*2);ctx.fill();
-  } else {
-    ctx.fillStyle='#1a3a5c';ctx.beginPath();ctx.roundRect(cx-47,y+100,18,46,9);ctx.fill();ctx.beginPath();ctx.roundRect(cx+29,y+100,18,46,9);ctx.fill();
-    ctx.fillStyle=SKIN_C;ctx.beginPath();ctx.ellipse(cx-38,y+148,10,9,0,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.ellipse(cx+38,y+148,10,9,0,0,Math.PI*2);ctx.fill();
-  }
-
-  ctx.fillStyle='#2a1e14';ctx.beginPath();ctx.roundRect(cx-21,y+153,15,13,4);ctx.fill();ctx.beginPath();ctx.roundRect(cx+6,y+153,15,13,4);ctx.fill();
-  ctx.fillStyle=SKIN_C;ctx.beginPath();ctx.roundRect(cx-9,y+80,18,20,4);ctx.fill();
-  ctx.fillStyle=SKIN_C;ctx.beginPath();ctx.ellipse(cx,y+42,30,33,0,0,Math.PI*2);ctx.fill();
-
-  // eyes - softer blink: keep pupils stable and close with eyelid lines
-  const lid=clamp(blink,0,1);
-  if(lid<.88){
-    const open=1-lid;
-    ctx.fillStyle='white';
-    ctx.beginPath();ctx.ellipse(cx-13,y+43,10,10*open,0,0,Math.PI*2);ctx.fill();
-    ctx.beginPath();ctx.ellipse(cx+13,y+43,10,10*open,0,0,Math.PI*2);ctx.fill();
-    if(open>.18){
-      ctx.fillStyle=DARK;
-      ctx.beginPath();ctx.ellipse(cx-13,y+44,6.1,6.6,0,0,Math.PI*2);ctx.fill();
-      ctx.beginPath();ctx.ellipse(cx+13,y+44,6.1,6.6,0,0,Math.PI*2);ctx.fill();
-      ctx.fillStyle='white';
-      ctx.beginPath();ctx.arc(cx-15,y+41,2,0,Math.PI*2);ctx.fill();
-      ctx.beginPath();ctx.arc(cx+11,y+41,2,0,Math.PI*2);ctx.fill();
-    }
-  } else {
-    ctx.strokeStyle=DARK;ctx.lineWidth=2;ctx.lineCap='round';
-    ctx.beginPath();ctx.moveTo(cx-22,y+43);ctx.quadraticCurveTo(cx-13,y+45,cx-4,y+43);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(cx+4,y+43);ctx.quadraticCurveTo(cx+13,y+45,cx+22,y+43);ctx.stroke();
-  }
-
-  // glasses — can push up
-  const gOff=pushGlasses>0?-3*pushGlasses:0;
-  ctx.strokeStyle=DARK;ctx.lineWidth=2.5;
-  ctx.beginPath();ctx.arc(cx-13,y+43+gOff,13,0,Math.PI*2);ctx.stroke();
-  ctx.beginPath();ctx.arc(cx+13,y+43+gOff,13,0,Math.PI*2);ctx.stroke();
-  ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(cx-1,y+43+gOff);ctx.lineTo(cx+1,y+43+gOff);ctx.stroke();
-  ctx.lineWidth=2;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(cx-26,y+39+gOff);ctx.lineTo(cx-36,y+37+gOff);ctx.stroke();ctx.beginPath();ctx.moveTo(cx+26,y+39+gOff);ctx.lineTo(cx+36,y+37+gOff);ctx.stroke();
-  ctx.strokeStyle='rgba(255,255,255,.5)';ctx.lineWidth=1.6;
-  ctx.beginPath();ctx.moveTo(cx-21,y+35+gOff);ctx.quadraticCurveTo(cx-17,y+32+gOff,cx-11,y+35+gOff);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(cx+5,y+35+gOff);ctx.quadraticCurveTo(cx+9,y+32+gOff,cx+15,y+35+gOff);ctx.stroke();
-
-  ctx.fillStyle='rgba(220,100,80,.24)';ctx.beginPath();ctx.ellipse(cx-22,y+53,7,4,0,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.ellipse(cx+22,y+53,7,4,0,0,Math.PI*2);ctx.fill();
-  ctx.strokeStyle='#8a5a3a';ctx.lineWidth=2;ctx.lineCap='round';
-  if(mouthOpen>.3){ctx.fillStyle='rgba(140,80,40,.5)';ctx.beginPath();ctx.ellipse(cx,y+61,6,3.5*mouthOpen,0,0,Math.PI*2);ctx.fill();}
-  ctx.beginPath();ctx.moveTo(cx-8,y+60);ctx.quadraticCurveTo(cx,y+68+mouthOpen*3,cx+8,y+60);ctx.stroke();
-
-  ctx.restore();
-  drawNameTag('Candise',cx,baseY+182,alpha);
-}
-
-// ── SPEECH BUBBLE ──
-function drawBubble(x,y,text,subtext,side='left',alpha=1){
-  ctx.save();ctx.globalAlpha=alpha;
-  const pw=side==='left'?x-10:W-x-10;
-  const bw=Math.min(230,Math.max(170,pw));
-  const bx=side==='left'?Math.max(10,x-bw-20):Math.min(W-bw-10,x+20);
-  const by=clamp(y,76,H-190);
-  ctx.fillStyle='rgba(255,252,245,.97)';ctx.strokeStyle='rgba(200,54,43,.55)';ctx.lineWidth=2;ctx.beginPath();ctx.roundRect(bx,by,bw,64,14);ctx.fill();ctx.stroke();
-  // tail
-  ctx.fillStyle='rgba(255,252,245,.97)';ctx.strokeStyle='rgba(200,54,43,.55)';ctx.lineWidth=2;
-  if(side==='left'){ctx.beginPath();ctx.moveTo(bx+bw,by+22);ctx.lineTo(x-8,by+31);ctx.lineTo(bx+bw,by+40);ctx.fill();ctx.stroke();}
-  else{ctx.beginPath();ctx.moveTo(bx,by+22);ctx.lineTo(x+8,by+31);ctx.lineTo(bx,by+40);ctx.fill();ctx.stroke();}
-  t(text,bx+bw/2,by+25,'bold 15px Arial',DARK);
-  t(subtext,bx+bw/2,by+47,'12px Arial','rgba(200,54,43,.85)');
-  ctx.restore();
-}
-
-// ── SCENE PROPS ──
-function drawYumchaScene(sc,pt){
-  drawSky(sc);
-  // warm interior bg
-  ctx.fillStyle='rgba(240,200,160,.4)';ctx.fillRect(0,72,W,H-72);
-  // sign
-  ctx.fillStyle=RED;ctx.beginPath();ctx.roundRect(W/2-155,80,310,50,6);ctx.fill();
-  t('飲茶 · 茶樓',W/2,108,'bold 22px serif','#fff8e8');
-  t('Yum Cha Restaurant',W/2,124,'11px Arial','rgba(255,248,232,.72)');
-  // lanterns
-  [130,W-130].forEach(lx=>{ctx.strokeStyle='rgba(200,54,43,.4)';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(lx,72);ctx.lineTo(lx,102);ctx.stroke();ctx.fillStyle='rgba(200,54,43,.88)';ctx.beginPath();ctx.ellipse(lx,122,15,28,0,0,Math.PI*2);ctx.fill();});
-  // table
-  ctx.fillStyle='rgba(200,155,95,.3)';ctx.strokeStyle='rgba(160,110,60,.4)';ctx.lineWidth=1.5;ctx.beginPath();ctx.roundRect(W/2-160,220,320,140,8);ctx.fill();ctx.stroke();
-  // steamers
-  [[W/2-70,220],[W/2,210],[W/2+60,222]].forEach(([sx,sy])=>{
-    ctx.fillStyle='#7a4820';ctx.beginPath();ctx.ellipse(sx,sy+10,26,9,0,0,Math.PI*2);ctx.fill();
-    ctx.fillStyle='#8a5830';ctx.beginPath();ctx.roundRect(sx-26,sy-10,52,22,4);ctx.fill();
-    ctx.fillStyle='#f0c8a0';ctx.beginPath();ctx.ellipse(sx-8,sy-4,7,5,0,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.ellipse(sx+8,sy-5,7,5,0,0,Math.PI*2);ctx.fill();
-  });
-  // teapot
-  ctx.fillStyle='#8a4020';ctx.beginPath();ctx.ellipse(W/2-90,240,22,14,0,0,Math.PI*2);ctx.fill();
-  ctx.fillStyle='#6a3018';ctx.beginPath();ctx.roundRect(W/2-112,230,44,11,5);ctx.fill();
-  drawFloor(sc);
-}
-
-function drawTempleScene(sc,pt){
-  drawSky(sc);
-  // roof
-  ctx.fillStyle='#a0c080';ctx.beginPath();ctx.moveTo(W/2,72);ctx.lineTo(160,195);ctx.lineTo(640,195);ctx.closePath();ctx.fill();
-  ctx.fillStyle='#b8d898';ctx.beginPath();ctx.moveTo(W/2,60);ctx.lineTo(180,184);ctx.lineTo(620,184);ctx.closePath();ctx.fill();
-  // body
-  ctx.fillStyle='#d0e8b8';ctx.strokeStyle='rgba(80,140,60,.25)';ctx.lineWidth=1.5;ctx.beginPath();ctx.rect(200,195,400,H-195-108);ctx.fill();ctx.stroke();
-  // doors
-  ctx.fillStyle=RED;ctx.beginPath();ctx.roundRect(W/2-80,280,160,H-280-108,5);ctx.fill();
-  ctx.fillStyle='rgba(255,200,55,.85)';[W/2-55,W/2+55].forEach(x=>{ctx.beginPath();ctx.arc(x,H-180,9,0,Math.PI*2);ctx.fill();});
-  // sign
-  ctx.fillStyle='rgba(200,54,43,.85)';ctx.beginPath();ctx.roundRect(W/2-80,212,160,40,4);ctx.fill();
-  t('道教廟宇',W/2,238,'bold 18px serif','#fff8e8');
-  // columns
-  [220,560].forEach(cx=>{ctx.fillStyle='#c0d8a0';ctx.strokeStyle='rgba(80,140,60,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(cx,200,20,H-200-108,4);ctx.fill();ctx.stroke();});
-  // lanterns
-  [W/2-120,W/2+120].forEach(lx=>{ctx.strokeStyle='rgba(200,54,43,.45)';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(lx,195);ctx.lineTo(lx,222);ctx.stroke();ctx.fillStyle='rgba(200,54,43,.88)';ctx.beginPath();ctx.ellipse(lx,240,12,22,0,0,Math.PI*2);ctx.fill();});
-  // incense smoke
-  ctx.strokeStyle='rgba(200,200,200,.3)';ctx.lineWidth=2;ctx.lineCap='round';
-  [W/2-15,W/2,W/2+15].forEach(sx=>{ctx.beginPath();ctx.moveTo(sx,280);ctx.quadraticCurveTo(sx-5,255,sx+3,238);ctx.stroke();});
-  drawFloor(sc);
-}
-
-function drawIslandScene(sc,pt){
-  drawSky(sc);
-  // clouds
-  ctx.fillStyle='rgba(255,255,255,.68)';[[180,52,65,24],[580,68,55,20]].forEach(([cx,cy,rx,ry])=>{ctx.beginPath();ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.ellipse(cx+26,cy-6,rx*.78,ry*.82,0,0,Math.PI*2);ctx.fill();});
-  // sea
-  ctx.fillStyle='rgba(90,155,215,.28)';ctx.fillRect(0,H-195,W,87);
-  ctx.strokeStyle='rgba(90,155,215,.38)';ctx.lineWidth=2;
-  [H-195,H-175].forEach(y=>{ctx.beginPath();ctx.moveTo(0,y);for(let x=0;x<W;x+=90)ctx.quadraticCurveTo(x+45,y-9,x+90,y);ctx.stroke();});
-  // island
-  ctx.fillStyle='#90c060';ctx.beginPath();ctx.ellipse(W/2,H-158,285,58,0,0,Math.PI*2);ctx.fill();
-  ctx.fillStyle='#a8d878';ctx.beginPath();ctx.ellipse(W/2,H-170,245,42,0,0,Math.PI*2);ctx.fill();
-  // trees
-  [[255,H-168,32],[465,H-172,26],[355,H-175,22]].forEach(([x,y,r])=>{ctx.strokeStyle='#4a7025';ctx.lineWidth=5;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x,y-52);ctx.stroke();ctx.fillStyle='#5a8830';ctx.beginPath();ctx.arc(x,y-56,r,0,Math.PI*2);ctx.fill();ctx.fillStyle='#70a040';ctx.beginPath();ctx.arc(x,y-63,r*.72,0,Math.PI*2);ctx.fill();});
-  // ferry
-  ctx.fillStyle='#e0eaf8';ctx.strokeStyle='rgba(90,130,195,.4)';ctx.lineWidth=1.5;ctx.beginPath();ctx.roundRect(45,H-212,142,42,8);ctx.fill();ctx.stroke();
-  ctx.fillStyle='#ccdef0';ctx.strokeStyle='rgba(90,130,195,.3)';ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(62,H-232,106,26,5);ctx.fill();ctx.stroke();
-  [[72,H-225],[96,H-225],[120,H-225]].forEach(([wx,wy])=>{ctx.fillStyle='rgba(90,155,215,.48)';ctx.beginPath();ctx.roundRect(wx,wy,15,11,2);ctx.fill();});
-  // destination sign on island
-  ctx.fillStyle='rgba(80,150,55,.85)';ctx.beginPath();ctx.roundRect(W/2-58,H-284,116,29,4);ctx.fill();
-  t('長洲·離島',W/2,H-264,'bold 13px serif','#fff8e8');
-  drawFloor(sc);
-}
-
-function drawOfficeScene(sc,pt){
-  drawSky(sc);
-  // window
-  ctx.fillStyle='rgba(195,215,245,.52)';ctx.strokeStyle='rgba(130,155,200,.38)';ctx.lineWidth=2;ctx.beginPath();ctx.roundRect(180,88,440,220,6);ctx.fill();ctx.stroke();
-  ctx.strokeStyle='rgba(130,155,200,.28)';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(180,195);ctx.lineTo(620,195);ctx.stroke();ctx.beginPath();ctx.moveTo(400,88);ctx.lineTo(400,308);ctx.stroke();
-  // city in window
-  [[190,95,88],[287,118,68],[364,100,98],[472,108,78],[558,125,52]].forEach(([x,y,w])=>{ctx.fillStyle='rgba(175,195,225,.42)';ctx.beginPath();ctx.rect(x,y,w,308-y);ctx.fill();});
-  // desk
-  ctx.fillStyle='#bec8da';ctx.beginPath();ctx.roundRect(0,H-198,W,22,3);ctx.fill();
-  // laptop
-  ctx.fillStyle='#c8d2e8';ctx.strokeStyle='rgba(130,155,200,.4)';ctx.lineWidth=1.5;ctx.beginPath();ctx.roundRect(W/2-88,H-258,175,110,5);ctx.fill();ctx.stroke();
-  ctx.fillStyle='#dce8f8';ctx.beginPath();ctx.roundRect(W/2-78,H-249,155,92,3);ctx.fill();
-  t('TalKong.hk',W/2,H-195,'bold 11px monospace','rgba(70,110,195,.68)');
-  // wall sign
-  ctx.fillStyle='rgba(200,54,43,.82)';ctx.beginPath();ctx.roundRect(38,100,94,46,5);ctx.fill();
-  t('港聲',85,122,'bold 14px serif','#fff8e8');t('TalKong',85,136,'8.5px Arial','rgba(255,248,232,.7)');
-  // coffee
-  ctx.fillStyle='#d0a880';ctx.beginPath();ctx.roundRect(W/2+100,H-220,28,26,4);ctx.fill();
-  ctx.strokeStyle='rgba(200,180,150,.3)';ctx.lineWidth=2;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(W/2+114,H-222);ctx.quadraticCurveTo(W/2+112,H-232,W/2+116,H-240);ctx.stroke();
-  drawFloor(sc);
-}
-
-// ── CTA SCENE ──
-function drawCTA(pt){
-  // brand bg with subtle pattern
-  ctx.fillStyle=CREAM;ctx.fillRect(0,0,W,H);
-  // subtle diamond pattern
-  ctx.strokeStyle='rgba(200,54,43,.06)';ctx.lineWidth=1;
-  for(let x=-50;x<W+50;x+=40)for(let y=-50;y<H+50;y+=40){ctx.save();ctx.translate(x,y);ctx.rotate(Math.PI/4);ctx.beginPath();ctx.rect(-10,-10,20,20);ctx.stroke();ctx.restore();}
-  // floor
-  ctx.fillStyle='#EAD8C8';ctx.fillRect(0,H-108,W,108);
-  ctx.strokeStyle='rgba(0,0,0,.07)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,H-108);ctx.lineTo(W,H-108);ctx.stroke();
-
-  // CTA text with bounce-in animation
-  const ta=Math.min(1,pt*3);
-  const tb=clamp((pt-.15)*3,0,1);
-  const tc=clamp((pt-.3)*3,0,1);
-  const bs=1+Math.max(0,.4*Math.sin(ta*Math.PI));
-
-  ctx.save();ctx.globalAlpha=easeOut(ta);
-  ctx.translate(W/2,H/2-70);ctx.scale(bs,bs);ctx.translate(-W/2,-(H/2-70));
-  t('免費報名',W/2,H/2-55,'900 42px Noto Serif HK, serif',RED);
-  ctx.restore();
-
-  ctx.save();ctx.globalAlpha=easeOut(tb);
-  const pop=1+Math.max(0,.16*Math.sin(tb*Math.PI));
-  ctx.translate(W/2,H/2+4);ctx.scale(pop,pop);ctx.translate(-W/2,-(H/2+4));
-  ctx.fillStyle=RED;ctx.shadowColor='rgba(154,36,24,.24)';ctx.shadowBlur=10;ctx.shadowOffsetY=4;
-  ctx.beginPath();ctx.roundRect(W/2-132,H/2-22,264,52,26);ctx.fill();
-  ctx.shadowColor='transparent';
-  t('立即報名  /  Sign Up Free',W/2,H/2+12,'900 18px Arial','#fff8e8');
-  ctx.restore();
-
-  ctx.save();ctx.globalAlpha=easeOut(tc);
-  // URL with underline animation
-  ctx.font='900 32px Noto Serif HK, serif';ctx.fillStyle=RED;ctx.textAlign='center';
-  ctx.fillText('TalKong.hk',W/2,H/2+74);
-  const uw=ctx.measureText('TalKong.hk').width;
-  ctx.fillStyle=RED;ctx.fillRect(W/2-uw/2,H/2+78,uw*tc,3);
-  ctx.restore();
-
-  // Clean CTA: no QR/OR placeholder, keep focus on the signup button and URL
-}
-
-// ── FLOATING LABEL ──
-function floatLabel(x,y,icon,text,alpha){
-  ctx.save();ctx.globalAlpha=alpha;
-  ctx.fillStyle='rgba(255,252,245,.95)';ctx.strokeStyle='rgba(200,54,43,.4)';ctx.lineWidth=1.5;ctx.beginPath();ctx.roundRect(x-55,y-16,110,32,16);ctx.fill();ctx.stroke();
-  t(icon+' '+text,x,y+6,'bold 11px Arial',DARK);
-  ctx.restore();
-}
-
-
-function drawNameTag(name,x,y,alpha=1){
-  ctx.save();
-  ctx.globalAlpha=alpha;
-  ctx.font='700 12px Arial';
-  const padX=12, h=20;
-  const w=Math.max(56, Math.ceil(ctx.measureText(name).width)+padX*2);
-  ctx.fillStyle='rgba(255,252,245,.96)';
-  ctx.strokeStyle='rgba(200,54,43,.42)';
-  ctx.lineWidth=1.5;
-  ctx.beginPath();ctx.roundRect(x-w/2,y-h/2,w,h,10);ctx.fill();ctx.stroke();
-  t(name,x,y+4,'700 12px Arial',DARK);
-  ctx.restore();
-}
-
-function drawBrandBug(alpha=0.92){
-  ctx.save();ctx.globalAlpha=alpha;
-  ctx.fillStyle='rgba(255,252,245,.82)';
-  ctx.strokeStyle='rgba(200,54,43,.28)';
-  ctx.lineWidth=1.5;
-  ctx.beginPath();ctx.roundRect(16,16,138,34,8);ctx.fill();ctx.stroke();
-  t('港聲 · TALKONG',85,38,'900 15px Georgia',RED);
-  ctx.restore();
-}
-
-// ── MAIN LOOP ──
-// Blink timers
-let sBlinkT=0,cBlinkT=0,sBlinkDur=0,cBlinkDur=0;
-
-function getBlinkVal(blinkT,dur,now){
-  if(dur<=0||now>blinkT+dur)return 0;
-  const p=(now-blinkT)/dur;
-  return p<.5?p*2:(1-p)*2;
-}
-
-let prevPhase='';
-function main(ts){
-  if(!startT)startT=ts;
-  const dt=Math.min((ts-lastT)/1000,0.05);lastT=ts;tick++;
-  const elapsed=Math.min((ts-startT)/1000,DUR);
-  const ph=phase(elapsed);
-  const pt=phaseT(elapsed);
-
-  // scene switches
-  if(ph!==prevPhase){
-    const map={bus:'street',brand:'street',yumcha:'yumcha',temple:'temple',island:'island',office:'office',cta:'cta'};
-    switchSc(map[ph]||'street');
-    prevPhase=ph;
-    // trigger blink on scene change
-    sBlinkT=elapsed+0.3;sBlinkDur=0.2;
-    cBlinkT=elapsed+0.5;cBlinkDur=0.2;
-  }
-  if(scLerp<1)scLerp=Math.min(1,scLerp+dt*2.5);
-
-  // random blinks
-  if(tick%140===0){sBlinkT=elapsed;sBlinkDur=0.15;}
-  if(tick%170===60){cBlinkT=elapsed;cBlinkDur=0.15;}
-
-  const sc=interpSc();
-  ctx.clearRect(0,0,W,H);
-
-  const floorY=H-108;
-  const sX=W*.36, cX=W*.64;
-  const charBaseY=floorY-150;
-
-  // ── RENDER BY PHASE ──
-  if(ph==='bus'){
-    // Bus crashes in
-    drawSky(sc);drawBuildings(sc);drawStreetProps();drawFloor(sc);
-    const busT=easeOut(Math.min(1,pt*2));
-    const busX=lerp(W+20,W-355,busT);
-    const shake=pt>.6?Math.max(0,4*(1-pt*3)):0;
-    drawBus(busX,floorY-122,shake);
-    // Hook text appears
-    if(pt>.38){
-      const ta=easeOut((pt-.38)*2.2);
-      ctx.save();ctx.globalAlpha=ta;
-      t('學廣東話？',W/2,H/2-46,'900 34px Noto Serif HK, serif',RED);
-      t('用真實香港文化學！',W/2,H/2-6,'900 30px Noto Serif HK, serif',DARK);
-      t('Learn through real Hong Kong culture.',W/2,H/2+28,'700 16px Arial','rgba(28,15,7,.86)');
-      ctx.restore();
-    }
-  }
-  else if(ph==='brand'){
-    drawSky(sc);drawBuildings(sc);drawStreetProps();
-    const sAlpha=easeOut(Math.min(1,pt*3));
-    const cAlpha=easeOut(Math.min(1,(pt-.15)*3));
-    const sJump=pt<.3?Math.sin(pt/0.3*Math.PI)*18*easeOut(Math.min(1,pt*5)):0;
-    const cJump=pt<.45&&pt>.15?Math.sin((pt-.15)/.3*Math.PI)*16*easeOut(Math.min(1,(pt-.15)*5)):0;
-    const sSq=pt<.15?1+.25*Math.sin(pt/.15*Math.PI):1;
-    const cSq=pt<.3&&pt>.15?1+.22*Math.sin((pt-.15)/.15*Math.PI):1;
-    drawFloor(sc);
-    if(sAlpha>0)drawSusan(sX,charBaseY,sAlpha,{jumpY:sJump,squash:sSq,mouthOpen:.5,waveArm:1,blink:getBlinkVal(sBlinkT,sBlinkDur,elapsed)});
-    if(cAlpha>0)drawCandise(cX,charBaseY,cAlpha,{jumpY:cJump,squash:cSq,mouthOpen:.3,pushGlasses:pt>.6?1:0,blink:getBlinkVal(cBlinkT,cBlinkDur,elapsed)});
-    // Logo drop
-    if(pt>.25){
-      const la=easeOut((pt-.25)*2.2);
-      const ly=lerp(-60,82,bounce(Math.min(1,(pt-.25)*2.8)));
-      ctx.save();ctx.globalAlpha=la;
-      ctx.fillStyle=RED;ctx.beginPath();ctx.roundRect(W/2-160,ly,320,52,6);ctx.fill();
-      t('港聲 · TALKONG',W/2,ly+32,'900 28px Noto Serif HK, serif','#fff8e8');
-      t("Hong Kong's Immersive Cantonese Workshop",W/2,ly+48,'11px Arial','rgba(255,248,232,.78)');
-      ctx.restore();
-    }
-  }
-  else if(ph==='yumcha'){
-    drawYumchaScene(sc,pt);
-    drawSusan(sX,charBaseY,1,{waveArm:0,mouthOpen:Math.sin(pt*Math.PI*2)*.35,blink:getBlinkVal(sBlinkT,sBlinkDur,elapsed)});
-    // speech bubble
-    const ba=easeOut(Math.min(1,pt*4));
-    drawBubble(sX,charBaseY-28,'一邊飲茶，一邊開口講','Speak Cantonese over yum cha','left',ba);
-    // floating labels
-    if(pt>.4)floatLabel(W-100,charBaseY+40,'🍵','飲茶',easeOut((pt-.4)*4));
-    // Candise peeks in
-    if(pt>.6){const ca=easeOut((pt-.6)*5);drawCandise(cX,charBaseY,ca,{pushGlasses:1,blink:getBlinkVal(cBlinkT,cBlinkDur,elapsed)});}
-  }
-  else if(ph==='temple'){
-    drawTempleScene(sc,pt);
-    drawCandise(cX,charBaseY,1,{mouthOpen:0,pushGlasses:pt>.5?easeOut((pt-.5)*4):0,blink:getBlinkVal(cBlinkT,cBlinkDur,elapsed)});
-    const ba=easeOut(Math.min(1,pt*4));
-    drawBubble(cX,charBaseY-28,'聽故事，學文化','Learn the stories behind culture','right',ba);
-    if(pt>.4)floatLabel(100,charBaseY+40,'⛩️','廟宇',easeOut((pt-.4)*4));
-    if(pt>.6){const sa=easeOut((pt-.6)*5);drawSusan(sX,charBaseY,sa,{blink:getBlinkVal(sBlinkT,sBlinkDur,elapsed)});}
-  }
-  else if(ph==='island'){
-    drawIslandScene(sc,pt);
-    const wowMouth=pt>.3?Math.min(.8,easeOut((pt-.3)*5)):0;
-    drawSusan(sX,charBaseY,1,{mouthOpen:wowMouth,blink:getBlinkVal(sBlinkT,sBlinkDur,elapsed)});
-    drawCandise(cX,charBaseY,1,{waveArm:.8,blink:getBlinkVal(cBlinkT,cBlinkDur,elapsed)});
-    if(pt>.4)floatLabel(W/2,Math.max(46,charBaseY-56),'🏝️','離島探索',easeOut((pt-.4)*4));
-    if(pt>.25)drawBubble(sX,charBaseY-28,'用廣東話探索社區','Explore communities in Cantonese','left',easeOut((pt-.25)*3));
-  }
-  else if(ph==='office'){
-    drawOfficeScene(sc,pt);
-    drawCandise(cX,charBaseY,1,{mouthOpen:Math.sin(pt*Math.PI*2)*.3,pushGlasses:pt>.4?easeOut((pt-.4)*4)*.8:0,blink:getBlinkVal(cBlinkT,cBlinkDur,elapsed)});
-    const ba=easeOut(Math.min(1,pt*3.5));
-    drawBubble(cX,charBaseY-28,'職場粵語更自然','Sound natural at work','right',ba);
-    if(pt>.4)floatLabel(120,charBaseY+20,'💼','職場自信',easeOut((pt-.4)*4));
-    if(pt>.6){const sa=easeOut((pt-.6)*5);drawSusan(sX,charBaseY,sa,{waveArm:.5,blink:getBlinkVal(sBlinkT,sBlinkDur,elapsed)});}
-  }
-  else if(ph==='cta'){
-    drawCTA(pt);
-    const wa=Math.sin(tick*.15)*.5+.5;
-    drawSusan(sX,charBaseY,1,{waveArm:wa,mouthOpen:.3,blink:getBlinkVal(sBlinkT,sBlinkDur,elapsed)});
-    drawCandise(cX,charBaseY,1,{waveArm:wa*.8,pushGlasses:Math.sin(tick*.08)>.7?1:0,blink:getBlinkVal(cBlinkT,cBlinkDur,elapsed)});
-  }
-
-  // persistent light brand corner bug
-  if(ph!=='cta') drawBrandBug(ph==='brand'?0.45:0.9);
-
-  // progress dots
-  const phases=['bus','brand','yumcha','temple','island','office','cta'];
-  document.querySelectorAll('.dp').forEach((d,i)=>{d.classList.toggle('on',phases[i]===ph);});
-
-  if(elapsed<DUR)af=requestAnimationFrame(main);
-}
-
-// Build dots
-const ui=document.getElementById('ui');
-['bus','brand','yumcha','temple','island','office','cta'].forEach(()=>{const d=document.createElement('div');d.className='dp';ui.appendChild(d);});
-
-function start(){startT=null;if(af)cancelAnimationFrame(af);af=requestAnimationFrame(main);}
-document.getElementById('rb').addEventListener('click',start);
-const fsb=document.getElementById('fsb');
-let _stageHome=null,_stageNext=null,_stagePh=null,_stageOverlay=false;
-const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
-function getFullEl(){return document.fullscreenElement||document.webkitFullscreenElement||null;}
-function isStageFull(){return stage.classList.contains('stage-full')||getFullEl()===stage;}
-function syncFullBtn(){ if(fsb) fsb.textContent = isStageFull() ? '× 退出' : '⛶ 全屏'; }
-function fitStageSoon(delay=60){setTimeout(rsz,delay);setTimeout(rsz,delay+180);}
-function enterStageOverlay(){
-  if(stage.classList.contains('stage-full')) return;
-  _stageHome = stage.parentNode;
-  _stageNext = stage.nextSibling;
-  _stagePh = document.createElement('div');
-  _stagePh.className='stage-full-placeholder';
-  _stageHome.insertBefore(_stagePh, stage);
-  document.body.appendChild(stage);
-  document.body.classList.add('stage-full-lock');
-  stage.classList.add('stage-full');
-  _stageOverlay=true;
-  syncFullBtn();
-  fitStageSoon();
-}
-function exitStageOverlay(){
-  if(!stage.classList.contains('stage-full')) return;
-  stage.classList.remove('stage-full');
-  document.body.classList.remove('stage-full-lock');
-  if(_stageHome){ _stageHome.insertBefore(stage, _stageNext || null); }
-  if(_stagePh){ _stagePh.remove(); _stagePh=null; }
-  _stageHome=null; _stageNext=null; _stageOverlay=false;
-  syncFullBtn();
-  fitStageSoon();
-}
-function requestNativeFull(){
-  const req=stage.requestFullscreen||stage.webkitRequestFullscreen||stage.webkitEnterFullscreen;
-  if(!req||isIOS) return false;
-  try{
-    document.body.classList.add('stage-full-lock');
-    const ret=req.call(stage);
-    if(ret&&typeof ret.catch==='function'){ret.catch(()=>{document.body.classList.remove('stage-full-lock');enterStageOverlay();});}
-    syncFullBtn();
-    fitStageSoon();
-    return true;
-  }catch(e){document.body.classList.remove('stage-full-lock');return false;}
-}
-function enterStageFull(){
-  if(isStageFull()) return;
-  if(!requestNativeFull()) enterStageOverlay();
-}
-function exitStageFull(){
-  if(getFullEl()===stage){
-    const ex=document.exitFullscreen||document.webkitExitFullscreen;
-    if(ex){try{ex.call(document);}catch(e){}}
-    return;
-  }
-  exitStageOverlay();
-}
-function toggleStageFull(){ isStageFull() ? exitStageFull() : enterStageFull(); }
-if(fsb) fsb.addEventListener('click',toggleStageFull);
-['fullscreenchange','webkitfullscreenchange'].forEach(ev=>document.addEventListener(ev,()=>{
-  if(getFullEl()===stage){
-    document.body.classList.add('stage-full-lock');
-  }else if(!_stageOverlay){
-    document.body.classList.remove('stage-full-lock');
-  }
-  syncFullBtn();
-  fitStageSoon();
-}));
-window.addEventListener('orientationchange',()=>fitStageSoon(220));
-window.addEventListener('resize',()=>fitStageSoon(60));
-window.addEventListener('keydown',e=>{ if(e.key==='Escape') exitStageFull(); });
-start();
-</script>
+      <div class="video-cta-row">
+        <a href="#" class="btn-g video-events-btn" onclick="showPage('events');setTimeout(()=>window.scrollTo({top:0,behavior:'smooth'}),40);return false;" data-i18n="video-events-btn">點擊查看往期精彩活動</a>
       </div>
     </div>
-
     <!-- Contact -->
     <div class="section fu">
       <div class="contact-inline">
@@ -3243,7 +2350,13 @@ const T = {
   'vid-eyebrow':'介紹及活動視頻',
   'vid-label':'S14 TalKong 港聲 MVP Video',
   'vid-title':'觀看我們的介紹短片',
-  'vid-note':'請前往 Google Drive 觀看完整視頻',
+  'vid-note':'透過真實活動片段，看看 TalKong 如何把粵語學習帶入香港生活場景。',
+  'comment-kicker':'真實回饋 · Comments','comment-title':'來自參與者與合作方的聲音',
+  'comment-role-1':'活動參與者','comment-1':'參加完 TalKong 的活動之後，讓我更有自信在日常生活中使用粵語。',
+  'comment-role-2':'大學學生事務處','comment-2':'本地學生與非本地學生的融合需要更有效的解決方案。',
+  'comment-role-3':'企業','comment-3':'來港就業的同事若能夠熟練使用粵語，工作方面的溝通會更高效。',
+  'marquee-1':'更敢開口講廣東話','marquee-2':'活動很貼近日常香港生活','marquee-3':'文化背景讓詞彙更容易記住','marquee-4':'適合初學者融入香港',
+  'video-events-btn':'點擊查看往期精彩活動',
   'ci-label':'與我們聯繫 · Get in touch','ci-cta':'立即報名',
   'ev-badge':'活動 · Events','ev-title':'主題粵語學習','ev-sub':'在真實香港情境中學習廣東話',
   'cat1-ey':'主題文化活動','cat1-title':'沉浸式文化體驗工作坊',
@@ -3322,7 +2435,13 @@ const T = {
   's2-title':'语言是文化的精华',
   's2-body':'语言是文化的精华，一种语言背后是一个地区丰富且独特的文化。TalKong港声不仅帮助人们学习广东话，更是香港文化的传承者和宣扬者。我们致力于将传承香港独特人文与广东话语言学习进行有机结合，使每一次学习广东话的活动都是一次传承并宣扬香港文化的机会。让人们在TalKong港声的每一次学习广东话的活动中都能深刻感受香港独特人文的魅力与风采。',
   's2-cap':'香港文化传承 × 粤语守护 · Legacy & Protector',
-  'vid-eyebrow':'介绍及活动视频','vid-label':'S14 TalKong 港声 MVP Video','vid-title':'观看我们的介绍短片','vid-note':'请前往 Google Drive 观看完整视频',
+  'vid-eyebrow':'介绍及活动视频','vid-label':'S14 TalKong 港声 MVP Video','vid-title':'观看我们的介绍短片','vid-note':'通过真实活动片段，看看 TalKong 如何把粤语学习带入香港生活场景。',
+  'comment-kicker':'真实反馈 · Comments','comment-title':'来自参与者与合作方的声音',
+  'comment-role-1':'活动参与者','comment-1':'参加完 TalKong 的活动之后，让我更有自信在日常生活中使用粤语。',
+  'comment-role-2':'大学学生事务处','comment-2':'本地学生与非本地学生的融合需要更有效的解决方案。',
+  'comment-role-3':'企业','comment-3':'来港就业的同事若能够熟练使用粤语，工作方面的沟通会更高效。',
+  'marquee-1':'更敢开口讲广东话','marquee-2':'活动很贴近日常香港生活','marquee-3':'文化背景让词汇更容易记住','marquee-4':'适合初学者融入香港',
+  'video-events-btn':'点击查看往期精彩活动',
   'ci-label':'与我们联系 · Get in touch','ci-cta':'立即报名',
   'ev-badge':'活动 · Events','ev-title':'主题粤语学习','ev-sub':'在真实香港情境中学习广东话',
   'cat1-ey':'主题文化活动','cat1-title':'沉浸式文化体验工作坊','cat1-lead':'每次工作坊围绕真实香港生活场景设计，在地道情境中学习广东话，让语言在生活中自然流露。',
@@ -3400,7 +2519,13 @@ const T = {
   'vid-eyebrow':'Introduction & Event Video',
   'vid-label':'S14 TalKong 港聲 MVP Video',
   'vid-title':'Watch Our Introduction Video',
-  'vid-note':'Visit Google Drive to watch the full video',
+  'vid-note':'Watch real workshop moments and see how TalKong brings Cantonese learning into everyday Hong Kong life.',
+  'comment-kicker':'Real feedback · Comments','comment-title':'Voices from participants and partners',
+  'comment-role-1':'Participant','comment-1':'After joining TalKong, I feel more confident using Cantonese in daily life.',
+  'comment-role-2':'University student affairs office','comment-2':'Local and non-local students need more effective ways to connect and integrate.',
+  'comment-role-3':'Company','comment-3':'For colleagues working in Hong Kong, stronger Cantonese makes workplace communication more efficient.',
+  'marquee-1':'More confidence speaking Cantonese','marquee-2':'Close to real Hong Kong life','marquee-3':'Culture makes words easier to remember','marquee-4':'Beginner-friendly for settling in Hong Kong',
+  'video-events-btn':'View past event highlights',
   'ci-label':'Get in touch · 與我們聯繫','ci-cta':'Join Now',
   'ev-badge':'Events · Activities','ev-title':'Themed Cantonese Learning','ev-sub':'Learn Cantonese in authentic Hong Kong settings',
   'cat1-ey':'Cultural Theme Workshops','cat1-title':'Immersive Cultural Experience Workshops','cat1-lead':'Each workshop is built around a real Hong Kong environment so you learn Cantonese the way locals actually use it.',
