@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="zh-HK">
 <head>
+<!-- Talkong: Cloudflare Pages Function endpoint for Google Cloud Text-to-Speech -->
+<script>
+  window.TALKONG_TTS_ENDPOINT = "/api/tts";
+</script>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 <title>TalKong 港聲</title>
@@ -3335,7 +3340,8 @@ function _buildTTSUrls(text, lang){
   const urls = [];
 
   if(customEndpoint){
-    urls.push(`${customEndpoint}${customEndpoint.includes('?') ? '&' : '?'}lang=yue-HK&text=${q}`);
+    const endpointLang = (lang === 'zh-HK') ? 'yue-HK' : ((lang === 'zh-CN') ? 'cmn-CN' : (lang || 'en-US'));
+    urls.push(`${customEndpoint}${customEndpoint.includes('?') ? '&' : '?'}lang=${encodeURIComponent(endpointLang)}&text=${q}`);
   }
 
   if(lang === 'zh-HK'){
