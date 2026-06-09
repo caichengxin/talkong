@@ -2239,6 +2239,208 @@ nav,.page,.hero-banner,.section,.site-footer,.mob-tab-bar{
 }
 </style>
 
+
+
+<style id="talkong-title-search-reset-fix-20260609">
+/* Keep all inner-page heroes consistent and prevent titles/badges from being clipped by the tab/header area. */
+#page-vocab .hero-banner,
+#page-events .hero-banner,
+#page-about .hero-banner,
+#page-translator .hero-banner{
+  height:auto!important;
+  min-height:320px!important;
+  padding:64px 20px 48px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+  box-sizing:border-box!important;
+}
+#page-vocab .hero-inner,
+#page-events .hero-inner,
+#page-about .hero-inner,
+#page-translator .hero-inner{
+  width:100%!important;
+  max-width:920px!important;
+  margin:0 auto!important;
+  padding:0 12px!important;
+  box-sizing:border-box!important;
+}
+#page-vocab .hero-badge,
+#page-events .hero-badge,
+#page-about .hero-badge,
+#page-translator .hero-badge{
+  max-width:min(760px,calc(100vw - 44px))!important;
+  min-height:0!important;
+  height:auto!important;
+  margin:0 auto 18px!important;
+  padding:7px 16px!important;
+  line-height:1.35!important;
+  white-space:normal!important;
+  overflow:visible!important;
+  box-sizing:border-box!important;
+}
+#page-vocab .hero-title,
+#page-events .hero-title,
+#page-about .hero-title,
+#page-translator .hero-title{
+  max-width:100%!important;
+  margin:0 auto 14px!important;
+  line-height:1.08!important;
+  white-space:normal!important;
+  overflow:visible!important;
+  text-wrap:balance;
+}
+#page-vocab .hero-subtitle,
+#page-events .hero-subtitle,
+#page-about .hero-subtitle,
+#page-translator .hero-subtitle,
+#page-vocab .seo-helper,
+#page-events .seo-helper,
+#page-about .seo-helper,
+#page-translator .seo-helper{
+  max-width:min(820px,100%)!important;
+  overflow:visible!important;
+  box-sizing:border-box!important;
+}
+
+/* Learning cards: avoid mobile overflow from search and category controls. */
+.vocab-section,
+.vocab-section .wrap,
+.vocab-top,
+.vocab-cats,
+.vocab-search,
+.vocab-search input,
+.vocab-nav,
+.vocab-btns{
+  box-sizing:border-box!important;
+}
+.vocab-search input{
+  max-width:100%!important;
+}
+
+@media(max-width:640px){
+  #page-vocab .hero-banner,
+  #page-events .hero-banner,
+  #page-about .hero-banner,
+  #page-translator .hero-banner{
+    min-height:auto!important;
+    padding:30px 16px 28px!important;
+  }
+  #page-vocab .hero-title,
+  #page-events .hero-title,
+  #page-about .hero-title,
+  #page-translator .hero-title{
+    font-size:clamp(32px,10vw,46px)!important;
+    line-height:1.08!important;
+    margin-bottom:10px!important;
+  }
+  #page-vocab .hero-badge,
+  #page-events .hero-badge,
+  #page-about .hero-badge,
+  #page-translator .hero-badge{
+    font-size:11px!important;
+    margin-bottom:10px!important;
+    padding:6px 12px!important;
+  }
+  #page-vocab .hero-subtitle,
+  #page-events .hero-subtitle,
+  #page-about .hero-subtitle,
+  #page-translator .hero-subtitle{
+    font-size:13px!important;
+    line-height:1.55!important;
+    letter-spacing:.04em!important;
+  }
+  #page-vocab .seo-helper,
+  #page-events .seo-helper,
+  #page-about .seo-helper,
+  #page-translator .seo-helper{
+    font-size:12.5px!important;
+    line-height:1.65!important;
+    padding:0!important;
+  }
+  #page-vocab .vocab-section{
+    padding-top:48px!important;
+  }
+  #page-vocab .vocab-section .wrap{
+    width:100%!important;
+    max-width:100%!important;
+    padding-left:10px!important;
+    padding-right:10px!important;
+    overflow:hidden!important;
+  }
+  #page-vocab .vocab-top{
+    display:flex!important;
+    flex-direction:column!important;
+    gap:12px!important;
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+  }
+  #page-vocab .vocab-cats{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:7px!important;
+    width:100%!important;
+    min-width:0!important;
+    margin:0!important;
+  }
+  #page-vocab .vc-cat{
+    width:100%!important;
+    min-width:0!important;
+    padding:9px 3px!important;
+    font-size:13px!important;
+    line-height:1.2!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+  }
+  #page-vocab .vocab-search{
+    position:relative!important;
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:visible!important;
+  }
+  #page-vocab .vocab-search input{
+    display:block!important;
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    height:44px!important;
+    padding:10px 12px 10px 38px!important;
+    font-size:16px!important;
+  }
+  #page-vocab .vocab-grid{
+    gap:12px!important;
+  }
+  #page-vocab .vocab-nav{
+    flex-direction:column!important;
+    align-items:stretch!important;
+    gap:12px!important;
+  }
+  #page-vocab .vocab-btns{
+    display:grid!important;
+    grid-template-columns:1fr 1fr!important;
+    gap:10px!important;
+    width:100%!important;
+  }
+  #page-vocab .vn-btn{
+    width:100%!important;
+    justify-content:center!important;
+    padding:10px 8px!important;
+    font-size:15px!important;
+  }
+}
+@media(max-width:380px){
+  #page-vocab .vocab-section .wrap{padding-left:8px!important;padding-right:8px!important;}
+  #page-vocab .vocab-grid{gap:10px!important;}
+  #page-vocab .vc{height:182px!important;}
+  #page-vocab .vc-front,#page-vocab .vc-back{padding-left:8px!important;padding-right:8px!important;}
+}
+</style>
+
 </head>
 <body>
 
@@ -3684,7 +3886,19 @@ function shuffleVocab(){
 }
 
 function resetAllCards(){
-  document.querySelectorAll('#vocab-grid .vc.flipped').forEach(c=>c.classList.remove('flipped'));
+  currentCat = 'all';
+  filteredVocab = [...VOCAB];
+
+  const input = document.getElementById('vocab-search-input');
+  if(input) input.value = '';
+
+  document.querySelectorAll('.vc-cat').forEach(btn => {
+    const fn = btn.getAttribute('onclick') || '';
+    btn.classList.toggle('on', fn.includes("'all'"));
+  });
+
+  buildVocabGrid(filteredVocab);
+  updateVocabLang();
 }
 
 /* ── hook into setLang ── */
