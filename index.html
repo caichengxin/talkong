@@ -625,19 +625,23 @@ nav.scrolled{box-shadow:0 2px 28px rgba(24,18,10,.08);}
   background:var(--paper);border:1px solid rgba(200,54,43,.3);
   transition:border-color .25s,transform .25s,box-shadow .25s;
   box-shadow:3px 3px 0 rgba(200,54,43,.18);
+  padding-top:44px;
+  padding-bottom:36px;
 }
 .vc-front:hover{border-color:var(--hk-red);box-shadow:5px 5px 0 rgba(200,54,43,.3);}
 .vc-back{
   background:var(--hk-red);border:1px solid var(--hk-red-d);
   transform:rotateY(180deg);
   box-shadow:3px 3px 0 rgba(154,36,24,.4);
+  padding-top:44px;
+  padding-bottom:36px;
 }
 .vc-cat-tag{font-family:var(--hand);font-size:14px;color:var(--hk-red);position:absolute;top:14px;left:50%;transform:translateX(-50%);white-space:nowrap;}
 .vc-emoji{font-size:30px;margin-bottom:8px;}
-.vc-zh-tw{font-family:var(--chinese);font-weight:700;font-size:32px;color:var(--dark);line-height:1.2;letter-spacing:.03em;max-width:100%;word-break:break-word;}
+.vc-zh-tw{font-family:var(--chinese);font-weight:700;font-size:clamp(18px,4.5vw,32px);color:var(--dark);line-height:1.25;letter-spacing:.03em;max-width:100%;word-break:break-word;overflow-wrap:break-word;}
 /* English phrases on the front need a smaller scale than CJK single words */
-html[lang="en"] .vc-zh-tw{font-family:var(--hand);font-weight:600;font-size:22px;line-height:1.1;letter-spacing:.01em;}
-.vc-zh-cn{font-family:var(--chinese);font-size:13px;color:var(--mid);margin-top:8px;}
+html[lang="en"] .vc-zh-tw{font-family:var(--hand);font-weight:600;font-size:clamp(15px,3.5vw,22px);line-height:1.2;letter-spacing:.01em;}
+.vc-zh-cn{font-family:var(--chinese);font-size:13px;color:var(--mid);margin-top:6px;max-width:100%;overflow-wrap:break-word;}
 .vc-tap{font-family:var(--hand);font-size:14px;color:var(--hk-red);position:absolute;bottom:14px;letter-spacing:.02em;}
 .vb-jyutping{font-family:var(--hand);font-weight:600;font-size:32px;color:#fff8e8;letter-spacing:.04em;margin-bottom:6px;}
 .vb-en{font-family:var(--hand);font-size:18px;color:#fff8e8;margin-bottom:10px;letter-spacing:.02em;}
@@ -659,7 +663,17 @@ html[lang="en"] .vc-zh-tw{font-family:var(--hand);font-weight:600;font-size:22px
 .vn-shuffle:hover{background:var(--hk-red-d);color:#fff8e8;}
 .vocab-empty{grid-column:1/-1;text-align:center;padding:60px;color:rgba(255,248,232,.3);font-family:var(--brush);font-size:24px;}
 @media(max-width:960px){.vocab-grid{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:560px){.vocab-grid{grid-template-columns:1fr 1fr;}.vc{height:180px;}}
+@media(max-width:560px){
+  .vocab-grid{grid-template-columns:1fr 1fr;}
+  .vc{height:190px;}
+  .vc-front,.vc-back{padding:34px 10px 26px;}
+  .vc-emoji{font-size:24px;margin-bottom:4px;}
+  .vc-zh-tw{font-size:clamp(16px,5.5vw,26px);}
+  html[lang="en"] .vc-zh-tw{font-size:clamp(13px,4vw,18px);}
+  .vc-zh-cn{font-size:11px;margin-top:4px;}
+  .vb-jyutping{font-size:clamp(16px,5vw,26px);margin-bottom:4px;}
+  .vb-en{font-size:15px;margin-bottom:7px;}
+}
 
 /* ══════════════════════════════════
    TRANSLATOR PAGE
