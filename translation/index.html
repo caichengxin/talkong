@@ -2153,6 +2153,102 @@ nav,.page,.hero-banner,.section,.site-footer,.mob-tab-bar{
   #page-home .bus-drive{width:clamp(132px,46vw,190px)!important;}
 }
 </style>
+
+<style id="mobile-detail-fine-tune-20260609">
+/* Mobile-only detail fixes: tighter philosophy section, safe vocab search width, and visible translator helper copy. */
+@media(max-width:640px){
+  /* 1) About philosophy: reduce vertical blank space without changing the desktop layout. */
+  .phil-wrap{
+    padding:36px 0 28px!important;
+  }
+  .phil-wrap::before{
+    font-size:190px!important;
+    right:-22px!important;
+    bottom:18px!important;
+    opacity:.55!important;
+  }
+  .phil-grid{
+    grid-template-columns:1fr!important;
+    gap:18px!important;
+  }
+  .phil-ey{
+    font-size:18px!important;
+    margin-bottom:12px!important;
+  }
+  .phil-ey::before{width:30px!important;}
+  .phil-q{
+    font-size:clamp(30px,9vw,38px)!important;
+    line-height:1.28!important;
+    padding-left:18px!important;
+    margin-bottom:14px!important;
+  }
+  .phil-p{
+    font-size:14px!important;
+    line-height:1.75!important;
+    margin-bottom:0!important;
+  }
+  .phil-items{gap:10px!important;}
+  .pi{padding:16px 18px!important;}
+  .pi-title{font-size:19px!important;margin-bottom:5px!important;}
+  .pi-body{font-size:12.5px!important;line-height:1.65!important;}
+
+  /* 2) Learning cards: keep the search box inside the mobile viewport. */
+  .vocab-top,
+  .vocab-search{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    box-sizing:border-box!important;
+  }
+  .vocab-search input{
+    display:block!important;
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    box-sizing:border-box!important;
+  }
+  .vocab-section{overflow:hidden!important;}
+
+  /* 3) Translator hero: allow the helper text to take space instead of being covered by the next section. */
+  #page-translator .hero-banner{
+    min-height:280px!important;
+    height:auto!important;
+    padding:34px 18px 36px!important;
+    overflow:visible!important;
+  }
+  #page-translator .hero-inner{
+    padding:0 16px!important;
+  }
+  #page-translator .hero-title{
+    font-size:clamp(34px,9.5vw,46px)!important;
+    line-height:1.06!important;
+    margin-bottom:8px!important;
+  }
+  #page-translator .hero-subtitle{
+    margin-bottom:8px!important;
+  }
+  #page-translator .seo-helper{
+    display:block!important;
+    max-width:320px!important;
+    margin:8px auto 0!important;
+    padding:0!important;
+    font-size:12.5px!important;
+    line-height:1.65!important;
+    max-height:none!important;
+    overflow:visible!important;
+    position:relative!important;
+    z-index:8!important;
+  }
+  #page-translator .trans-page-body{
+    padding-top:26px!important;
+  }
+}
+@media(max-width:380px){
+  #page-translator .hero-banner{min-height:300px!important;}
+  #page-translator .hero-title{font-size:clamp(32px,9vw,42px)!important;}
+  .phil-q{font-size:30px!important;}
+}
+</style>
 </head>
 <body>
 
