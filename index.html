@@ -2314,168 +2314,6 @@ nav,.page,.hero-banner,.section,.site-footer,.mob-tab-bar{
 }
 </style>
 
-
-
-<style id="talkong-inner-hero-final-unified-20260609">
-/* Final unified inner-page hero sizing: keeps headings/badges from clipping on desktop and mobile. */
-@media(min-width:641px){
-  #page-vocab .hero-banner,
-  #page-events .hero-banner,
-  #page-about .hero-banner,
-  #page-translator .hero-banner{
-    height:auto!important;
-    min-height:420px!important;
-    padding:70px 20px 58px!important;
-    display:flex!important;
-    align-items:center!important;
-    justify-content:center!important;
-    overflow:hidden!important;
-    box-sizing:border-box!important;
-  }
-  #page-vocab .hero-inner,
-  #page-events .hero-inner,
-  #page-about .hero-inner,
-  #page-translator .hero-inner{
-    width:100%!important;
-    max-width:960px!important;
-    margin:0 auto!important;
-    padding:0 20px!important;
-    box-sizing:border-box!important;
-    overflow:visible!important;
-  }
-  #page-vocab .hero-badge,
-  #page-events .hero-badge,
-  #page-about .hero-badge,
-  #page-translator .hero-badge{
-    max-width:min(760px,calc(100vw - 56px))!important;
-    height:auto!important;
-    min-height:0!important;
-    margin:0 auto 20px!important;
-    padding:7px 18px!important;
-    line-height:1.35!important;
-    white-space:normal!important;
-    overflow:visible!important;
-    box-sizing:border-box!important;
-  }
-  #page-vocab .hero-title,
-  #page-events .hero-title,
-  #page-about .hero-title,
-  #page-translator .hero-title{
-    max-width:100%!important;
-    margin:0 auto 16px!important;
-    font-size:clamp(52px,6.1vw,86px)!important;
-    line-height:1.08!important;
-    white-space:normal!important;
-    overflow:visible!important;
-    text-wrap:balance;
-  }
-  #page-vocab .hero-subtitle,
-  #page-events .hero-subtitle,
-  #page-about .hero-subtitle,
-  #page-translator .hero-subtitle{
-    max-width:880px!important;
-    margin:0 auto!important;
-    line-height:1.7!important;
-    overflow:visible!important;
-    box-sizing:border-box!important;
-  }
-  #page-vocab .seo-helper,
-  #page-events .seo-helper,
-  #page-about .seo-helper,
-  #page-translator .seo-helper{
-    max-width:840px!important;
-    margin:22px auto 0!important;
-    line-height:1.75!important;
-    overflow:visible!important;
-    box-sizing:border-box!important;
-  }
-  #page-vocab .vocab-section,
-  #page-events .section:first-of-type,
-  #page-about .section:first-of-type,
-  #page-translator .trans-page-body{
-    padding-top:46px!important;
-  }
-}
-@media(max-width:640px){
-  #page-vocab .hero-banner,
-  #page-events .hero-banner,
-  #page-about .hero-banner,
-  #page-translator .hero-banner{
-    height:auto!important;
-    min-height:210px!important;
-    padding:34px 16px 28px!important;
-    display:flex!important;
-    align-items:center!important;
-    justify-content:center!important;
-    overflow:hidden!important;
-    box-sizing:border-box!important;
-  }
-  #page-vocab .hero-inner,
-  #page-events .hero-inner,
-  #page-about .hero-inner,
-  #page-translator .hero-inner{
-    width:100%!important;
-    max-width:100%!important;
-    margin:0 auto!important;
-    padding:0!important;
-    overflow:visible!important;
-    box-sizing:border-box!important;
-  }
-  #page-vocab .hero-badge,
-  #page-events .hero-badge,
-  #page-about .hero-badge,
-  #page-translator .hero-badge{
-    max-width:calc(100vw - 48px)!important;
-    margin:0 auto 10px!important;
-    padding:5px 10px!important;
-    font-size:10px!important;
-    line-height:1.25!important;
-    letter-spacing:.08em!important;
-    white-space:normal!important;
-    overflow:visible!important;
-  }
-  #page-vocab .hero-title,
-  #page-events .hero-title,
-  #page-about .hero-title,
-  #page-translator .hero-title{
-    max-width:100%!important;
-    margin:0 auto 10px!important;
-    font-size:clamp(30px,10.5vw,48px)!important;
-    line-height:1.05!important;
-    white-space:normal!important;
-    overflow:visible!important;
-    text-wrap:balance;
-  }
-  #page-vocab .hero-subtitle,
-  #page-events .hero-subtitle,
-  #page-about .hero-subtitle,
-  #page-translator .hero-subtitle{
-    max-width:100%!important;
-    margin:0 auto!important;
-    font-size:13px!important;
-    line-height:1.55!important;
-    letter-spacing:.08em!important;
-    overflow:visible!important;
-  }
-  #page-vocab .seo-helper,
-  #page-events .seo-helper,
-  #page-about .seo-helper,
-  #page-translator .seo-helper{
-    max-width:100%!important;
-    margin:14px auto 0!important;
-    font-size:13px!important;
-    line-height:1.65!important;
-    overflow:visible!important;
-  }
-  #page-vocab .vocab-section,
-  #page-events .section:first-of-type,
-  #page-about .section:first-of-type,
-  #page-translator .trans-page-body{
-    padding-top:28px!important;
-  }
-}
-</style>
-
 </head>
 <body>
 
@@ -3921,7 +3759,17 @@ function shuffleVocab(){
 }
 
 function resetAllCards(){
-  document.querySelectorAll('#vocab-grid .vc.flipped').forEach(c=>c.classList.remove('flipped'));
+  if(window.speechSynthesis && window.speechSynthesis.cancel) window.speechSynthesis.cancel();
+  const inp = document.getElementById('vocab-search-input');
+  if(inp) inp.value = '';
+  currentCat = 'all';
+  filteredVocab = [...VOCAB];
+  document.querySelectorAll('#vocab-cats .vc-cat').forEach(btn => {
+    const fn = btn.getAttribute('onclick') || '';
+    btn.classList.toggle('on', fn.includes("'all'"));
+  });
+  buildVocabGrid(filteredVocab);
+  updateVocabLang();
 }
 
 /* ── hook into setLang ── */
@@ -4890,3 +4738,105 @@ document.addEventListener('click', function(e){
   }
 }
 </style>
+
+
+<style id="translator-mobile-hero-no-overlap-final-20260609">
+/* Mobile-only translator hero fix. Desktop layout above is intentionally unchanged. */
+@media (max-width:640px){
+  #page-translator .hero-banner{
+    height:auto!important;
+    min-height:0!important;
+    padding:30px 16px 30px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    overflow:hidden!important;
+    box-sizing:border-box!important;
+  }
+  #page-translator .hero-inner{
+    width:100%!important;
+    max-width:100%!important;
+    padding:0 10px!important;
+    box-sizing:border-box!important;
+    text-align:center!important;
+  }
+  #page-translator .hero-badge{
+    width:auto!important;
+    max-width:calc(100vw - 56px)!important;
+    margin:0 auto 12px!important;
+    padding:6px 12px!important;
+    height:auto!important;
+    line-height:1.35!important;
+    white-space:normal!important;
+    overflow:visible!important;
+    box-sizing:border-box!important;
+  }
+  #page-translator .hero-title{
+    display:block!important;
+    font-size:clamp(30px,9vw,44px)!important;
+    line-height:1.08!important;
+    margin:0 auto 12px!important;
+    padding:0!important;
+    max-width:100%!important;
+    white-space:normal!important;
+    overflow:visible!important;
+    text-wrap:balance;
+  }
+  #page-translator .hero-subtitle{
+    display:block!important;
+    font-size:13px!important;
+    line-height:1.55!important;
+    margin:0 auto 10px!important;
+    max-width:100%!important;
+    overflow:visible!important;
+  }
+  #page-translator .seo-helper{
+    display:block!important;
+    font-size:12px!important;
+    line-height:1.65!important;
+    max-width:100%!important;
+    margin:0 auto!important;
+    padding:0!important;
+    overflow:visible!important;
+    box-sizing:border-box!important;
+  }
+  #page-translator .trans-page-body{
+    padding-top:34px!important;
+  }
+}
+@media (max-width:380px){
+  #page-translator .hero-banner{padding-top:28px!important;padding-bottom:28px!important;}
+  #page-translator .hero-title{font-size:clamp(28px,8.8vw,38px)!important;}
+  #page-translator .seo-helper{font-size:11.5px!important;line-height:1.6!important;}
+}
+</style>
+<script id="vocab-reset-final-fix-20260609">
+/* Make Reset Cards restore the learning-card page to its initial state. */
+(function(){
+  function setAllCategoryActive(){
+    document.querySelectorAll('#vocab-cats .vc-cat').forEach(function(btn){
+      var fn = btn.getAttribute('onclick') || '';
+      btn.classList.toggle('on', fn.indexOf("'all'") !== -1 || fn.indexOf('"all"') !== -1);
+    });
+  }
+  window.resetAllCards = function(){
+    try{
+      if(window.speechSynthesis && window.speechSynthesis.cancel) window.speechSynthesis.cancel();
+    }catch(e){}
+    document.querySelectorAll('#vocab-grid .vc.flipped').forEach(function(card){card.classList.remove('flipped');});
+    var input = document.getElementById('vocab-search-input');
+    if(input) input.value = '';
+    if(Array.isArray(window.VOCAB)){
+      window.currentCat = 'all';
+      window.filteredVocab = window.VOCAB.slice();
+      if(typeof window.buildVocabGrid === 'function') window.buildVocabGrid(window.filteredVocab);
+      else if(typeof window.filterVocab === 'function') window.filterVocab('all');
+    }else if(typeof window.filterVocab === 'function'){
+      window.currentCat = 'all';
+      window.filterVocab('all');
+    }
+    setAllCategoryActive();
+    if(typeof window.updateVocabLang === 'function') window.updateVocabLang();
+  };
+})();
+</script>
