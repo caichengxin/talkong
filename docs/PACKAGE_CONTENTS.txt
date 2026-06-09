@@ -1,0 +1,10 @@
+TalKong corrected deployment package
+
+Upload these at repository root:
+- index.html
+- _headers
+- _redirects
+- functions/api/tts.js
+- README_DEPLOY_TTS.md
+
+Do not upload old misnamed files as-is.

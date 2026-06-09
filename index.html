@@ -7,8 +7,9 @@
 </script>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
 <title>TalKong 港聲</title>
+<meta name="theme-color" content="#fff7df">
 <meta name="description" content="創新粵語教育與文化融合工作坊。Innovative Cantonese Education & Culture Integration Workshop.">
 <!-- Open Graph / Social sharing -->
 <meta property="og:type" content="website">
@@ -1879,6 +1880,42 @@ nav,.page-tabs,.mob-tab-bar,.site-footer{
   background:rgba(255,253,243,.56)!important;
 }
 .hero-badge::before,.hero-badge::after{background:#5d6843!important;}
+
+
+
+/* === TalKong mobile production patch 2026-06-08 === */
+html, body{
+  min-height:100%;
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+}
+button, a, .mob-tab, .pt, .lb, .vc, .vc-speak, .vb-speak, .rf-chip, .trans-act{
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+}
+input, textarea, select{
+  font-size:16px!important;
+}
+.page, .hero-banner, .trans-page-body{
+  min-height:auto;
+}
+@supports (height:100dvh){
+  #page-home .hero-banner{min-height:min(620px,100dvh)!important;}
+}
+.mob-tab-bar{
+  padding-bottom:env(safe-area-inset-bottom,0)!important;
+}
+@media(max-width:960px){
+  .page{padding-bottom:calc(72px + env(safe-area-inset-bottom,0))!important;}
+  .site-footer{margin-bottom:calc(58px + env(safe-area-inset-bottom,0))!important;}
+}
+@media(max-width:640px){
+  .wrap{padding-left:16px!important;padding-right:16px!important;}
+  .hero-inner{max-width:100%;}
+  .hero-btns .btn-g,.hero-btns .btn-o{min-height:44px;}
+  .vc-speak,.vb-speak{width:36px!important;height:36px!important;font-size:16px!important;}
+  .rf-submit,.trans-go-btn{min-height:48px;}
+}
 
 </style>
 </head>

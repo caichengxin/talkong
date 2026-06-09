@@ -27,7 +27,7 @@ export async function onRequest(context) {
       return json({ error: "Missing GOOGLE_TTS_API_KEY in Cloudflare Pages environment variables." }, 500);
     }
 
-    const cacheKey = new Request(new URL(`/api/tts?lang=${encodeURIComponent(lang)}&text=${encodeURIComponent(text)}`, request.url).toString(), request);
+    const cacheKey = new Request(new URL(`/api/tts?lang=${encodeURIComponent(lang)}&text=${encodeURIComponent(text)}`, request.url).toString(), { method: "GET" });
     const cache = caches.default;
     const cached = await cache.match(cacheKey);
     if (cached) {
@@ -77,7 +77,8 @@ export async function onRequest(context) {
         headers: {
           ...corsHeaders(),
           "Content-Type": "audio/mpeg",
-          "Cache-Control": "public, max-age=604800"
+          "Cache-Control": "public, max-age=604800",
+          "X-Content-Type-Options": "nosniff"
         }
       });
 
@@ -102,7 +103,11 @@ async function readInput(request) {
   if (request.method === "POST") {
     const contentType = request.headers.get("content-type") || "";
     if (contentType.includes("application/json")) {
-      return await request.json();
+      try {
+        return await request.json();
+      } catch (error) {
+        return {};
+      }
     }
   }
 
@@ -188,7 +193,9 @@ function json(data, status = 200) {
     status,
     headers: {
       ...corsHeaders(),
-      "Content-Type": "application/json; charset=utf-8"
+      "Content-Type": "application/json; charset=utf-8",
+      "Cache-Control": "no-store",
+      "X-Content-Type-Options": "nosniff"
     }
   });
 }
