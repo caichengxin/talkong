@@ -3301,39 +3301,42 @@ nav,.page,.hero-banner,.section,.site-footer,.mob-tab-bar{
 ═══════════════════════════════════════ -->
 <div id="page-events" class="page">
 
-  <div class="hero-banner events-photo-hero" style="min-height:340px;height:340px;">
-    <div class="events-hero-photo-bg" aria-hidden="true">
-      <div class="events-hero-stage" id="events-hero-stage">
-        <div class="events-hero-slide is-active">
-          <img class="events-hero-panel-fill" src="../assets/events/event-hero-01.webp" alt="" loading="eager" decoding="async">
-          <img class="events-hero-panel-main" src="../assets/events/event-hero-01.webp" alt="TalKong 活動照片 1" loading="eager" decoding="async">
-        </div>
-        <div class="events-hero-slide is-next">
-          <img class="events-hero-panel-fill" src="../assets/events/event-hero-02.webp" alt="" loading="eager" decoding="async">
-          <img class="events-hero-panel-main" src="../assets/events/event-hero-02.webp" alt="TalKong 活動照片 2" loading="eager" decoding="async">
-        </div>
-        <div class="events-hero-slide">
-          <img class="events-hero-panel-fill" src="../assets/events/event-hero-03.webp" alt="" loading="lazy" decoding="async">
-          <img class="events-hero-panel-main" src="../assets/events/event-hero-03.webp" alt="TalKong 活動照片 3" loading="lazy" decoding="async">
-        </div>
-        <div class="events-hero-slide">
-          <img class="events-hero-panel-fill" src="../assets/events/event-hero-04.webp" alt="" loading="lazy" decoding="async">
-          <img class="events-hero-panel-main" src="../assets/events/event-hero-04.webp" alt="TalKong 活動照片 4" loading="lazy" decoding="async">
-        </div>
-        <div class="events-hero-slide is-prev">
-          <img class="events-hero-panel-fill" src="../assets/events/event-hero-05.webp" alt="" loading="lazy" decoding="async">
-          <img class="events-hero-panel-main" src="../assets/events/event-hero-05.webp" alt="TalKong 活動照片 5" loading="lazy" decoding="async">
-        </div>
-      </div>
-      <div class="events-hero-dots" aria-hidden="true">
-        <span class="events-hero-dot is-active"></span>
-        <span class="events-hero-dot"></span>
-        <span class="events-hero-dot"></span>
-        <span class="events-hero-dot"></span>
-        <span class="events-hero-dot"></span>
+  <div class="hero-banner events-photo-hero events-marquee-hero" style="min-height:430px;height:auto;">
+    <div class="events-marquee-bg" aria-hidden="true">
+      <div class="events-marquee-track">
+        <figure class="events-marquee-card">
+          <img src="/assets/events/event-hero-01.webp" alt="TalKong 活動照片 1" loading="eager" decoding="async">
+        </figure>
+        <figure class="events-marquee-card">
+          <img src="/assets/events/event-hero-02.webp" alt="TalKong 活動照片 2" loading="eager" decoding="async">
+        </figure>
+        <figure class="events-marquee-card">
+          <img src="/assets/events/event-hero-03.webp" alt="TalKong 活動照片 3" loading="lazy" decoding="async">
+        </figure>
+        <figure class="events-marquee-card">
+          <img src="/assets/events/event-hero-04.webp" alt="TalKong 活動照片 4" loading="lazy" decoding="async">
+        </figure>
+        <figure class="events-marquee-card">
+          <img src="/assets/events/event-hero-05.webp" alt="TalKong 活動照片 5" loading="lazy" decoding="async">
+        </figure>
+        <figure class="events-marquee-card">
+          <img src="/assets/events/event-hero-01.webp" alt="TalKong 活動照片 1" loading="eager" decoding="async">
+        </figure>
+        <figure class="events-marquee-card">
+          <img src="/assets/events/event-hero-02.webp" alt="TalKong 活動照片 2" loading="eager" decoding="async">
+        </figure>
+        <figure class="events-marquee-card">
+          <img src="/assets/events/event-hero-03.webp" alt="TalKong 活動照片 3" loading="lazy" decoding="async">
+        </figure>
+        <figure class="events-marquee-card">
+          <img src="/assets/events/event-hero-04.webp" alt="TalKong 活動照片 4" loading="lazy" decoding="async">
+        </figure>
+        <figure class="events-marquee-card">
+          <img src="/assets/events/event-hero-05.webp" alt="TalKong 活動照片 5" loading="lazy" decoding="async">
+        </figure>
       </div>
     </div>
-    <div class="hero-inner">
+    <div class="hero-inner events-marquee-title">
       <div class="hero-badge" data-i18n="ev-badge">活動 · Events</div>
       <h1 class="hero-title" style="font-size:80px;" data-i18n="ev-title">主題粵語學習</h1>
       <p class="hero-subtitle" data-i18n="ev-sub">在真實香港情境中學習廣東話</p>
@@ -5644,4 +5647,130 @@ document.addEventListener('click', function(e){
   5%,18%{background:#fff8e8;transform:scale(1.18);box-shadow:0 0 0 4px rgba(255,248,232,.10);}
 }
 @media(max-width:640px){#page-events .hero-banner.events-photo-hero{min-height:350px!important;padding:54px 14px 54px!important;}}
+</style>
+
+
+<style id="talkong-events-infinite-marquee-final-20260610">
+/* 活動頁照片 Hero 最終版：清晰人物 + 無限橫向循環輪播 */
+#page-events .hero-banner.events-photo-hero.events-marquee-hero{
+  position:relative!important;
+  min-height:430px!important;
+  height:auto!important;
+  padding:58px 0 56px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+  background:linear-gradient(115deg,#251b16 0%,#6a3725 52%,#7c5a24 100%)!important;
+  border-bottom:1px solid rgba(200,54,43,.22)!important;
+}
+#page-events .hero-banner.events-photo-hero.events-marquee-hero::after{
+  content:''!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:2!important;
+  pointer-events:none!important;
+  opacity:1!important;
+  background:
+    linear-gradient(90deg,rgba(26,20,16,.28),rgba(200,54,43,.08) 48%,rgba(184,135,58,.15)),
+    repeating-linear-gradient(45deg,rgba(255,248,232,.025) 0 1px,transparent 1px 42px)!important;
+}
+#page-events .events-marquee-bg{
+  position:absolute!important;
+  inset:0!important;
+  z-index:1!important;
+  display:flex!important;
+  align-items:center!important;
+  overflow:hidden!important;
+}
+#page-events .events-marquee-track{
+  display:flex!important;
+  align-items:center!important;
+  gap:26px!important;
+  width:max-content!important;
+  padding:0 26px!important;
+  animation:talkongEventsMarquee 54s linear infinite!important;
+  will-change:transform!important;
+}
+#page-events .events-marquee-track:hover{animation-play-state:paused!important;}
+#page-events .events-marquee-card{
+  flex:0 0 auto!important;
+  width:clamp(330px,34vw,560px)!important;
+  height:clamp(220px,23vw,340px)!important;
+  margin:0!important;
+  border-radius:22px!important;
+  overflow:hidden!important;
+  background:rgba(255,248,232,.08)!important;
+  border:1px solid rgba(255,248,232,.20)!important;
+  box-shadow:0 22px 48px rgba(0,0,0,.24)!important;
+}
+#page-events .events-marquee-card img{
+  width:100%!important;
+  height:100%!important;
+  display:block!important;
+  object-fit:cover!important;
+  object-position:center center!important;
+  filter:none!important;
+  opacity:1!important;
+  transform:none!important;
+}
+#page-events .events-photo-hero .events-marquee-title{
+  position:relative!important;
+  z-index:5!important;
+  width:min(760px,calc(100% - 48px))!important;
+  max-width:760px!important;
+  margin:0 auto!important;
+  padding:28px 36px 30px!important;
+  text-align:center!important;
+  border-radius:18px!important;
+  border:1px solid rgba(255,248,232,.28)!important;
+  background:linear-gradient(135deg,rgba(34,24,18,.70),rgba(154,36,24,.42))!important;
+  box-shadow:0 22px 56px rgba(0,0,0,.26),inset 0 1px 0 rgba(255,248,232,.12)!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+#page-events .events-photo-hero .hero-badge{
+  margin-left:auto!important;
+  margin-right:auto!important;
+  color:rgba(255,248,232,.88)!important;
+  border-color:rgba(255,248,232,.40)!important;
+  background:rgba(255,248,232,.14)!important;
+}
+#page-events .events-photo-hero .hero-title{
+  color:#fff8e8!important;
+  font-size:clamp(48px,5.4vw,78px)!important;
+  line-height:1.06!important;
+  text-shadow:0 3px 14px rgba(0,0,0,.34)!important;
+}
+#page-events .events-photo-hero .hero-subtitle{
+  color:rgba(255,248,232,.94)!important;
+  text-shadow:0 2px 9px rgba(0,0,0,.28)!important;
+}
+#page-events .events-hero-photo-bg,
+#page-events .events-hero-stage,
+#page-events .events-hero-dots,
+#page-events .events-hero-slide{display:none!important;}
+@keyframes talkongEventsMarquee{
+  0%{transform:translate3d(0,0,0);}
+  100%{transform:translate3d(calc(-50% - 13px),0,0);}
+}
+@media(max-width:760px){
+  #page-events .hero-banner.events-photo-hero.events-marquee-hero{
+    min-height:360px!important;
+    padding:48px 0 48px!important;
+  }
+  #page-events .events-marquee-track{gap:18px!important;padding:0 18px!important;animation-duration:46s!important;}
+  #page-events .events-marquee-card{width:300px!important;height:205px!important;border-radius:16px!important;}
+  #page-events .events-photo-hero .events-marquee-title{
+    width:calc(100% - 32px)!important;
+    padding:22px 18px 24px!important;
+    border-radius:14px!important;
+    background:linear-gradient(135deg,rgba(34,24,18,.72),rgba(154,36,24,.46))!important;
+  }
+  #page-events .events-photo-hero .hero-title{font-size:clamp(38px,11vw,52px)!important;}
+  #page-events .events-photo-hero .hero-subtitle{font-size:13px!important;line-height:1.65!important;}
+}
+@media(prefers-reduced-motion:reduce){
+  #page-events .events-marquee-track{animation:none!important;}
+}
 </style>
