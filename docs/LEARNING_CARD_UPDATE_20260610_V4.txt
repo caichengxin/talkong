@@ -1,0 +1,9 @@
+TalKong learning card mobile fix v4
+
+Changes:
+- Removed the duplicate note button from the flipped/back side of vocabulary cards.
+- Added CSS guard so note buttons/popovers never show on the back side, including mobile layout.
+- Improved pronunciation fallback on mobile: the page now tries the site /api/tts endpoint first, then falls back to browser Web Speech with zh-HK even when the mobile browser does not list voices in advance.
+- Removed unreliable public translate_tts media URLs from the client fallback path because they often fail silently on mobile browsers.
+
+Deploy by uploading the contents of talkong-main/ to the site root.

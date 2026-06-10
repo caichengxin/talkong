@@ -2549,6 +2549,9 @@ nav,.page,.hero-banner,.section,.site-footer,.mob-tab-bar{
 #page-vocab .vc-note-btn{position:absolute;right:10px;bottom:10px;z-index:8;min-width:30px;height:30px;border-radius:999px;border:1px solid rgba(200,54,43,.42);background:rgba(255,248,232,.94);color:var(--hk-red);font-family:var(--brush);font-size:14px;font-weight:900;line-height:1;display:flex;align-items:center;justify-content:center;padding:0 8px;box-shadow:0 3px 0 rgba(200,54,43,.12);cursor:pointer;transition:transform .18s,box-shadow .18s,background .18s;}
 #page-vocab .vc-back .vc-note-btn{background:rgba(255,248,232,.16);color:#fff8e8;border-color:rgba(255,248,232,.48);box-shadow:0 3px 0 rgba(0,0,0,.12);}
 #page-vocab .vc-note-btn:hover,#page-vocab .vc-note-btn:focus-visible{transform:translateY(-1px);box-shadow:0 5px 0 rgba(200,54,43,.16);outline:none;}
+
+/* v4: note button only appears on the question/front side */
+#page-vocab .vc-back .vc-note-btn,#page-vocab .vc-back .vc-note-pop{display:none!important;}
 #page-vocab .vc-note-pop{position:absolute;left:10px;right:10px;bottom:48px;z-index:20;display:none;max-height:136px;overflow:auto;padding:12px 13px;border-radius:12px;text-align:left;background:#fffdf3;color:var(--dark);border:1px solid rgba(200,54,43,.28);box-shadow:0 12px 28px rgba(26,20,16,.18);font-family:var(--chinese);}
 #page-vocab .vc-note-pop.show{display:block;}
 #page-vocab .vc-note-title{display:flex;align-items:center;gap:6px;margin-bottom:6px;font-family:var(--brush);font-size:15px;color:var(--hk-red);font-weight:900;}
@@ -4159,7 +4162,6 @@ function buildVocabGrid(words){
           <div class="vb-zh-tw" data-role="back-tw">${escHtml(w.tw)}</div>
           <div class="vb-zh-cn" data-role="back-cn">${escHtml(w.cn)}</div>
           <span class="vb-tap" data-role="hint-back">${hints.back}</span>
-          ${noteBlock}
         </div>
       </div>
     </div>`;
@@ -4306,7 +4308,10 @@ function _pickVoice(lang){
       if((v.lang || '').toLowerCase() === 'zh-hk') score += 10;
       return { v, score };
     }).sort((a,b)=>b.score-a.score);
-    return ranked[0] && ranked[0].score > 0 ? ranked[0].v : null;
+    if(ranked[0] && ranked[0].score > 0) return ranked[0].v;
+    return voices.find(v => (v.lang||'').toLowerCase() === 'zh-hk')
+      || voices.find(v => /zh[-_]?hant|zh[-_]?tw|zh[-_]?cn|zh/.test((v.lang||'').toLowerCase() + ' ' + (v.name||'').toLowerCase()))
+      || null;
   }
 
   return voices.find(v => (v.lang||'').toLowerCase() === lc)
@@ -4319,7 +4324,7 @@ function _synthSpeak(text, lang, btn, token){
   const speakNow = () => {
     if(token !== _ttsToken) return;
     const u = new SpeechSynthesisUtterance(text);
-    u.lang = (lang === 'zh-HK') ? 'yue-HK' : lang;
+    u.lang = (lang === 'zh-HK') ? 'zh-HK' : lang;
     u.rate = 0.84;
     u.pitch = 1;
     const voice = _pickVoice(lang);
@@ -4357,26 +4362,15 @@ function _buildTTSUrls(text, lang){
   const customEndpoint = window.TALKONG_TTS_ENDPOINT || '';
   const urls = [];
 
+  // v4: use the site-owned Cloudflare /api/tts endpoint only.
+  // Public translate_tts URLs are unreliable on mobile and can silently block playback.
   if(customEndpoint){
     const endpointLang = (lang === 'zh-HK') ? 'yue-HK' : ((lang === 'zh-CN') ? 'cmn-CN' : (lang || 'en-US'));
     urls.push(`${customEndpoint}${customEndpoint.includes('?') ? '&' : '?'}lang=${encodeURIComponent(endpointLang)}&text=${q}`);
   }
 
-  if(lang === 'zh-HK'){
-    urls.push(
-      `https://translate.google.com.hk/translate_tts?ie=UTF-8&client=tw-ob&tl=yue&q=${q}&ttsspeed=0.82`,
-      `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=yue&q=${q}&ttsspeed=0.82`,
-      `https://translate.googleapis.com/translate_tts?ie=UTF-8&client=gtx&tl=yue&q=${q}`,
-      `https://translate.google.com.hk/translate_tts?ie=UTF-8&client=tw-ob&tl=zh-HK&q=${q}&ttsspeed=0.82`,
-      `https://translate.googleapis.com/translate_tts?ie=UTF-8&client=gtx&tl=zh-HK&q=${q}`
-    );
-  }else{
-    const shortLang = (lang || 'en-US').split('-')[0];
-    urls.push(`https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=${shortLang}&q=${q}&ttsspeed=0.9`);
-  }
   return urls;
 }
-
 function _tryRemoteTTS(text, lang, btn, token, onFail){
   const urls = _buildTTSUrls(text, lang);
   const audio = _getTtsAudioEl();
@@ -4436,7 +4430,7 @@ function _tryRemoteTTS(text, lang, btn, token, onFail){
       audio.onerror = fail;
       audio.onstalled = fail;
       audio.onabort = fail;
-      startTimer = setTimeout(fail, 3200);
+      startTimer = setTimeout(fail, 1600);
       const playPromise = audio.play();
       if(playPromise && playPromise.catch) playPromise.catch(fail);
     }catch(e){
@@ -4452,9 +4446,9 @@ function _doSpeak(text, lang, btn){
 
   if(lang === 'zh-HK'){
     _tryRemoteTTS(text, 'zh-HK', btn, token, () => {
-      const nativeVoice = _pickVoice('zh-HK');
-      if(nativeVoice) _synthSpeak(text, 'zh-HK', btn, token);
-      else _finishSpeak(btn);
+      // Always try browser Web Speech as a fallback. On iOS/Android the voice list may be empty
+      // until the first user-initiated speech call, so do not require _pickVoice() to succeed.
+      _synthSpeak(text, 'zh-HK', btn, token);
     });
     return;
   }
