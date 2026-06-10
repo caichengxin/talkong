@@ -2356,6 +2356,13 @@ nav,.page,.hero-banner,.section,.site-footer,.mob-tab-bar{
 #page-vocab .vc.has-note .vc-tap,#page-vocab .vc.has-note .vb-tap{left:50%;transform:translateX(-50%);max-width:calc(100% - 92px);white-space:nowrap;}
 @media(max-width:640px){#page-vocab .vocab-section{padding-bottom:92px!important;}#page-vocab .vc{height:206px!important;}#page-vocab .vc-front,#page-vocab .vc-back{padding-top:32px!important;padding-bottom:40px!important;border-radius:12px!important;}#page-vocab .vc-note-btn{right:8px;bottom:8px;min-width:28px;height:28px;font-size:13px;padding:0 7px;}#page-vocab .vc-note-pop{left:8px;right:8px;bottom:42px;max-height:124px;padding:10px;}#page-vocab .vc-note-text{font-size:12px;line-height:1.55;}#page-vocab .vocab-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}}
 @media(max-width:390px){#page-vocab .vocab-grid{grid-template-columns:1fr!important;max-width:310px;margin-left:auto;margin-right:auto;}#page-vocab .vc{height:198px!important;}}
+
+/* v3 note readability fix: force note body visible and use a taller readable popover */
+#page-vocab .vc-note-pop{max-height:172px!important;overflow-y:auto!important;scrollbar-gutter:stable;background:#fffdf3!important;}
+#page-vocab .vc-note-text{display:block!important;visibility:visible!important;opacity:1!important;color:#28201a!important;font-size:13.5px!important;line-height:1.72!important;font-weight:500!important;min-height:42px!important;padding-top:2px!important;}
+#page-vocab .vc-note-text:empty::after{content:'此卡暫未提供注釋';color:#8d5b51;}
+@media(max-width:640px){#page-vocab .vc-note-pop{max-height:158px!important;}#page-vocab .vc-note-text{font-size:13px!important;line-height:1.66!important;}}
+
 </style>
 
 </head>
@@ -3803,9 +3810,33 @@ let filteredVocab = [...VOCAB];
 let currentCat = 'all';
 let currentLang = 'zh-TW';
 
+
+const NOTE_FALLBACKS = {
+  '二': {
+    tw: '「二」主要表示數字本身，常見於數學、電話號碼、日期、年份及較大的數字，例如：一加一等於二、六月二日、二零二六年、二十、二百。',
+    en: '二 (ji6) is mainly used for the numeral itself, such as in maths, phone numbers, dates, years, and larger numbers.'
+  },
+  '兩': {
+    tw: '「兩」通常用於表示數量，放在量詞或名詞前面，例如：兩個人、兩本書、兩隻貓。日常口語中，說數量時多用「兩」而不是「二」。',
+    en: '兩 (loeng5) is more common before measure words or nouns when talking about quantity, such as “two people” or “two books.”'
+  },
+  '两': {
+    tw: '「兩」通常用於表示數量，放在量詞或名詞前面，例如：兩個人、兩本書、兩隻貓。日常口語中，說數量時多用「兩」而不是「二」。',
+    en: '兩 (loeng5) is more common before measure words or nouns when talking about quantity, such as “two people” or “two books.”'
+  },
+  '幸會': {
+    tw: '「幸會」常見於商務會面、正式介紹、演講、面試或書信等較正式場合，意思是「很高興認識你」。日常輕鬆場合可說「你好」或「好高興識到你」。',
+    en: '幸會 is commonly used in formal situations, such as business meetings, formal introductions, speeches, job interviews, and formal correspondence.'
+  },
+  '幸会': {
+    tw: '「幸會」常見於商務會面、正式介紹、演講、面試或書信等較正式場合，意思是「很高興認識你」。日常輕鬆場合可說「你好」或「好高興識到你」。',
+    en: '幸會 is commonly used in formal situations, such as business meetings, formal introductions, speeches, job interviews, and formal correspondence.'
+  }
+};
+
+
 /* ── helpers ── */
 function lk(lang){ return lang==='zh-CN'?'cn': lang==='en'?'en':'tw'; }
-
 
 function escHtml(s){
   return String(s == null ? '' : s).replace(/[&<>\"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
@@ -3815,11 +3846,42 @@ function noteLabel(){
   const l = lk(currentLang);
   return l==='en' ? {title:'Note', btn:'Note'} : (l==='cn' ? {title:'注释', btn:'释'} : {title:'註釋', btn:'註'});
 }
+function normalizeNoteValue(value){
+  return String(value == null ? '' : value).replace(/\s+/g, ' ').trim();
+}
+function getWordNoteObjectFromKeys(keys){
+  for(const key of keys){
+    const k = normalizeNoteValue(key);
+    if(k && NOTE_FALLBACKS[k]) return NOTE_FALLBACKS[k];
+  }
+  return null;
+}
 function getCardNoteFromData(card){
+  if(!card) return '';
   const l = lk(currentLang);
-  const zh = (card.dataset.noteTw || '').trim();
-  const en = (card.dataset.noteEn || '').trim();
+  const directZh = normalizeNoteValue(card.getAttribute('data-note-tw') || card.dataset.noteTw || '');
+  const directEn = normalizeNoteValue(card.getAttribute('data-note-en') || card.dataset.noteEn || '');
+  const obj = getWordNoteObjectFromKeys([card.dataset.tw, card.dataset.cn, card.dataset.en]);
+  const zh = directZh || (obj && obj.tw) || '';
+  const en = directEn || (obj && obj.en) || '';
   return l==='en' ? (en || zh) : (zh || en);
+}
+function getWordNote(w){
+  const l = lk(currentLang);
+  const obj = getWordNoteObjectFromKeys([w && w.tw, w && w.cn, w && w.en]);
+  const zh = normalizeNoteValue((w && w.noteTw) || '') || (obj && obj.tw) || '';
+  const en = normalizeNoteValue((w && w.noteEn) || '') || (obj && obj.en) || '';
+  return { zh, en, text: l==='en' ? (en || zh) : (zh || en) };
+}
+function fillNotePopup(pop, text){
+  if(!pop) return;
+  const textEl = pop.querySelector('[data-role="note-text"]');
+  const clean = normalizeNoteValue(text);
+  if(textEl){
+    textEl.textContent = clean || '此卡暫未提供注釋';
+    textEl.style.display = 'block';
+    textEl.style.visibility = 'visible';
+  }
 }
 function toggleCardNote(btn){
   const face = btn.closest('.vc-front,.vc-back');
@@ -3828,9 +3890,8 @@ function toggleCardNote(btn){
   const pop = face.querySelector('.vc-note-pop');
   if(!pop) return;
   document.querySelectorAll('#vocab-grid .vc-note-pop.show').forEach(p => { if(p!==pop) p.classList.remove('show'); });
-  const text = (btn.getAttribute('data-note') || getCardNoteFromData(card) || '').trim();
-  const textEl = pop.querySelector('[data-role="note-text"]');
-  if(textEl) textEl.textContent = text;
+  const text = normalizeNoteValue(btn.getAttribute('data-note')) || getCardNoteFromData(card);
+  fillNotePopup(pop, text);
   pop.classList.toggle('show');
 }
 function closeCardNote(btn){
@@ -3841,6 +3902,7 @@ document.addEventListener('click', function(e){
   if(e.target.closest && e.target.closest('#vocab-grid .vc-note-pop,#vocab-grid .vc-note-btn')) return;
   document.querySelectorAll('#vocab-grid .vc-note-pop.show').forEach(p => p.classList.remove('show'));
 }, true);
+
 
 /* ── build grid (only called once or on filter/shuffle) ── */
 function buildVocabGrid(words){
@@ -3861,10 +3923,11 @@ function buildVocabGrid(words){
     const sub   = l==='en' ? w.tw  : l==='cn' ? w.tw : w.cn;
     const catLbl = CAT_LABELS[l][w.cat] || w.cat;
     const hints  = FLIP_HINTS[l];
-    const noteZh = (w.noteTw || '').trim();
-    const noteEn = (w.noteEn || '').trim();
-    const hasNote = !!(noteZh || noteEn);
-    const note = l==='en' ? (noteEn || noteZh) : (noteZh || noteEn);
+    const noteInfo = getWordNote(w);
+    const noteZh = noteInfo.zh;
+    const noteEn = noteInfo.en;
+    const note = noteInfo.text;
+    const hasNote = !!note;
     const nl = noteLabel();
     const noteBlock = hasNote ? `<button class="vc-note-btn" type="button" data-note="${escAttr(note)}" onclick="event.stopPropagation();toggleCardNote(this)" aria-label="${escAttr(nl.title)}" title="${escAttr(nl.title)}">${nl.btn}</button>
           <div class="vc-note-pop" role="dialog" aria-label="${escAttr(nl.title)}">
