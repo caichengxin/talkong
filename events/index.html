@@ -2543,16 +2543,14 @@ nav,.page,.hero-banner,.section,.site-footer,.mob-tab-bar{
 
 
 <style id="talkong-learning-card-notes-20260610-v2">
-#page-vocab .vc{height:228px;touch-action:manipulation;}
+#page-vocab .vc{height:228px;touch-action:manipulation;position:relative;}
 #page-vocab .vc-front,#page-vocab .vc-back{overflow:hidden;}
 #page-vocab .vc-front:hover{transform:none;}
-#page-vocab .vc-note-btn{position:absolute;right:10px;bottom:10px;z-index:8;min-width:30px;height:30px;border-radius:999px;border:1px solid rgba(200,54,43,.42);background:rgba(255,248,232,.94);color:var(--hk-red);font-family:var(--brush);font-size:14px;font-weight:900;line-height:1;display:flex;align-items:center;justify-content:center;padding:0 8px;box-shadow:0 3px 0 rgba(200,54,43,.12);cursor:pointer;transition:transform .18s,box-shadow .18s,background .18s;}
-#page-vocab .vc-back .vc-note-btn{background:rgba(255,248,232,.16);color:#fff8e8;border-color:rgba(255,248,232,.48);box-shadow:0 3px 0 rgba(0,0,0,.12);}
-#page-vocab .vc-note-btn:hover,#page-vocab .vc-note-btn:focus-visible{transform:translateY(-1px);box-shadow:0 5px 0 rgba(200,54,43,.16);outline:none;}
-
-/* v4: note button only appears on the question/front side */
-#page-vocab .vc-back .vc-note-btn,#page-vocab .vc-back .vc-note-pop{display:none!important;}
-#page-vocab .vc-note-pop{position:absolute;left:10px;right:10px;bottom:48px;z-index:20;display:none;max-height:136px;overflow:auto;padding:12px 13px;border-radius:12px;text-align:left;background:#fffdf3;color:var(--dark);border:1px solid rgba(200,54,43,.28);box-shadow:0 12px 28px rgba(26,20,16,.18);font-family:var(--chinese);}
+/* v5: note control belongs to the card shell, not to front/back faces. It stays as one fixed button at bottom-right whether flipped or not. */
+#page-vocab .vc > .vc-note-btn{position:absolute;right:10px;bottom:10px;z-index:40;min-width:30px;height:30px;border-radius:999px;border:1px solid rgba(200,54,43,.42);background:rgba(255,248,232,.94);color:var(--hk-red);font-family:var(--brush);font-size:14px;font-weight:900;line-height:1;display:flex;align-items:center;justify-content:center;padding:0 8px;box-shadow:0 3px 0 rgba(200,54,43,.12);cursor:pointer;transition:transform .18s,box-shadow .18s,background .18s;}
+#page-vocab .vc.flipped > .vc-note-btn{background:rgba(255,248,232,.94);color:var(--hk-red);border-color:rgba(200,54,43,.42);box-shadow:0 3px 0 rgba(0,0,0,.12);}
+#page-vocab .vc > .vc-note-btn:hover,#page-vocab .vc > .vc-note-btn:focus-visible{transform:translateY(-1px);box-shadow:0 5px 0 rgba(200,54,43,.16);outline:none;}
+#page-vocab .vc > .vc-note-pop{position:absolute;left:10px;right:10px;bottom:48px;z-index:39;display:none;max-height:136px;overflow:auto;padding:12px 13px;border-radius:12px;text-align:left;background:#fffdf3;color:var(--dark);border:1px solid rgba(200,54,43,.28);box-shadow:0 12px 28px rgba(26,20,16,.18);font-family:var(--chinese);}
 #page-vocab .vc-note-pop.show{display:block;}
 #page-vocab .vc-note-title{display:flex;align-items:center;gap:6px;margin-bottom:6px;font-family:var(--brush);font-size:15px;color:var(--hk-red);font-weight:900;}
 #page-vocab .vc-note-text{font-size:12.5px;line-height:1.62;white-space:pre-line;color:var(--dark2);}
@@ -4089,10 +4087,9 @@ function fillNotePopup(pop, text){
   }
 }
 function toggleCardNote(btn){
-  const face = btn.closest('.vc-front,.vc-back');
   const card = btn.closest('.vc');
-  if(!face || !card) return;
-  const pop = face.querySelector('.vc-note-pop');
+  if(!card) return;
+  const pop = card.querySelector(':scope > .vc-note-pop') || card.querySelector('.vc-note-pop');
   if(!pop) return;
   document.querySelectorAll('#vocab-grid .vc-note-pop.show').forEach(p => { if(p!==pop) p.classList.remove('show'); });
   const text = normalizeNoteValue(btn.getAttribute('data-note')) || getCardNoteFromData(card);
@@ -4152,7 +4149,6 @@ function buildVocabGrid(words){
           <div class="vc-zh-tw" data-role="main">${escHtml(main)}</div>
           <div class="vc-zh-cn" data-role="sub">${escHtml(sub)}</div>
           <span class="vc-tap" data-role="hint-front">${hints.front}</span>
-          ${noteBlock}
         </div>
         <div class="vc-back">
           <button class="vb-speak" onclick="event.stopPropagation();speakWord(this,'back')" title="朗讀" aria-label="朗讀這個粵語詞語">🔊</button>
@@ -4164,6 +4160,7 @@ function buildVocabGrid(words){
           <span class="vb-tap" data-role="hint-back">${hints.back}</span>
         </div>
       </div>
+      ${noteBlock}
     </div>`;
   }).join('');
 
@@ -4441,13 +4438,22 @@ function _tryRemoteTTS(text, lang, btn, token, onFail){
   tryNext();
 }
 
+function _isMobileTTSContext(){
+  return /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent || '');
+}
+
 function _doSpeak(text, lang, btn){
   const token = ++_ttsToken;
 
+  // v5: on mobile, Web Speech must be triggered immediately inside the tap event.
+  // Waiting for remote audio to fail can lose the user gesture and make pronunciation seem broken.
+  if(_isMobileTTSContext()){
+    _synthSpeak(text, lang === 'zh-HK' ? 'zh-HK' : lang, btn, token);
+    return;
+  }
+
   if(lang === 'zh-HK'){
     _tryRemoteTTS(text, 'zh-HK', btn, token, () => {
-      // Always try browser Web Speech as a fallback. On iOS/Android the voice list may be empty
-      // until the first user-initiated speech call, so do not require _pickVoice() to succeed.
       _synthSpeak(text, 'zh-HK', btn, token);
     });
     return;
