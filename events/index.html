@@ -2568,6 +2568,121 @@ nav,.page,.hero-banner,.section,.site-footer,.mob-tab-bar{
 
 </style>
 
+
+<style id="talkong-events-photo-hero-20260610">
+/* 活動頁照片滾動標題背景：五張活動照片 + 統一暖色朦朧遮罩 */
+#page-events .events-photo-hero{
+  background:#1a1410!important;
+  min-height:430px!important;
+  height:auto!important;
+  padding:78px 20px 68px!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+  border-bottom:1px solid rgba(200,54,43,.22)!important;
+}
+#page-events .events-hero-photo-bg{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  overflow:hidden;
+  background:#1a1410;
+}
+#page-events .events-hero-photo-bg::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:2;
+  background:
+    linear-gradient(90deg,rgba(26,20,16,.76) 0%,rgba(200,54,43,.45) 48%,rgba(184,135,58,.50) 100%),
+    radial-gradient(circle at 18% 30%,rgba(255,248,232,.22) 0 180px,transparent 260px),
+    radial-gradient(circle at 80% 18%,rgba(200,54,43,.28) 0 210px,transparent 310px);
+  backdrop-filter:blur(2px);
+  pointer-events:none;
+}
+#page-events .events-hero-photo-bg::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:3;
+  background:
+    linear-gradient(180deg,rgba(26,20,16,.16) 0%,rgba(26,20,16,.42) 100%),
+    repeating-linear-gradient(45deg,rgba(255,248,232,.045) 0 1px,transparent 1px 34px);
+  pointer-events:none;
+}
+#page-events .events-hero-slide{
+  position:absolute;
+  inset:-7%;
+  width:114%;
+  height:114%;
+  object-fit:cover;
+  opacity:0;
+  filter:saturate(.94) contrast(.98) brightness(.86);
+  transform:scale(1.03);
+  animation:eventsHeroFade 30s linear infinite;
+  will-change:opacity,transform;
+}
+#page-events .events-hero-slide:nth-child(1){animation-delay:0s;}
+#page-events .events-hero-slide:nth-child(2){animation-delay:6s;}
+#page-events .events-hero-slide:nth-child(3){animation-delay:12s;}
+#page-events .events-hero-slide:nth-child(4){animation-delay:18s;}
+#page-events .events-hero-slide:nth-child(5){animation-delay:24s;}
+@keyframes eventsHeroFade{
+  0%{opacity:0;transform:scale(1.03) translateX(0);}
+  5%{opacity:1;}
+  18%{opacity:1;}
+  23%{opacity:0;}
+  100%{opacity:0;transform:scale(1.12) translateX(-1.5%);}
+}
+#page-events .events-photo-hero .hero-inner{
+  z-index:4!important;
+  max-width:900px!important;
+  padding:34px 42px 36px!important;
+  margin:0 auto!important;
+  border:1px solid rgba(255,248,232,.28);
+  border-radius:18px;
+  background:linear-gradient(135deg,rgba(26,20,16,.48),rgba(200,54,43,.26));
+  box-shadow:0 28px 70px rgba(26,20,16,.32),inset 0 1px 0 rgba(255,248,232,.16);
+  backdrop-filter:blur(7px);
+}
+#page-events .events-photo-hero .hero-badge{
+  background:rgba(255,248,232,.12);
+  color:rgba(255,248,232,.86);
+  border-color:rgba(255,248,232,.42);
+}
+#page-events .events-photo-hero .hero-title{
+  color:#fff8e8!important;
+  text-shadow:0 3px 18px rgba(0,0,0,.34);
+}
+#page-events .events-photo-hero .hero-subtitle{
+  color:rgba(255,248,232,.88)!important;
+  text-shadow:0 2px 10px rgba(0,0,0,.30);
+}
+@media(max-width:640px){
+  #page-events .events-photo-hero{
+    min-height:330px!important;
+    padding:54px 14px 46px!important;
+  }
+  #page-events .events-hero-slide{
+    inset:-10%;
+    width:120%;
+    height:120%;
+  }
+  #page-events .events-photo-hero .hero-inner{
+    width:100%!important;
+    padding:24px 18px 26px!important;
+    border-radius:14px;
+    background:linear-gradient(135deg,rgba(26,20,16,.56),rgba(200,54,43,.30));
+  }
+  #page-events .events-photo-hero .hero-title{font-size:46px!important;line-height:1.12!important;}
+  #page-events .events-photo-hero .hero-subtitle{font-size:14px!important;letter-spacing:.08em!important;line-height:1.7!important;}
+}
+@media(prefers-reduced-motion:reduce){
+  #page-events .events-hero-slide{animation:none;opacity:0;}
+  #page-events .events-hero-slide:first-child{opacity:1;}
+}
+</style>
+
 </head>
 <body>
 
@@ -3122,7 +3237,14 @@ nav,.page,.hero-banner,.section,.site-footer,.mob-tab-bar{
 ═══════════════════════════════════════ -->
 <div id="page-events" class="page">
 
-  <div class="hero-banner" style="min-height:340px;height:340px;">
+  <div class="hero-banner events-photo-hero" style="min-height:340px;height:340px;">
+    <div class="events-hero-photo-bg" aria-hidden="true">
+      <img class="events-hero-slide" src="/assets/events/event-hero-01.webp" alt="" loading="eager" decoding="async">
+      <img class="events-hero-slide" src="/assets/events/event-hero-02.webp" alt="" loading="eager" decoding="async">
+      <img class="events-hero-slide" src="/assets/events/event-hero-03.webp" alt="" loading="lazy" decoding="async">
+      <img class="events-hero-slide" src="/assets/events/event-hero-04.webp" alt="" loading="lazy" decoding="async">
+      <img class="events-hero-slide" src="/assets/events/event-hero-05.webp" alt="" loading="lazy" decoding="async">
+    </div>
     <div class="hero-inner">
       <div class="hero-badge" data-i18n="ev-badge">活動 · Events</div>
       <h1 class="hero-title" style="font-size:80px;" data-i18n="ev-title">主題粵語學習</h1>
