@@ -492,6 +492,31 @@ nav.scrolled{box-shadow:0 2px 28px rgba(24,18,10,.08);}
 .split-photo-caption::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--hk-red-l);box-shadow:0 0 12px rgba(255,110,80,.6);flex:0 0 auto;}
 .split-photo.s1-photo img{object-position:center 42%;}
 .split-photo.s2-photo img{object-position:center center;}
+
+/* Home culture Q&A flip cards */
+.culture-qa-section{padding-top:78px;padding-bottom:76px;}
+.culture-qa-head{text-align:center;max-width:760px;margin:0 auto 30px;}
+.culture-qa-head .eyebrow{margin-bottom:12px;}
+.culture-qa-head h3{font-family:var(--brush);font-size:36px;line-height:1.2;color:var(--tk-green-dark);letter-spacing:.03em;margin-bottom:12px;}
+.culture-qa-head p{font-family:var(--chinese);font-size:15px;line-height:1.9;color:var(--tk-brown);}
+.culture-card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:30px;}
+.culture-flip-card{appearance:none;border:0;background:transparent;padding:0;min-height:310px;perspective:1200px;cursor:pointer;text-align:left;color:inherit;font:inherit;display:block;width:100%;}
+.culture-flip-card:focus-visible{outline:3px solid rgba(216,58,49,.48);outline-offset:7px;border-radius:18px;}
+.culture-flip-inner{display:block;position:relative;width:100%;height:100%;min-height:310px;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;transition:transform .72s cubic-bezier(.2,.72,.18,1);}
+.culture-flip-card.is-flipped .culture-flip-inner{transform:rotateY(180deg);}
+.culture-card-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;border:1px solid rgba(216,58,49,.18);box-shadow:10px 10px 0 rgba(216,58,49,.08);overflow:hidden;}
+.culture-card-front{display:flex;flex-direction:column;justify-content:space-between;padding:24px;background:linear-gradient(135deg,rgba(255,248,232,.98),rgba(224,236,181,.58));}
+.culture-card-front::before{content:'問';position:absolute;right:-8px;bottom:-26px;font-family:var(--brush);font-size:150px;line-height:1;color:rgba(20,138,83,.08);pointer-events:none;}
+.culture-card-num{font-family:var(--hand);font-size:18px;letter-spacing:.06em;color:var(--tk-red);}
+.culture-card-q{position:relative;z-index:1;font-family:var(--brush);font-size:28px;line-height:1.28;color:var(--tk-green-dark);letter-spacing:.02em;margin:18px 0;}
+.culture-card-hint{position:relative;z-index:1;display:inline-flex;align-items:center;gap:8px;width:max-content;max-width:100%;font-family:var(--chinese);font-size:13px;font-weight:700;color:var(--tk-brown);padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.54);border:1px dashed rgba(216,58,49,.25);}
+.culture-card-back{transform:rotateY(180deg);padding:22px 22px 24px;background:linear-gradient(135deg,rgba(45,94,62,.96),rgba(28,61,42,.96));color:#fff8e8;display:flex;flex-direction:column;}
+.culture-card-back::before{content:'答';position:absolute;right:-10px;bottom:-28px;font-family:var(--brush);font-size:150px;line-height:1;color:rgba(255,248,232,.07);pointer-events:none;}
+.culture-card-back h4{position:relative;z-index:1;font-family:var(--brush);font-size:24px;line-height:1.25;letter-spacing:.02em;margin-bottom:14px;color:#fff8e8;}
+.culture-card-back p{position:relative;z-index:1;font-family:var(--chinese);font-size:14px;line-height:1.78;color:rgba(255,248,232,.88);overflow:auto;padding-right:4px;margin-bottom:14px;}
+.culture-card-return{position:relative;z-index:1;display:inline-flex;align-items:center;justify-content:center;width:max-content;max-width:100%;margin-top:auto;font-family:var(--chinese);font-size:13px;font-weight:700;color:#fff8e8;padding:8px 12px;border-radius:999px;background:rgba(255,248,232,.14);border:1px dashed rgba(255,248,232,.34);}
+@media (max-width:980px){.culture-card-grid{grid-template-columns:1fr;gap:18px;max-width:620px;margin-left:auto;margin-right:auto;}.culture-flip-card,.culture-flip-inner{min-height:250px;}.culture-card-q{font-size:26px;}.culture-qa-section{padding-top:58px;padding-bottom:58px;}}
+@media (max-width:560px){.culture-qa-head{text-align:left;}.culture-qa-head h3{font-size:30px;}.culture-flip-card,.culture-flip-inner{min-height:292px;}.culture-card-front{padding:20px;}.culture-card-back{padding:20px;}.culture-card-q{font-size:24px;}.culture-card-back p{font-size:13.5px;line-height:1.7;}}
 .split-visual svg.illus{width:90%;height:auto;position:relative;z-index:1;}
 .split-visual-label{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);font-family:var(--hand);font-size:18px;letter-spacing:.05em;color:rgba(255,200,150,.6);z-index:2;white-space:nowrap;}
 
@@ -2892,6 +2917,59 @@ nav,.page,.hero-banner,.section,.site-footer,.mob-tab-bar{
       </div>
     </div>
 
+    <!-- 香港文化冷知識卡 -->
+    <div class="section fu culture-qa-section">
+      <div class="culture-qa-head">
+        <div class="eyebrow" data-i18n="qa-eyebrow">香港文化冷知識 · Culture Cards</div>
+        <h3 data-i18n="qa-title">三張卡，認識地道廣東話背後的故事</h3>
+        <p data-i18n="qa-lead">點擊卡片翻開答案；看完後再點一次，即可返回問題。從茶樓禮儀、街市隱語到賽馬用語，看看日常詞句如何藏着香港文化記憶。</p>
+      </div>
+      <div class="culture-card-grid" aria-label="香港文化冷知識問答卡">
+        <button class="culture-flip-card" type="button" aria-pressed="false">
+          <span class="culture-flip-inner">
+            <span class="culture-card-face culture-card-front">
+              <span class="culture-card-num" data-i18n="qa1-num">故事 01</span>
+              <span class="culture-card-q" data-i18n="qa1-q">茶蓋要打開，全因一隻鷓鴣？</span>
+              <span class="culture-card-hint" data-i18n="qa-hint">點擊翻轉看解答</span>
+            </span>
+            <span class="culture-card-face culture-card-back">
+              <h4 data-i18n="qa1-a-title">茶樓加水的默契</h4>
+              <p data-i18n="qa1-a">相傳古時有人仿效印度人以鷓鴣作寵物，還會把牠帶到茶樓。有一次，鳥主把鷓鴣暫放在空茶壺內並蓋上壺蓋，伙記不知內有活鳥，直接注入熱水，結果把鳥燙死，茶樓因而要賠償。為免同類意外再發生，茶樓逐漸形成「打開茶蓋才加水」的做法，也成為飲茶時的有趣民間說法。</p>
+              <span class="culture-card-return" data-i18n="qa-return">再點一次返回問題</span>
+            </span>
+          </span>
+        </button>
+        <button class="culture-flip-card" type="button" aria-pressed="false">
+          <span class="culture-flip-inner">
+            <span class="culture-card-face culture-card-front">
+              <span class="culture-card-num" data-i18n="qa2-num">故事 02</span>
+              <span class="culture-card-q" data-i18n="qa2-q">「斗零」曾是秘密組織的獨有語言？</span>
+              <span class="culture-card-hint" data-i18n="qa-hint">點擊翻轉看解答</span>
+            </span>
+            <span class="culture-card-face culture-card-back">
+              <h4 data-i18n="qa2-a-title">從街市隱語到日常口語</h4>
+              <p data-i18n="qa2-a">今日「斗零」多指零碎錢、很小的數目，也帶有小巧之意，例如「斗零踭」就是很細小的鞋跟。早期「斗零」可指五仙硬幣。這個詞源自昔日街市行業的隱語：一枚五仙重三分六厘，隱語中「三」稱「斗」、「六」稱「零」，於是合成「斗零」。街市與市民接觸頻繁，這個行內說法便慢慢走進日常廣東話。</p>
+              <span class="culture-card-return" data-i18n="qa-return">再點一次返回問題</span>
+            </span>
+          </span>
+        </button>
+        <button class="culture-flip-card" type="button" aria-pressed="false">
+          <span class="culture-flip-inner">
+            <span class="culture-card-face culture-card-front">
+              <span class="culture-card-num" data-i18n="qa3-num">故事 03</span>
+              <span class="culture-card-q" data-i18n="qa3-q">「搏到盡」原來不是說人，是說馬？</span>
+              <span class="culture-card-hint" data-i18n="qa-hint">點擊翻轉看解答</span>
+            </span>
+            <span class="culture-card-face culture-card-back">
+              <h4 data-i18n="qa3-a-title">由馬場走進生活的詞語</h4>
+              <p data-i18n="qa3-a">我們常用「搏到盡」形容全力以赴，但這個說法最初常見於賽馬語境。馬匹按評分由低班逐步升班，低班時或能輕鬆取勝，升班後便要更努力拼搏；若勝出次數增加，負磅亦可能加重。當負磅極高仍要爭勝時，便是真正「搏到盡」。後來這句話被引申到讀書、工作與生活，成為廣東話裏很有力量的表達。</p>
+              <span class="culture-card-return" data-i18n="qa-return">再點一次返回問題</span>
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+
     <!-- 介紹及活動視頻 -->
     <div class="section fu video-showcase-section">
       <div class="eyebrow" data-i18n="vid-eyebrow">介紹及活動視頻</div>
@@ -3386,6 +3464,10 @@ const T = {
   's1-cap':'沉浸式體驗工作坊 · Immersive Workshop',
   's2-title':'語言是文化的精華',
   's2-body':'語言是文化的精華，一種語言背後是一個地區豐富且獨特的文化。TalKong港聲不僅幫助人們學習廣東話，更是香港文化的傳承者和宣揚者。我們致力於將傳承香港獨特人文與廣東話語言學習進行有機結合，使每一次學習廣東話的活動都是一次傳承並宣揚香港文化的機會。讓人們在TalKong港聲的每一次學習廣東話的活動中都能深刻感受香港獨特人文的魅力與風采。',
+  'qa-eyebrow':'香港文化冷知識 · Culture Cards','qa-title':'三張卡，認識地道廣東話背後的故事','qa-lead':'點擊卡片翻開答案；看完後再點一次，即可返回問題。從茶樓禮儀、街市隱語到賽馬用語，看看日常詞句如何藏着香港文化記憶。','qa-hint':'點擊翻轉看解答','qa-return':'再點一次返回問題',
+  'qa1-num':'故事 01','qa1-q':'茶蓋要打開，全因一隻鷓鴣？','qa1-a-title':'茶樓加水的默契','qa1-a':'相傳古時有人仿效印度人以鷓鴣作寵物，還會把牠帶到茶樓。有一次，鳥主把鷓鴣暫放在空茶壺內並蓋上壺蓋，伙記不知內有活鳥，直接注入熱水，結果把鳥燙死，茶樓因而要賠償。為免同類意外再發生，茶樓逐漸形成「打開茶蓋才加水」的做法，也成為飲茶時的有趣民間說法。',
+  'qa2-num':'故事 02','qa2-q':'「斗零」曾是秘密組織的獨有語言？','qa2-a-title':'從街市隱語到日常口語','qa2-a':'今日「斗零」多指零碎錢、很小的數目，也帶有小巧之意，例如「斗零踭」就是很細小的鞋跟。早期「斗零」可指五仙硬幣。這個詞源自昔日街市行業的隱語：一枚五仙重三分六厘，隱語中「三」稱「斗」、「六」稱「零」，於是合成「斗零」。街市與市民接觸頻繁，這個行內說法便慢慢走進日常廣東話。',
+  'qa3-num':'故事 03','qa3-q':'「搏到盡」原來不是說人，是說馬？','qa3-a-title':'由馬場走進生活的詞語','qa3-a':'我們常用「搏到盡」形容全力以赴，但這個說法最初常見於賽馬語境。馬匹按評分由低班逐步升班，低班時或能輕鬆取勝，升班後便要更努力拼搏；若勝出次數增加，負磅亦可能加重。當負磅極高仍要爭勝時，便是真正「搏到盡」。後來這句話被引申到讀書、工作與生活，成為廣東話裏很有力量的表達。',
   'vid-eyebrow':'介紹及活動視頻',
   'vid-label':'S14 TalKong 港聲 MVP Video',
   'vid-title':'觀看我們的介紹短片',
@@ -3475,6 +3557,10 @@ const T = {
   's1-cap':'沉浸式体验工作坊 · Immersive Workshop',
   's2-title':'语言是文化的精华',
   's2-body':'语言是文化的精华，一种语言背后是一个地区丰富且独特的文化。TalKong港声不仅帮助人们学习广东话，更是香港文化的传承者和宣扬者。我们致力于将传承香港独特人文与广东话语言学习进行有机结合，使每一次学习广东话的活动都是一次传承并宣扬香港文化的机会。让人们在TalKong港声的每一次学习广东话的活动中都能深刻感受香港独特人文的魅力与风采。',
+  'qa-eyebrow':'香港文化冷知识 · Culture Cards','qa-title':'三张卡，认识地道广东话背后的故事','qa-lead':'点击卡片翻开答案；看完后再点一次，即可回到问题。从茶楼礼仪、街市隐语到赛马用语，看看日常词句如何藏着香港文化记忆。','qa-hint':'点击翻转看解答','qa-return':'再点一次回到问题',
+  'qa1-num':'故事 01','qa1-q':'茶盖要打开，全因一只鹧鸪？','qa1-a-title':'茶楼加水的默契','qa1-a':'相传古时有人仿效印度人以鹧鸪作宠物，还会把它带到茶楼。有一次，鸟主把鹧鸪暂放在空茶壶内并盖上壶盖，伙计不知内有活鸟，直接注入热水，结果把鸟烫死，茶楼因而要赔偿。为免同类意外再发生，茶楼逐渐形成“打开茶盖才加水”的做法，也成为饮茶时的有趣民间说法。',
+  'qa2-num':'故事 02','qa2-q':'“斗零”曾是秘密组织的独有语言？','qa2-a-title':'从街市隐语到日常口语','qa2-a':'今日“斗零”多指零碎钱、很小的数目，也带有小巧之意，例如“斗零踭”就是很细小的鞋跟。早期“斗零”可指五仙硬币。这个词源自昔日街市行业的隐语：一枚五仙重三分六厘，隐语中“三”称“斗”、“六”称“零”，于是合成“斗零”。街市与市民接触频繁，这个行内说法便慢慢走进日常广东话。',
+  'qa3-num':'故事 03','qa3-q':'“搏到尽”原来不是说人，是说马？','qa3-a-title':'由马场走进生活的词语','qa3-a':'我们常用“搏到尽”形容全力以赴，但这个说法最初常见于赛马语境。马匹按评分由低班逐步升班，低班时或能轻松取胜，升班后便要更努力拼搏；若胜出次数增加，负磅亦可能加重。当负磅极高仍要争胜时，便是真正“搏到尽”。后来这句话被引申到读书、工作与生活，成为广东话里很有力量的表达。',
   's2-cap':'香港文化传承 × 粤语守护 · Legacy & Protector',
   'vid-eyebrow':'介绍及活动视频','vid-label':'S14 TalKong 港声 MVP Video','vid-title':'观看我们的介绍短片','vid-note':'通过真实活动片段，看看 TalKong 如何把粤语学习带入香港生活场景。',
   'comment-kicker':'真实反馈 · Comments','comment-title':'来自参与者与合作方的声音',
@@ -3560,6 +3646,10 @@ const T = {
   's1-body':'We go beyond conventional language teaching by designing themed activities that immerse learners in authentic Cantonese-speaking environments, helping them use and practise what they learn in real, everyday situations.',
   's2-title':'Language Is the Essence of Culture',
   's2-body':'Every language carries the rich and unique culture of its people. TalKong is more than a Cantonese class — we are guardians and advocates of Hong Kong culture. We weave authentic local heritage into every lesson, turning each workshop into an opportunity to experience and celebrate what makes Hong Kong truly unique.',
+  'qa-eyebrow':'Hong Kong culture facts · Culture Cards','qa-title':'Three cards, three stories behind everyday Cantonese','qa-lead':'Tap a card to reveal the answer; tap it again to return to the question. Discover how tea-house etiquette, market slang, and horse-racing terms became part of Hong Kong Cantonese.','qa-hint':'Tap to reveal answer','qa-return':'Tap again for question',
+  'qa1-num':'Story 01','qa1-q':'Do tea lids stay open because of a partridge?','qa1-a-title':'The tea-house refill signal','qa1-a':'A popular story says that people once kept partridges as pets and even brought them to tea houses. One owner placed a bird inside an empty teapot and closed the lid. A waiter, not knowing there was a live bird inside, poured in hot water and the bird died, leading to compensation. To prevent similar accidents, the open lid gradually became a signal for refilling hot water.',
+  'qa2-num':'Story 02','qa2-q':'Was “dau ling” once secret market language?','qa2-a-title':'From trade slang to daily speech','qa2-a':'Today, “dau ling” often means small change or a tiny amount, and can suggest something small, as in a very thin shoe heel. Earlier, it could refer to a five-cent coin. The term is linked to old market jargon: a five-cent coin weighed three fan and six lei; in the jargon, “three” was “dau” and “six” was “ling”. As market speech mixed with daily life, the phrase entered everyday Cantonese.',
+  'qa3-num':'Story 03','qa3-q':'Did “bok dou zeon” begin with horses, not people?','qa3-a-title':'A racing phrase turned everyday expression','qa3-a':'We now use “bok dou zeon” to mean giving everything you have, but the phrase was strongly associated with horse racing. Horses move up through classes as their ratings rise. After winning, they may face tougher competition and carry more weight. When a horse still has to fight for victory under a very heavy burden, it is truly “pushing to the limit”. The phrase later spread to school, work, and daily life.',
   'vid-eyebrow':'Introduction & Event Video',
   'vid-label':'S14 TalKong 港聲 MVP Video',
   'vid-title':'Watch Our Introduction Video',
@@ -3760,8 +3850,21 @@ window.addEventListener('DOMContentLoaded',()=>{
   window._tkLang = initLang;
   filteredVocab = [...VOCAB];
   buildVocabGrid(VOCAB);
+  initCultureFlipCards();
   showPage(pageFromPath(window.location.pathname), {replace:true, noScroll:true});
 });
+
+
+function initCultureFlipCards(){
+  document.querySelectorAll('.culture-flip-card').forEach(card=>{
+    if(card.dataset.flipReady==='1') return;
+    card.dataset.flipReady='1';
+    card.addEventListener('click', ()=>{
+      const flipped = card.classList.toggle('is-flipped');
+      card.setAttribute('aria-pressed', flipped ? 'true' : 'false');
+    });
+  });
+}
 
 /* ─── VOCAB DATA ─── */
 const VOCAB = [
