@@ -1,0 +1,1 @@
+Adjusted culture Q&A story-card answer body text to be slightly larger and more readable on both desktop and mobile. Mobile card min-height increased a little to keep spacing comfortable.
