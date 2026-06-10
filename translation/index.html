@@ -2541,6 +2541,33 @@ nav,.page,.hero-banner,.section,.site-footer,.mob-tab-bar{
 }
 </style>
 
+
+<style id="talkong-learning-card-notes-20260610-v2">
+#page-vocab .vc{height:228px;touch-action:manipulation;position:relative;}
+#page-vocab .vc-front,#page-vocab .vc-back{overflow:hidden;}
+#page-vocab .vc-front:hover{transform:none;}
+/* v5: note control belongs to the card shell, not to front/back faces. It stays as one fixed button at bottom-right whether flipped or not. */
+#page-vocab .vc > .vc-note-btn{position:absolute;right:10px;bottom:10px;z-index:40;min-width:30px;height:30px;border-radius:999px;border:1px solid rgba(200,54,43,.42);background:rgba(255,248,232,.94);color:var(--hk-red);font-family:var(--brush);font-size:14px;font-weight:900;line-height:1;display:flex;align-items:center;justify-content:center;padding:0 8px;box-shadow:0 3px 0 rgba(200,54,43,.12);cursor:pointer;transition:transform .18s,box-shadow .18s,background .18s;}
+#page-vocab .vc.flipped > .vc-note-btn{background:rgba(255,248,232,.94);color:var(--hk-red);border-color:rgba(200,54,43,.42);box-shadow:0 3px 0 rgba(0,0,0,.12);}
+#page-vocab .vc > .vc-note-btn:hover,#page-vocab .vc > .vc-note-btn:focus-visible{transform:translateY(-1px);box-shadow:0 5px 0 rgba(200,54,43,.16);outline:none;}
+#page-vocab .vc > .vc-note-pop{position:absolute;left:10px;right:10px;bottom:48px;z-index:39;display:none;max-height:136px;overflow:auto;padding:12px 13px;border-radius:12px;text-align:left;background:#fffdf3;color:var(--dark);border:1px solid rgba(200,54,43,.28);box-shadow:0 12px 28px rgba(26,20,16,.18);font-family:var(--chinese);}
+#page-vocab .vc-note-pop.show{display:block;}
+#page-vocab .vc-note-title{display:flex;align-items:center;gap:6px;margin-bottom:6px;font-family:var(--brush);font-size:15px;color:var(--hk-red);font-weight:900;}
+#page-vocab .vc-note-text{font-size:12.5px;line-height:1.62;white-space:pre-line;color:var(--dark2);}
+#page-vocab .vc-note-text:empty::after{content:'此卡暫未提供注釋';color:var(--mid);}
+#page-vocab .vc-note-close{margin-left:auto;border:0;background:transparent;color:var(--mid);font-size:18px;line-height:1;cursor:pointer;padding:0 2px;}
+#page-vocab .vc.has-note .vc-tap,#page-vocab .vc.has-note .vb-tap{left:50%;transform:translateX(-50%);max-width:calc(100% - 92px);white-space:nowrap;}
+@media(max-width:640px){#page-vocab .vocab-section{padding-bottom:92px!important;}#page-vocab .vc{height:206px!important;}#page-vocab .vc-front,#page-vocab .vc-back{padding-top:32px!important;padding-bottom:40px!important;border-radius:12px!important;}#page-vocab .vc-note-btn{right:8px;bottom:8px;min-width:28px;height:28px;font-size:13px;padding:0 7px;}#page-vocab .vc-note-pop{left:8px;right:8px;bottom:42px;max-height:124px;padding:10px;}#page-vocab .vc-note-text{font-size:12px;line-height:1.55;}#page-vocab .vocab-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}}
+@media(max-width:390px){#page-vocab .vocab-grid{grid-template-columns:1fr!important;max-width:310px;margin-left:auto;margin-right:auto;}#page-vocab .vc{height:198px!important;}}
+
+/* v3 note readability fix: force note body visible and use a taller readable popover */
+#page-vocab .vc-note-pop{max-height:172px!important;overflow-y:auto!important;scrollbar-gutter:stable;background:#fffdf3!important;}
+#page-vocab .vc-note-text{display:block!important;visibility:visible!important;opacity:1!important;color:#28201a!important;font-size:13.5px!important;line-height:1.72!important;font-weight:500!important;min-height:42px!important;padding-top:2px!important;}
+#page-vocab .vc-note-text:empty::after{content:'此卡暫未提供注釋';color:#8d5b51;}
+@media(max-width:640px){#page-vocab .vc-note-pop{max-height:158px!important;}#page-vocab .vc-note-text{font-size:13px!important;line-height:1.66!important;}}
+
+</style>
+
 </head>
 <body>
 
@@ -3868,45 +3895,102 @@ function initCultureFlipCards(){
 
 /* ─── VOCAB DATA ─── */
 const VOCAB = [
-  {cat:'greet', emoji:'👋', tw:'你好',     cn:'你好',         en:'Hello',             jyutping:'nei5 hou2'},
-  {cat:'greet', emoji:'🙏', tw:'唔該',     cn:'唔该 / 谢谢',  en:'Thank you / Excuse me', jyutping:'m4 goi1'},
-  {cat:'greet', emoji:'😊', tw:'早晨',     cn:'早上好',       en:'Good morning',      jyutping:'zou2 san4'},
-  {cat:'greet', emoji:'🌙', tw:'晚安',     cn:'晚安',         en:'Good night',        jyutping:'maan5 on1'},
-  {cat:'greet', emoji:'👋', tw:'拜拜',     cn:'再见',         en:'Goodbye',           jyutping:'baai1 baai3'},
-  {cat:'greet', emoji:'🤝', tw:'幸會',     cn:'幸会',         en:'Nice to meet you',  jyutping:'hang6 wui6'},
-  {cat:'food',  emoji:'☕', tw:'咖啡',     cn:'咖啡',         en:'Coffee',            jyutping:'gaa3 fe1'},
-  {cat:'food',  emoji:'🧋', tw:'奶茶',     cn:'奶茶',         en:'Milk tea',          jyutping:'naai5 caa4'},
-  {cat:'food',  emoji:'🍵', tw:'飲茶',     cn:'饮茶',         en:'Yum cha / Dim sum', jyutping:'jam2 caa4'},
-  {cat:'food',  emoji:'🍚', tw:'好食',     cn:'好吃',         en:'Delicious',         jyutping:'hou2 sik6'},
-  {cat:'food',  emoji:'🧾', tw:'埋單',     cn:'结账',         en:'Bill please',       jyutping:'maai4 daan1'},
-  {cat:'food',  emoji:'🥢', tw:'寫嘢',     cn:'写东西',       en:'Write things',      jyutping:'se2 je5'  },
-  {cat:'food',  emoji:'🍺', tw:'乾杯',     cn:'干杯',         en:'Cheers!',           jyutping:'gon1 bui1'},
-  {cat:'food',  emoji:'🛍️', tw:'外賣',    cn:'外卖',         en:'Takeaway',          jyutping:'ngoi6 maai6'},
-  {cat:'daily', emoji:'💰', tw:'幾錢',     cn:'多少钱',       en:'How much?',         jyutping:'gei2 cin2'},
-  {cat:'daily', emoji:'🚇', tw:'地鐵',     cn:'地铁',         en:'MTR / Subway',      jyutping:'dei6 tit3'},
-  {cat:'daily', emoji:'🚌', tw:'巴士',     cn:'公交车',       en:'Bus',               jyutping:'baa1 si2'},
-  {cat:'daily', emoji:'🏠', tw:'屋企',     cn:'家',           en:'Home',              jyutping:'uk1 kei2'},
-  {cat:'daily', emoji:'😴', tw:'瞓覺',     cn:'睡觉',         en:'Sleep',             jyutping:'fan3 gaau3'},
-  {cat:'daily', emoji:'📱', tw:'手機',     cn:'手机',         en:'Mobile phone',      jyutping:'sau2 gei1'},
-  {cat:'daily', emoji:'🛒', tw:'買嘢',     cn:'买东西',       en:'Go shopping',       jyutping:'maai5 je5'},
-  {cat:'daily', emoji:'🎉', tw:'生日快樂', cn:'生日快乐',     en:'Happy birthday',    jyutping:'sang1 jat6 faai3 lok6'},
-  {cat:'work',  emoji:'💼', tw:'開會',     cn:'开会',         en:'Have a meeting',    jyutping:'hoi1 wui2'},
-  {cat:'work',  emoji:'📧', tw:'電郵',     cn:'电子邮件',     en:'Email',             jyutping:'din6 jau4'},
-  {cat:'work',  emoji:'✅', tw:'搞掂',     cn:'搞定',         en:'Done / Settled',    jyutping:'gaau2 dim6'},
-  {cat:'work',  emoji:'🤔', tw:'唔明',     cn:'不明白',       en:"Don't understand",  jyutping:'m4 ming4'},
-  {cat:'work',  emoji:'📋', tw:'報告',     cn:'报告',         en:'Report',            jyutping:'bou3 gou3'},
-  {cat:'work',  emoji:'🏆', tw:'加油',     cn:'加油',         en:'Keep it up!',       jyutping:'gaa1 jau4'},
-  {cat:'num',   emoji:'0️⃣', tw:'零',       cn:'零',           en:'Zero',              jyutping:'ling4'},
-  {cat:'num',   emoji:'1️⃣', tw:'一',       cn:'一',           en:'One',               jyutping:'jat1'},
-  {cat:'num',   emoji:'2️⃣', tw:'二',       cn:'二',           en:'Two',               jyutping:'ji6'},
-  {cat:'num',   emoji:'3️⃣', tw:'三',       cn:'三',           en:'Three',             jyutping:'saam1'},
-  {cat:'num',   emoji:'4️⃣', tw:'四',       cn:'四',           en:'Four',              jyutping:'sei3'},
-  {cat:'num',   emoji:'5️⃣', tw:'五',       cn:'五',           en:'Five',              jyutping:'ng5'},
-  {cat:'num',   emoji:'6️⃣', tw:'六',       cn:'六',           en:'Six',               jyutping:'luk6'},
-  {cat:'num',   emoji:'7️⃣', tw:'七',       cn:'七',           en:'Seven',             jyutping:'cat1'},
-  {cat:'num',   emoji:'8️⃣', tw:'八',       cn:'八',           en:'Eight',             jyutping:'baat3'},
-  {cat:'num',   emoji:'9️⃣', tw:'九',       cn:'九',           en:'Nine',              jyutping:'gau2'},
-  {cat:'num',   emoji:'🔟', tw:'十',        cn:'十',           en:'Ten',               jyutping:'sap6'},
+  {cat:"num", emoji:"0️⃣", tw:"零", cn:"零", en:"Zero", jyutping:"ling4"},
+  {cat:"num", emoji:"1️⃣", tw:"一", cn:"一", en:"One", jyutping:"jat1"},
+  {cat:"num", emoji:"2️⃣", tw:"二", cn:"二", en:"Two", jyutping:"ji6", noteTw:"「二」主要表示數字本身，常見於數學、電話號碼、日期、年份及較大的數字，例如：一加一等於二、六月二日、二零二六年、二十、二百。", noteEn:"二 (ji6) is mainly used for the numeral itself, such as in maths, phone numbers, dates, years, and larger numbers."},
+  {cat:"num", emoji:"2️⃣", tw:"兩", cn:"两", en:"Two", jyutping:"loeng5", noteTw:"「兩」通常用於表示數量，放在量詞或名詞前面，例如：兩個人、兩本書、兩隻貓。日常口語中，說數量時多用「兩」而不是「二」。", noteEn:"兩 (loeng5) is more common before measure words or nouns when talking about quantity, such as “two people” or “two books.”"},
+  {cat:"num", emoji:"3️⃣", tw:"三", cn:"三", en:"Three", jyutping:"saam1"},
+  {cat:"num", emoji:"4️⃣", tw:"四", cn:"四", en:"Four", jyutping:"sei3"},
+  {cat:"num", emoji:"5️⃣", tw:"五", cn:"五", en:"Five", jyutping:"ng5"},
+  {cat:"num", emoji:"6️⃣", tw:"六", cn:"六", en:"Six", jyutping:"luk6"},
+  {cat:"num", emoji:"7️⃣", tw:"七", cn:"七", en:"Seven", jyutping:"cat1"},
+  {cat:"num", emoji:"8️⃣", tw:"八", cn:"八", en:"Eight", jyutping:"baat3"},
+  {cat:"num", emoji:"9️⃣", tw:"九", cn:"九", en:"Nine", jyutping:"gau2"},
+  {cat:"num", emoji:"🔟", tw:"十", cn:"十", en:"Ten", jyutping:"sap6"},
+  {cat:"num", emoji:"💯", tw:"百", cn:"百", en:"Hundred", jyutping:"baak3"},
+  {cat:"num", emoji:"🔢", tw:"千", cn:"千", en:"Thousand", jyutping:"cin1"},
+  {cat:"num", emoji:"🔢", tw:"萬", cn:"万", en:"Ten thousand", jyutping:"maan6"},
+  {cat:"num", emoji:"🔢", tw:"十萬", cn:"十万", en:"One hundred thousand", jyutping:"sap6 maan6"},
+  {cat:"num", emoji:"🔢", tw:"百萬", cn:"百万", en:"One million", jyutping:"baak3 maan6"},
+  {cat:"greet", emoji:"👋", tw:"你好", cn:"你好", en:"Hello", jyutping:"nei5 hou2"},
+  {cat:"greet", emoji:"🌅", tw:"早晨", cn:"早上好", en:"Good morning", jyutping:"zou2 san4"},
+  {cat:"greet", emoji:"👋", tw:"午安", cn:"下午好", en:"Good afternoon", jyutping:"ng5 on1"},
+  {cat:"greet", emoji:"🌙", tw:"晚安", cn:"晚安", en:"Good night", jyutping:"maan5 on1"},
+  {cat:"greet", emoji:"👋", tw:"拜拜", cn:"再见", en:"Bye-bye", jyutping:"baai1 baai3"},
+  {cat:"greet", emoji:"🤝", tw:"幸會", cn:"幸会", en:"Nice to meet you", jyutping:"hang6 wui6", noteTw:"「幸會」常見於商務會面、正式介紹、演講、面試或書信等較正式場合，意思是「很高興認識你」。日常輕鬆場合可說「你好」或「好高興識到你」。", noteEn:"幸會 is commonly used in formal situations, such as business meetings, formal introductions, speeches, job interviews, and formal correspondence."},
+  {cat:"greet", emoji:"👋", tw:"一陣見", cn:"待会儿见", en:"See you later", jyutping:"jat1 zan6 gin3"},
+  {cat:"greet", emoji:"👋", tw:"遲啲見", cn:"回头见／待会儿见", en:"See you later / See you soon", jyutping:"ci4 di1 gin3"},
+  {cat:"greet", emoji:"👋", tw:"好耐冇見", cn:"好久不见", en:"Long time no see", jyutping:"hou2 noi6 mou5 gin3"},
+  {cat:"greet", emoji:"🙏", tw:"多謝", cn:"谢谢", en:"Thank you (for receiving something)", jyutping:"do1 ze6"},
+  {cat:"greet", emoji:"🙏", tw:"唔該", cn:"劳驾／麻烦您／谢谢", en:"Excuse me / Please / Thank you (for a service)", jyutping:"m4 goi1"},
+  {cat:"greet", emoji:"👋", tw:"唔使客氣", cn:"不客气", en:"You're welcome", jyutping:"m4 sai2 haak3 hei3"},
+  {cat:"greet", emoji:"🙇", tw:"對唔住", cn:"对不起", en:"Sorry", jyutping:"deoi3 m4 zyu6"},
+  {cat:"greet", emoji:"🙇", tw:"唔好意思", cn:"不好意思", en:"Excuse me / Sorry (to apologize or get attention)", jyutping:"m4 hou2 ji3 si1"},
+  {cat:"greet", emoji:"👌", tw:"唔緊要", cn:"没关系", en:"It's okay / No problem", jyutping:"m4 gan2 jiu3"},
+  {cat:"greet", emoji:"👌", tw:"冇問題", cn:"没问题", en:"No problem", jyutping:"mou5 man6 tai4"},
+  {cat:"food", emoji:"🍳", tw:"早餐", cn:"早餐", en:"breakfast", jyutping:"zou2 caan1"},
+  {cat:"food", emoji:"🍱", tw:"午餐", cn:"午餐", en:"lunch", jyutping:"ng5 caan1"},
+  {cat:"food", emoji:"🍽️", tw:"晚餐", cn:"晚餐", en:"dinner", jyutping:"maan5 caan1"},
+  {cat:"food", emoji:"🌙", tw:"宵夜", cn:"夜宵", en:"late-night snack", jyutping:"siu1 je6"},
+  {cat:"food", emoji:"🍡", tw:"小食", cn:"小吃", en:"snacks", jyutping:"siu2 sik6"},
+  {cat:"food", emoji:"🍽️", tw:"餐廳", cn:"餐厅", en:"restaurant", jyutping:"caan1 teng1"},
+  {cat:"food", emoji:"🥢", tw:"食嘢", cn:"吃东西", en:"eat food (general)", jyutping:"sik6 je5"},
+  {cat:"food", emoji:"🥤", tw:"飲嘢", cn:"喝东西", en:"drink (general)", jyutping:"jam2 je5"},
+  {cat:"food", emoji:"✍️", tw:"寫嘢", cn:"写东西", en:"write / be writing", jyutping:"se2 je5"},
+  {cat:"food", emoji:"🛍️", tw:"外賣", cn:"外卖", en:"takeout", jyutping:"ngoi6 maai6"},
+  {cat:"food", emoji:"🍽️", tw:"堂食", cn:"堂食", en:"dine-in", jyutping:"tong4 sik6"},
+  {cat:"food", emoji:"☕", tw:"咖啡", cn:"咖啡", en:"coffee", jyutping:"gaa3 fe1"},
+  {cat:"food", emoji:"🧋", tw:"奶茶", cn:"奶茶", en:"milk tea", jyutping:"naai5 caa4"},
+  {cat:"food", emoji:"🥢", tw:"嘢飲", cn:"饮料", en:"beverage / drinks", jyutping:"je5 jam2"},
+  {cat:"food", emoji:"🍻", tw:"乾杯", cn:"干杯", en:"cheers (toast)", jyutping:"gon1 bui1"},
+  {cat:"food", emoji:"🧾", tw:"埋單", cn:"买单 / 结账", en:"pay the bill / check please", jyutping:"maai4 daan1"},
+  {cat:"food", emoji:"🥢", tw:"飲水", cn:"喝水", en:"drink water", jyutping:"jam2 seoi2"},
+  {cat:"food", emoji:"🍵", tw:"飲茶", cn:"喝茶 / 早茶", en:"yum cha / drink tea (dim sum culture)", jyutping:"jam2 caa4"},
+  {cat:"food", emoji:"😋", tw:"好食", cn:"好吃", en:"tasty / delicious", jyutping:"hou2 sik6"},
+  {cat:"food", emoji:"🥢", tw:"難食", cn:"难吃", en:"not tasty", jyutping:"naan4 sik6"},
+  {cat:"food", emoji:"🥢", tw:"肚餓", cn:"肚子饿", en:"hungry", jyutping:"tou5 ngo6"},
+  {cat:"food", emoji:"🥢", tw:"飽", cn:"饱", en:"full (not hungry)", jyutping:"baau2"},
+  {cat:"daily", emoji:"⏰", tw:"起身", cn:"起床", en:"get up", jyutping:"hei2 san1"},
+  {cat:"daily", emoji:"😴", tw:"訓覺", cn:"睡觉", en:"sleep", jyutping:"fan3 gaau3"},
+  {cat:"daily", emoji:"🍚", tw:"食飯", cn:"吃饭", en:"eat a meal", jyutping:"sik6 faan6"},
+  {cat:"daily", emoji:"💼", tw:"返工", cn:"上班", en:"go to work", jyutping:"faan1 gung1"},
+  {cat:"daily", emoji:"🎒", tw:"返學", cn:"上学", en:"go to school", jyutping:"faan1 hok6"},
+  {cat:"daily", emoji:"🏁", tw:"放工", cn:"下班", en:"leave work", jyutping:"fong3 gung1"},
+  {cat:"daily", emoji:"🏫", tw:"放學", cn:"放学", en:"leave school", jyutping:"fong3 hok6"},
+  {cat:"daily", emoji:"🚶", tw:"行街", cn:"逛街", en:"go shopping / walk around", jyutping:"haang4 gaai1"},
+  {cat:"daily", emoji:"🛒", tw:"買嘢", cn:"买东西", en:"buy things", jyutping:"maai5 je5"},
+  {cat:"daily", emoji:"🍳", tw:"煮飯", cn:"做饭", en:"cook", jyutping:"zyu2 faan6"},
+  {cat:"daily", emoji:"🧺", tw:"洗衫", cn:"洗衣服", en:"wash clothes", jyutping:"sai2 saam1"},
+  {cat:"daily", emoji:"🏙️", tw:"冲涼", cn:"洗澡", en:"take a shower", jyutping:"cung1 loeng4"},
+  {cat:"daily", emoji:"🏙️", tw:"睇電視", cn:"看电视", en:"watch TV", jyutping:"tai2 din6 si6"},
+  {cat:"daily", emoji:"🏙️", tw:"休息", cn:"休息", en:"rest", jyutping:"jau1 sik1"},
+  {cat:"daily", emoji:"💰", tw:"幾錢", cn:"多少钱", en:"how much (price)", jyutping:"gei2 cin2"},
+  {cat:"daily", emoji:"🏙️", tw:"幾點", cn:"几点", en:"what time", jyutping:"gei2 dim2"},
+  {cat:"daily", emoji:"🚇", tw:"地鐵", cn:"地铁", en:"subway / metro", jyutping:"dei6 tit3"},
+  {cat:"daily", emoji:"🚌", tw:"巴士", cn:"公交 / 巴士", en:"bus", jyutping:"baa1 si2"},
+  {cat:"daily", emoji:"🏠", tw:"屋企", cn:"家", en:"home", jyutping:"uk1 kei2"},
+  {cat:"daily", emoji:"📱", tw:"手機", cn:"手机", en:"mobile phone", jyutping:"sau2 gei1"},
+  {cat:"daily", emoji:"🎂", tw:"生日快樂", cn:"生日快乐", en:"happy birthday", jyutping:"saang1 jat6 faai3 lok6"},
+  {cat:"work", emoji:"🏢", tw:"公司", cn:"公司", en:"company", jyutping:"gung1 si1"},
+  {cat:"work", emoji:"👔", tw:"老細", cn:"老板", en:"boss", jyutping:"lou5 sai3"},
+  {cat:"work", emoji:"👥", tw:"同事", cn:"同事", en:"colleague", jyutping:"tung4 si6"},
+  {cat:"work", emoji:"👔", tw:"上司", cn:"上司", en:"supervisor", jyutping:"soeng5 si1"},
+  {cat:"work", emoji:"👥", tw:"下屬", cn:"下属", en:"subordinate", jyutping:"haa6 suk6"},
+  {cat:"work", emoji:"⏱️", tw:"OT（加班）", cn:"加班", en:"overtime", jyutping:"ou1 ti1 gaa1 baan1"},
+  {cat:"work", emoji:"🗣️", tw:"開會", cn:"开会", en:"have a meeting", jyutping:"hoi1 wui6"},
+  {cat:"work", emoji:"📋", tw:"報告", cn:"报告", en:"report", jyutping:"bou3 gou3"},
+  {cat:"work", emoji:"📄", tw:"文件", cn:"文件", en:"document", jyutping:"man4 gin2"},
+  {cat:"work", emoji:"📧", tw:"電郵", cn:"邮件", en:"email", jyutping:"din6 jau4"},
+  {cat:"work", emoji:"🧑‍💼", tw:"面試", cn:"面试", en:"interview", jyutping:"min6 si3"},
+  {cat:"work", emoji:"💼", tw:"辭職", cn:"辞职", en:"resign", jyutping:"ci4 zik1"},
+  {cat:"work", emoji:"💼", tw:"轉工", cn:"换工作", en:"change job", jyutping:"zyun3 gung1"},
+  {cat:"work", emoji:"💼", tw:"升職", cn:"升职", en:"promotion", jyutping:"sing1 zik1"},
+  {cat:"work", emoji:"💼", tw:"加人工", cn:"加薪", en:"salary increase", jyutping:"gaa1 jan4 gung1"},
+  {cat:"work", emoji:"💼", tw:"人工", cn:"工资", en:"salary", jyutping:"jan4 gung1"},
+  {cat:"work", emoji:"✅", tw:"搞掂", cn:"搞定", en:"done / settled / sorted", jyutping:"gaau2 dim6"},
+  {cat:"work", emoji:"💼", tw:"收到", cn:"收到", en:"received / got it", jyutping:"sau1 dou3"},
+  {cat:"work", emoji:"🤔", tw:"唔明", cn:"不明白", en:"don’t understand", jyutping:"m4 ming4"},
+  {cat:"work", emoji:"💪", tw:"加油", cn:"加油", en:"keep it up / go for it", jyutping:"gaa1 jau4"}
 ];
 
 const CAT_LABELS = {
@@ -3929,8 +4013,98 @@ let filteredVocab = [...VOCAB];
 let currentCat = 'all';
 let currentLang = 'zh-TW';
 
+
+const NOTE_FALLBACKS = {
+  '二': {
+    tw: '「二」主要表示數字本身，常見於數學、電話號碼、日期、年份及較大的數字，例如：一加一等於二、六月二日、二零二六年、二十、二百。',
+    en: '二 (ji6) is mainly used for the numeral itself, such as in maths, phone numbers, dates, years, and larger numbers.'
+  },
+  '兩': {
+    tw: '「兩」通常用於表示數量，放在量詞或名詞前面，例如：兩個人、兩本書、兩隻貓。日常口語中，說數量時多用「兩」而不是「二」。',
+    en: '兩 (loeng5) is more common before measure words or nouns when talking about quantity, such as “two people” or “two books.”'
+  },
+  '两': {
+    tw: '「兩」通常用於表示數量，放在量詞或名詞前面，例如：兩個人、兩本書、兩隻貓。日常口語中，說數量時多用「兩」而不是「二」。',
+    en: '兩 (loeng5) is more common before measure words or nouns when talking about quantity, such as “two people” or “two books.”'
+  },
+  '幸會': {
+    tw: '「幸會」常見於商務會面、正式介紹、演講、面試或書信等較正式場合，意思是「很高興認識你」。日常輕鬆場合可說「你好」或「好高興識到你」。',
+    en: '幸會 is commonly used in formal situations, such as business meetings, formal introductions, speeches, job interviews, and formal correspondence.'
+  },
+  '幸会': {
+    tw: '「幸會」常見於商務會面、正式介紹、演講、面試或書信等較正式場合，意思是「很高興認識你」。日常輕鬆場合可說「你好」或「好高興識到你」。',
+    en: '幸會 is commonly used in formal situations, such as business meetings, formal introductions, speeches, job interviews, and formal correspondence.'
+  }
+};
+
+
 /* ── helpers ── */
 function lk(lang){ return lang==='zh-CN'?'cn': lang==='en'?'en':'tw'; }
+
+function escHtml(s){
+  return String(s == null ? '' : s).replace(/[&<>\"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
+}
+function escAttr(s){ return escHtml(s).replace(/'/g,'&#39;'); }
+function noteLabel(){
+  const l = lk(currentLang);
+  return l==='en' ? {title:'Note', btn:'Note'} : (l==='cn' ? {title:'注释', btn:'释'} : {title:'註釋', btn:'註'});
+}
+function normalizeNoteValue(value){
+  return String(value == null ? '' : value).replace(/\s+/g, ' ').trim();
+}
+function getWordNoteObjectFromKeys(keys){
+  for(const key of keys){
+    const k = normalizeNoteValue(key);
+    if(k && NOTE_FALLBACKS[k]) return NOTE_FALLBACKS[k];
+  }
+  return null;
+}
+function getCardNoteFromData(card){
+  if(!card) return '';
+  const l = lk(currentLang);
+  const directZh = normalizeNoteValue(card.getAttribute('data-note-tw') || card.dataset.noteTw || '');
+  const directEn = normalizeNoteValue(card.getAttribute('data-note-en') || card.dataset.noteEn || '');
+  const obj = getWordNoteObjectFromKeys([card.dataset.tw, card.dataset.cn, card.dataset.en]);
+  const zh = directZh || (obj && obj.tw) || '';
+  const en = directEn || (obj && obj.en) || '';
+  return l==='en' ? (en || zh) : (zh || en);
+}
+function getWordNote(w){
+  const l = lk(currentLang);
+  const obj = getWordNoteObjectFromKeys([w && w.tw, w && w.cn, w && w.en]);
+  const zh = normalizeNoteValue((w && w.noteTw) || '') || (obj && obj.tw) || '';
+  const en = normalizeNoteValue((w && w.noteEn) || '') || (obj && obj.en) || '';
+  return { zh, en, text: l==='en' ? (en || zh) : (zh || en) };
+}
+function fillNotePopup(pop, text){
+  if(!pop) return;
+  const textEl = pop.querySelector('[data-role="note-text"]');
+  const clean = normalizeNoteValue(text);
+  if(textEl){
+    textEl.textContent = clean || '此卡暫未提供注釋';
+    textEl.style.display = 'block';
+    textEl.style.visibility = 'visible';
+  }
+}
+function toggleCardNote(btn){
+  const card = btn.closest('.vc');
+  if(!card) return;
+  const pop = card.querySelector(':scope > .vc-note-pop') || card.querySelector('.vc-note-pop');
+  if(!pop) return;
+  document.querySelectorAll('#vocab-grid .vc-note-pop.show').forEach(p => { if(p!==pop) p.classList.remove('show'); });
+  const text = normalizeNoteValue(btn.getAttribute('data-note')) || getCardNoteFromData(card);
+  fillNotePopup(pop, text);
+  pop.classList.toggle('show');
+}
+function closeCardNote(btn){
+  const pop = btn.closest('.vc-note-pop');
+  if(pop) pop.classList.remove('show');
+}
+document.addEventListener('click', function(e){
+  if(e.target.closest && e.target.closest('#vocab-grid .vc-note-pop,#vocab-grid .vc-note-btn')) return;
+  document.querySelectorAll('#vocab-grid .vc-note-pop.show').forEach(p => p.classList.remove('show'));
+}, true);
+
 
 /* ── build grid (only called once or on filter/shuffle) ── */
 function buildVocabGrid(words){
@@ -3947,34 +4121,46 @@ function buildVocabGrid(words){
   }
 
   grid.innerHTML = words.map((w, i) => {
-    // front: main display depends on lang
     const main  = l==='en' ? w.en  : l==='cn' ? w.cn : w.tw;
-    const sub   = l==='en' ? w.tw  : l==='cn' ? w.tw : w.cn;   // always show the "other" CJK
+    const sub   = l==='en' ? w.tw  : l==='cn' ? w.tw : w.cn;
     const catLbl = CAT_LABELS[l][w.cat] || w.cat;
     const hints  = FLIP_HINTS[l];
+    const noteInfo = getWordNote(w);
+    const noteZh = noteInfo.zh;
+    const noteEn = noteInfo.en;
+    const note = noteInfo.text;
+    const hasNote = !!note;
+    const nl = noteLabel();
+    const noteBlock = hasNote ? `<button class="vc-note-btn" type="button" data-note="${escAttr(note)}" onclick="event.stopPropagation();toggleCardNote(this)" aria-label="${escAttr(nl.title)}" title="${escAttr(nl.title)}">${nl.btn}</button>
+          <div class="vc-note-pop" role="dialog" aria-label="${escAttr(nl.title)}">
+            <div class="vc-note-title"><span>${nl.title}</span><button class="vc-note-close" type="button" onclick="event.stopPropagation();closeCardNote(this)" aria-label="Close">×</button></div>
+            <div class="vc-note-text" data-role="note-text">${escHtml(note)}</div>
+          </div>` : '';
 
-    return `<div class="vc" onclick="flipCard(this)"
-      data-tw="${w.tw}" data-cn="${w.cn}" data-en="${w.en}"
-      data-jp="${w.jyutping}" data-cat="${w.cat}" data-emoji="${w.emoji}">
+    return `<div class="vc${hasNote ? ' has-note' : ''}" onclick="flipCard(this)"
+      data-tw="${escAttr(w.tw)}" data-cn="${escAttr(w.cn)}" data-en="${escAttr(w.en)}"
+      data-jp="${escAttr(w.jyutping)}" data-cat="${escAttr(w.cat)}" data-emoji="${escAttr(w.emoji)}"
+      data-note-tw="${escAttr(noteZh)}" data-note-en="${escAttr(noteEn)}">
       <div class="vc-inner">
         <div class="vc-front">
           <button class="vc-speak" onclick="event.stopPropagation();speakWord(this,'front')" title="朗讀" aria-label="朗讀這個粵語詞語">🔊</button>
           <span class="vc-cat-tag" data-role="cat-label">${catLbl}</span>
           <span class="vc-emoji">${w.emoji}</span>
-          <div class="vc-zh-tw" data-role="main">${main}</div>
-          <div class="vc-zh-cn" data-role="sub">${sub}</div>
+          <div class="vc-zh-tw" data-role="main">${escHtml(main)}</div>
+          <div class="vc-zh-cn" data-role="sub">${escHtml(sub)}</div>
           <span class="vc-tap" data-role="hint-front">${hints.front}</span>
         </div>
         <div class="vc-back">
           <button class="vb-speak" onclick="event.stopPropagation();speakWord(this,'back')" title="朗讀" aria-label="朗讀這個粵語詞語">🔊</button>
-          <div class="vb-jyutping">${w.jyutping}</div>
-          <div class="vb-en" data-role="back-en">${w.en}</div>
+          <div class="vb-jyutping">${escHtml(w.jyutping)}</div>
+          <div class="vb-en" data-role="back-en">${escHtml(w.en)}</div>
           <div class="vb-divider"></div>
-          <div class="vb-zh-tw" data-role="back-tw">${w.tw}</div>
-          <div class="vb-zh-cn" data-role="back-cn">${w.cn}</div>
+          <div class="vb-zh-tw" data-role="back-tw">${escHtml(w.tw)}</div>
+          <div class="vb-zh-cn" data-role="back-cn">${escHtml(w.cn)}</div>
           <span class="vb-tap" data-role="hint-back">${hints.back}</span>
         </div>
       </div>
+      ${noteBlock}
     </div>`;
   }).join('');
 
@@ -3985,6 +4171,7 @@ function buildVocabGrid(words){
 function updateVocabLang(){
   const l = lk(currentLang);
   const hints = FLIP_HINTS[l];
+  const nl = noteLabel();
 
   document.querySelectorAll('#vocab-grid .vc').forEach(card => {
     const tw = card.dataset.tw;
@@ -3992,10 +4179,10 @@ function updateVocabLang(){
     const en = card.dataset.en;
     const cat = card.dataset.cat;
 
-    // front main / sub
     const main = l==='en' ? en : l==='cn' ? cn : tw;
     const sub  = l==='en' ? tw : l==='cn' ? tw : cn;
     const catLbl = CAT_LABELS[l][cat] || cat;
+    const note = getCardNoteFromData(card);
 
     const q = s => card.querySelector(`[data-role="${s}"]`);
     if(q('main'))       q('main').textContent = main;
@@ -4004,23 +4191,29 @@ function updateVocabLang(){
     if(q('hint-front')) q('hint-front').textContent = hints.front;
     if(q('hint-back'))  q('hint-back').textContent  = hints.back;
 
-    // back: en / tw / cn
     if(q('back-en')) q('back-en').textContent = en;
     if(q('back-tw')) q('back-tw').textContent = tw;
     if(q('back-cn')) q('back-cn').textContent = cn;
+
+    card.querySelectorAll('.vc-note-btn').forEach(btn=>{
+      btn.textContent = nl.btn;
+      btn.title = nl.title;
+      btn.setAttribute('aria-label', nl.title);
+      btn.setAttribute('data-note', note);
+    });
+    card.querySelectorAll('.vc-note-pop').forEach(pop=>{ pop.setAttribute('aria-label', nl.title); });
+    card.querySelectorAll('.vc-note-title span').forEach(el=>{ el.textContent = nl.title; });
+    card.querySelectorAll('[data-role="note-text"]').forEach(el=>{ el.textContent = note; });
   });
 
-  // update count suffix
   const countEl = document.getElementById('vocab-count');
   if(countEl && filteredVocab.length > 0){
     countEl.textContent = filteredVocab.length + COUNT_SUFFIX[l];
   }
 
-  // update search placeholder
   const inp = document.getElementById('vocab-search-input');
   if(inp) inp.placeholder = SEARCH_PH[l];
 
-  // update category buttons
   document.querySelectorAll('.vc-cat').forEach(b => {
     const fn = b.getAttribute('onclick') || '';
     const m = fn.match(/'(\w+)'/);
@@ -4049,7 +4242,9 @@ function applyFilter(cat, q){
     list = list.filter(w =>
       w.tw.includes(q)||w.cn.includes(q)||
       w.en.toLowerCase().includes(lq)||
-      w.jyutping.toLowerCase().includes(lq)
+      w.jyutping.toLowerCase().includes(lq)||
+      (w.noteTw||'').toLowerCase().includes(lq)||
+      (w.noteEn||'').toLowerCase().includes(lq)
     );
   }
   filteredVocab = list;
@@ -4110,7 +4305,10 @@ function _pickVoice(lang){
       if((v.lang || '').toLowerCase() === 'zh-hk') score += 10;
       return { v, score };
     }).sort((a,b)=>b.score-a.score);
-    return ranked[0] && ranked[0].score > 0 ? ranked[0].v : null;
+    if(ranked[0] && ranked[0].score > 0) return ranked[0].v;
+    return voices.find(v => (v.lang||'').toLowerCase() === 'zh-hk')
+      || voices.find(v => /zh[-_]?hant|zh[-_]?tw|zh[-_]?cn|zh/.test((v.lang||'').toLowerCase() + ' ' + (v.name||'').toLowerCase()))
+      || null;
   }
 
   return voices.find(v => (v.lang||'').toLowerCase() === lc)
@@ -4123,7 +4321,7 @@ function _synthSpeak(text, lang, btn, token){
   const speakNow = () => {
     if(token !== _ttsToken) return;
     const u = new SpeechSynthesisUtterance(text);
-    u.lang = (lang === 'zh-HK') ? 'yue-HK' : lang;
+    u.lang = (lang === 'zh-HK') ? 'zh-HK' : lang;
     u.rate = 0.84;
     u.pitch = 1;
     const voice = _pickVoice(lang);
@@ -4161,26 +4359,15 @@ function _buildTTSUrls(text, lang){
   const customEndpoint = window.TALKONG_TTS_ENDPOINT || '';
   const urls = [];
 
+  // v4: use the site-owned Cloudflare /api/tts endpoint only.
+  // Public translate_tts URLs are unreliable on mobile and can silently block playback.
   if(customEndpoint){
     const endpointLang = (lang === 'zh-HK') ? 'yue-HK' : ((lang === 'zh-CN') ? 'cmn-CN' : (lang || 'en-US'));
     urls.push(`${customEndpoint}${customEndpoint.includes('?') ? '&' : '?'}lang=${encodeURIComponent(endpointLang)}&text=${q}`);
   }
 
-  if(lang === 'zh-HK'){
-    urls.push(
-      `https://translate.google.com.hk/translate_tts?ie=UTF-8&client=tw-ob&tl=yue&q=${q}&ttsspeed=0.82`,
-      `https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=yue&q=${q}&ttsspeed=0.82`,
-      `https://translate.googleapis.com/translate_tts?ie=UTF-8&client=gtx&tl=yue&q=${q}`,
-      `https://translate.google.com.hk/translate_tts?ie=UTF-8&client=tw-ob&tl=zh-HK&q=${q}&ttsspeed=0.82`,
-      `https://translate.googleapis.com/translate_tts?ie=UTF-8&client=gtx&tl=zh-HK&q=${q}`
-    );
-  }else{
-    const shortLang = (lang || 'en-US').split('-')[0];
-    urls.push(`https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=${shortLang}&q=${q}&ttsspeed=0.9`);
-  }
   return urls;
 }
-
 function _tryRemoteTTS(text, lang, btn, token, onFail){
   const urls = _buildTTSUrls(text, lang);
   const audio = _getTtsAudioEl();
@@ -4240,7 +4427,7 @@ function _tryRemoteTTS(text, lang, btn, token, onFail){
       audio.onerror = fail;
       audio.onstalled = fail;
       audio.onabort = fail;
-      startTimer = setTimeout(fail, 3200);
+      startTimer = setTimeout(fail, 1600);
       const playPromise = audio.play();
       if(playPromise && playPromise.catch) playPromise.catch(fail);
     }catch(e){
@@ -4251,14 +4438,23 @@ function _tryRemoteTTS(text, lang, btn, token, onFail){
   tryNext();
 }
 
+function _isMobileTTSContext(){
+  return /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent || '');
+}
+
 function _doSpeak(text, lang, btn){
   const token = ++_ttsToken;
 
+  // v5: on mobile, Web Speech must be triggered immediately inside the tap event.
+  // Waiting for remote audio to fail can lose the user gesture and make pronunciation seem broken.
+  if(_isMobileTTSContext()){
+    _synthSpeak(text, lang === 'zh-HK' ? 'zh-HK' : lang, btn, token);
+    return;
+  }
+
   if(lang === 'zh-HK'){
     _tryRemoteTTS(text, 'zh-HK', btn, token, () => {
-      const nativeVoice = _pickVoice('zh-HK');
-      if(nativeVoice) _synthSpeak(text, 'zh-HK', btn, token);
-      else _finishSpeak(btn);
+      _synthSpeak(text, 'zh-HK', btn, token);
     });
     return;
   }

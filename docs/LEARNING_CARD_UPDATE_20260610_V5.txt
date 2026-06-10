@@ -1,0 +1,7 @@
+TalKong learning card v5 update
+
+Fixes:
+- The note button is now rendered once per card on the card shell, not inside the front or back face.
+- The same single note button stays fixed at the bottom-right before and after flipping.
+- Note popup also belongs to the card shell, avoiding duplicate or missing controls after CSS 3D transforms.
+- Mobile pronunciation now starts browser Web Speech immediately inside the tap event, avoiding mobile gesture-loss after remote TTS fallback delays.

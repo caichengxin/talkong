@@ -1,0 +1,5 @@
+V3 fix for learning card notes.
+- Adds an explicit NOTE_FALLBACKS map for 二 / 兩 / 幸會.
+- Note popups now fill from three sources: Excel data, card data attributes, and fallback map.
+- Note body visibility is forced with readable font size and color.
+- This prevents blank note popups even if an older render path drops the note field.

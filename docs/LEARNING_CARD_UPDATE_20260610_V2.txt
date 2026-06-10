@@ -1,0 +1,9 @@
+TalKong learning card update v2 - 2026-06-10
+
+Fix included:
+- Annotation text is now written directly into the note button data and note popup at render time.
+- This fixes the case where the note popup opens but appears empty.
+- Cards total: 96.
+- Cards with annotations in the uploaded Excel: 3（二、兩、幸會）.
+
+Deploy: upload the contents of talkong-main/ to the site root.
