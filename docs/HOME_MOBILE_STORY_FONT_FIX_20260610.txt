@@ -1,0 +1,18 @@
+2026-06-10 update
+
+1. Home mobile culture story cards
+- Increased the mobile card height so the answer side has enough room on narrow screens.
+- Hid the large decorative 問 / 答 background glyphs on small mobile screens to prevent them from visually overlapping the answer button and text.
+- Adjusted answer title, paragraph spacing, and return-button alignment for cleaner mobile layout.
+
+2. Simplified Chinese font optimization
+- Added Noto Serif SC and Noto Sans SC to the Google Fonts request.
+- When the site is switched to Simplified Chinese (html lang="zh-CN"), body/UI text now uses Noto Sans SC and headings use Noto Serif SC.
+- This avoids the decorative/fallback rendering that made some simplified characters look too dense or sticky.
+
+Files updated:
+- index.html
+- about/index.html
+- events/index.html
+- learning-cards/index.html
+- translation/index.html
