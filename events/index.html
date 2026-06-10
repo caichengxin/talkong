@@ -5570,3 +5570,33 @@ document.addEventListener('click', function(e){
   });
 })();
 </script>
+
+<style id="talkong-events-photo-hero-final-lock-20260610">
+/* Final override: keep activity photo carousel visible even after later global hero styles. */
+#page-events .hero-banner.events-photo-hero{
+  position:relative!important;
+  background:#1a1410!important;
+  min-height:450px!important;
+  height:auto!important;
+  padding:78px 20px 72px!important;
+  overflow:hidden!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+#page-events .hero-banner.events-photo-hero .events-hero-photo-bg{
+  display:block!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  opacity:1!important;
+  visibility:visible!important;
+  overflow:hidden!important;
+}
+#page-events .hero-banner.events-photo-hero .events-hero-stage{position:absolute!important;inset:0!important;display:block!important;}
+#page-events .hero-banner.events-photo-hero .events-hero-slide{position:absolute!important;inset:0!important;display:flex!important;align-items:center!important;justify-content:center!important;visibility:visible!important;}
+#page-events .hero-banner.events-photo-hero .events-hero-slide.is-active{opacity:1!important;transform:translate3d(0,0,0)!important;z-index:1!important;}
+#page-events .hero-banner.events-photo-hero .events-hero-panel-fill,
+#page-events .hero-banner.events-photo-hero .events-hero-panel-main{display:block!important;visibility:visible!important;}
+#page-events .hero-banner.events-photo-hero .hero-inner{position:relative!important;z-index:5!important;}
+@media(max-width:640px){#page-events .hero-banner.events-photo-hero{min-height:350px!important;padding:54px 14px 54px!important;}}
+</style>
