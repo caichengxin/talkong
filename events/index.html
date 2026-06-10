@@ -2568,6 +2568,185 @@ nav,.page,.hero-banner,.section,.site-footer,.mob-tab-bar{
 
 </style>
 
+
+<style id="talkong-events-photo-hero-20260610">
+/* 活動頁標題照片區：五張完整照片左右順滑輪播，遮罩更淡，文字依然清晰 */
+#page-events .events-photo-hero{
+  position:relative!important;
+  background:#1a1410!important;
+  min-height:450px!important;
+  height:auto!important;
+  padding:78px 20px 72px!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+  border-bottom:1px solid rgba(200,54,43,.20)!important;
+}
+#page-events .events-hero-photo-bg{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  overflow:hidden;
+  background:#1a1410;
+}
+#page-events .events-hero-stage{
+  position:absolute;
+  inset:0;
+}
+#page-events .events-hero-slide{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  transform:translate3d(10%,0,0);
+  transition:opacity 1.2s ease, transform 1.2s cubic-bezier(.22,.61,.36,1);
+  will-change:opacity, transform;
+}
+#page-events .events-hero-slide.is-active{
+  opacity:1;
+  transform:translate3d(0,0,0);
+  z-index:1;
+}
+#page-events .events-hero-slide.is-prev{
+  opacity:0;
+  transform:translate3d(-10%,0,0);
+}
+#page-events .events-hero-slide.is-next{
+  opacity:0;
+  transform:translate3d(10%,0,0);
+}
+#page-events .events-hero-panel-fill{
+  position:absolute;
+  inset:-4%;
+  width:108%;
+  height:108%;
+  object-fit:cover;
+  filter:blur(20px) brightness(.74) saturate(.92);
+  transform:scale(1.04);
+  opacity:.82;
+}
+#page-events .events-hero-panel-main{
+  position:relative;
+  z-index:1;
+  width:min(1180px, calc(100% - 60px));
+  height:calc(100% - 48px);
+  object-fit:contain;
+  border-radius:22px;
+  border:1px solid rgba(255,248,232,.18);
+  background:rgba(255,248,232,.06);
+  box-shadow:0 20px 46px rgba(0,0,0,.18), 0 0 0 1px rgba(255,255,255,.04) inset;
+}
+#page-events .events-hero-photo-bg::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:2;
+  background:
+    linear-gradient(90deg,rgba(26,20,16,.44) 0%,rgba(200,54,43,.16) 48%,rgba(184,135,58,.20) 100%),
+    linear-gradient(180deg,rgba(26,20,16,.04),rgba(26,20,16,.18));
+  pointer-events:none;
+}
+#page-events .events-hero-photo-bg::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  z-index:3;
+  background:
+    radial-gradient(circle at 18% 30%,rgba(255,248,232,.10) 0 160px,transparent 240px),
+    radial-gradient(circle at 78% 18%,rgba(200,54,43,.10) 0 190px,transparent 280px),
+    repeating-linear-gradient(45deg,rgba(255,248,232,.025) 0 1px,transparent 1px 38px);
+  pointer-events:none;
+}
+#page-events .events-hero-dots{
+  position:absolute;
+  left:50%;
+  bottom:20px;
+  transform:translateX(-50%);
+  z-index:4;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:8px 14px;
+  border-radius:999px;
+  background:rgba(26,20,16,.22);
+  border:1px solid rgba(255,248,232,.10);
+  backdrop-filter:blur(6px);
+}
+#page-events .events-hero-dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:rgba(255,248,232,.28);
+  box-shadow:0 0 0 1px rgba(255,248,232,.06) inset;
+  transition:transform .25s ease, background-color .25s ease, box-shadow .25s ease;
+}
+#page-events .events-hero-dot.is-active{
+  background:#fff8e8;
+  transform:scale(1.18);
+  box-shadow:0 0 0 4px rgba(255,248,232,.10);
+}
+#page-events .events-photo-hero .hero-inner{
+  position:relative;
+  z-index:5!important;
+  max-width:920px!important;
+  padding:34px 42px 36px!important;
+  margin:0 auto!important;
+  border:1px solid rgba(255,248,232,.22);
+  border-radius:18px;
+  background:linear-gradient(135deg,rgba(26,20,16,.42),rgba(200,54,43,.18));
+  box-shadow:0 28px 70px rgba(26,20,16,.28), inset 0 1px 0 rgba(255,248,232,.12);
+  backdrop-filter:blur(7px);
+}
+#page-events .events-photo-hero .hero-badge{
+  background:rgba(255,248,232,.10);
+  color:rgba(255,248,232,.90);
+  border-color:rgba(255,248,232,.34);
+}
+#page-events .events-photo-hero .hero-title{
+  color:#fff8e8!important;
+  text-shadow:0 3px 16px rgba(0,0,0,.28);
+}
+#page-events .events-photo-hero .hero-subtitle{
+  color:rgba(255,248,232,.92)!important;
+  text-shadow:0 2px 10px rgba(0,0,0,.24);
+}
+@media(max-width:860px){
+  #page-events .events-photo-hero{min-height:410px!important;}
+  #page-events .events-hero-panel-main{
+    width:calc(100% - 30px);
+    height:calc(100% - 54px);
+    border-radius:18px;
+  }
+}
+@media(max-width:640px){
+  #page-events .events-photo-hero{
+    min-height:350px!important;
+    padding:54px 14px 54px!important;
+  }
+  #page-events .events-hero-panel-main{
+    width:calc(100% - 18px);
+    height:calc(100% - 34px);
+    border-radius:14px;
+  }
+  #page-events .events-hero-panel-fill{filter:blur(16px) brightness(.76) saturate(.92);}
+  #page-events .events-photo-hero .hero-inner{
+    width:100%!important;
+    padding:22px 18px 24px!important;
+    border-radius:14px;
+    background:linear-gradient(135deg,rgba(26,20,16,.48),rgba(200,54,43,.22));
+  }
+  #page-events .events-photo-hero .hero-title{font-size:46px!important;line-height:1.12!important;}
+  #page-events .events-photo-hero .hero-subtitle{font-size:14px!important;letter-spacing:.08em!important;line-height:1.7!important;}
+  #page-events .events-hero-dots{bottom:14px;gap:8px;padding:7px 12px;}
+  #page-events .events-hero-dot{width:8px;height:8px;}
+}
+@media(prefers-reduced-motion:reduce){
+  #page-events .events-hero-slide{transition:none;}
+}
+</style>
+
 </head>
 <body>
 
@@ -3122,8 +3301,42 @@ nav,.page,.hero-banner,.section,.site-footer,.mob-tab-bar{
 ═══════════════════════════════════════ -->
 <div id="page-events" class="page">
 
-  <div class="hero-banner" style="min-height:340px;height:340px;">
-    <div class="hero-inner">
+  <div class="hero-banner events-photo-hero events-marquee-hero" style="min-height:430px;height:auto;">
+    <div class="events-marquee-bg" aria-hidden="true">
+      <div class="events-marquee-track">
+        <figure class="events-marquee-card">
+          <img src="/assets/events/event-hero-01.webp" alt="TalKong 活動照片 1" loading="eager" decoding="async">
+        </figure>
+        <figure class="events-marquee-card">
+          <img src="/assets/events/event-hero-02.webp" alt="TalKong 活動照片 2" loading="eager" decoding="async">
+        </figure>
+        <figure class="events-marquee-card">
+          <img src="/assets/events/event-hero-03.webp" alt="TalKong 活動照片 3" loading="lazy" decoding="async">
+        </figure>
+        <figure class="events-marquee-card">
+          <img src="/assets/events/event-hero-04.webp" alt="TalKong 活動照片 4" loading="lazy" decoding="async">
+        </figure>
+        <figure class="events-marquee-card">
+          <img src="/assets/events/event-hero-05.webp" alt="TalKong 活動照片 5" loading="lazy" decoding="async">
+        </figure>
+        <figure class="events-marquee-card">
+          <img src="/assets/events/event-hero-01.webp" alt="TalKong 活動照片 1" loading="eager" decoding="async">
+        </figure>
+        <figure class="events-marquee-card">
+          <img src="/assets/events/event-hero-02.webp" alt="TalKong 活動照片 2" loading="eager" decoding="async">
+        </figure>
+        <figure class="events-marquee-card">
+          <img src="/assets/events/event-hero-03.webp" alt="TalKong 活動照片 3" loading="lazy" decoding="async">
+        </figure>
+        <figure class="events-marquee-card">
+          <img src="/assets/events/event-hero-04.webp" alt="TalKong 活動照片 4" loading="lazy" decoding="async">
+        </figure>
+        <figure class="events-marquee-card">
+          <img src="/assets/events/event-hero-05.webp" alt="TalKong 活動照片 5" loading="lazy" decoding="async">
+        </figure>
+      </div>
+    </div>
+    <div class="hero-inner events-marquee-title">
       <div class="hero-badge" data-i18n="ev-badge">活動 · Events</div>
       <h1 class="hero-title" style="font-size:80px;" data-i18n="ev-title">主題粵語學習</h1>
       <p class="hero-subtitle" data-i18n="ev-sub">在真實香港情境中學習廣東話</p>
@@ -5299,3 +5512,265 @@ document.addEventListener('click', function(e){
   };
 })();
 </script>
+
+<script id="talkong-events-photo-hero-slider-20260610">
+(function(){
+  var stage = document.getElementById('events-hero-stage');
+  if(!stage) return;
+  var slides = Array.prototype.slice.call(stage.querySelectorAll('.events-hero-slide'));
+  var dots = Array.prototype.slice.call(document.querySelectorAll('#page-events .events-hero-dot'));
+  var hero = document.querySelector('#page-events .events-photo-hero');
+  var index = 0;
+  var timer = null;
+  var reduceMotion = false;
+  try{ reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+  if(!slides.length) return;
+
+  function paintDots(activeIndex){
+    dots.forEach(function(dot, idx){
+      dot.classList.toggle('is-active', idx === activeIndex);
+    });
+  }
+
+  function render(nextIndex){
+    var prevIndex = (nextIndex - 1 + slides.length) % slides.length;
+    var nextNextIndex = (nextIndex + 1) % slides.length;
+    slides.forEach(function(slide, idx){
+      slide.classList.remove('is-active','is-prev','is-next');
+      if(idx === nextIndex) slide.classList.add('is-active');
+      else if(idx === prevIndex) slide.classList.add('is-prev');
+      else if(idx === nextNextIndex) slide.classList.add('is-next');
+    });
+    paintDots(nextIndex);
+    index = nextIndex;
+  }
+
+  function stopAuto(){
+    if(timer){ clearInterval(timer); timer = null; }
+  }
+
+  function startAuto(){
+    if(reduceMotion || timer) return;
+    timer = window.setInterval(function(){
+      render((index + 1) % slides.length);
+    }, 6800);
+  }
+
+  render(0);
+  startAuto();
+
+  if(hero){
+    hero.addEventListener('mouseenter', stopAuto);
+    hero.addEventListener('mouseleave', startAuto);
+    hero.addEventListener('focusin', stopAuto);
+    hero.addEventListener('focusout', startAuto);
+    hero.addEventListener('touchstart', stopAuto, {passive:true});
+    hero.addEventListener('touchend', function(){ window.setTimeout(startAuto, 2000); }, {passive:true});
+  }
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden) stopAuto();
+    else startAuto();
+  });
+})();
+</script>
+
+<style id="talkong-events-photo-hero-final-lock-20260610">
+/* Final override: keep activity photo carousel visible and make the five photos rotate without relying on JavaScript. */
+#page-events .hero-banner.events-photo-hero{
+  position:relative!important;
+  background:#1a1410!important;
+  min-height:450px!important;
+  height:auto!important;
+  padding:78px 20px 72px!important;
+  overflow:hidden!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+#page-events .hero-banner.events-photo-hero .events-hero-photo-bg{
+  display:block!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  opacity:1!important;
+  visibility:visible!important;
+  overflow:hidden!important;
+  background:#1a1410!important;
+}
+#page-events .hero-banner.events-photo-hero .events-hero-stage{
+  position:absolute!important;
+  inset:0!important;
+  display:block!important;
+  overflow:hidden!important;
+}
+#page-events .hero-banner.events-photo-hero .events-hero-slide{
+  position:absolute!important;
+  inset:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  visibility:visible!important;
+  opacity:0;
+  transform:translate3d(7%,0,0);
+  animation:eventsHeroAutoSlide 40s cubic-bezier(.22,.61,.36,1) infinite;
+  will-change:opacity,transform;
+}
+#page-events .hero-banner.events-photo-hero .events-hero-slide:nth-child(1){animation-delay:0s;}
+#page-events .hero-banner.events-photo-hero .events-hero-slide:nth-child(2){animation-delay:8s;}
+#page-events .hero-banner.events-photo-hero .events-hero-slide:nth-child(3){animation-delay:16s;}
+#page-events .hero-banner.events-photo-hero .events-hero-slide:nth-child(4){animation-delay:24s;}
+#page-events .hero-banner.events-photo-hero .events-hero-slide:nth-child(5){animation-delay:32s;}
+#page-events .hero-banner.events-photo-hero:hover .events-hero-slide{animation-play-state:paused;}
+#page-events .hero-banner.events-photo-hero .events-hero-panel-fill,
+#page-events .hero-banner.events-photo-hero .events-hero-panel-main{
+  display:block!important;
+  visibility:visible!important;
+}
+#page-events .hero-banner.events-photo-hero .events-hero-dot{
+  animation:eventsHeroDotPulse 40s linear infinite;
+}
+#page-events .hero-banner.events-photo-hero .events-hero-dot:nth-child(1){animation-delay:0s;}
+#page-events .hero-banner.events-photo-hero .events-hero-dot:nth-child(2){animation-delay:8s;}
+#page-events .hero-banner.events-photo-hero .events-hero-dot:nth-child(3){animation-delay:16s;}
+#page-events .hero-banner.events-photo-hero .events-hero-dot:nth-child(4){animation-delay:24s;}
+#page-events .hero-banner.events-photo-hero .events-hero-dot:nth-child(5){animation-delay:32s;}
+#page-events .hero-banner.events-photo-hero:hover .events-hero-dot{animation-play-state:paused;}
+#page-events .hero-banner.events-photo-hero .hero-inner{position:relative!important;z-index:5!important;}
+@keyframes eventsHeroAutoSlide{
+  0%{opacity:0;transform:translate3d(7%,0,0);}
+  5%{opacity:1;transform:translate3d(0,0,0);}
+  18%{opacity:1;transform:translate3d(0,0,0);}
+  24%{opacity:0;transform:translate3d(-7%,0,0);}
+  100%{opacity:0;transform:translate3d(-7%,0,0);}
+}
+@keyframes eventsHeroDotPulse{
+  0%,24%,100%{background:rgba(255,248,232,.28);transform:scale(1);box-shadow:0 0 0 1px rgba(255,248,232,.06) inset;}
+  5%,18%{background:#fff8e8;transform:scale(1.18);box-shadow:0 0 0 4px rgba(255,248,232,.10);}
+}
+@media(max-width:640px){#page-events .hero-banner.events-photo-hero{min-height:350px!important;padding:54px 14px 54px!important;}}
+</style>
+
+
+<style id="talkong-events-infinite-marquee-final-20260610">
+/* 活動頁照片 Hero 最終版：清晰人物 + 無限橫向循環輪播 */
+#page-events .hero-banner.events-photo-hero.events-marquee-hero{
+  position:relative!important;
+  min-height:430px!important;
+  height:auto!important;
+  padding:58px 0 56px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+  background:linear-gradient(115deg,#251b16 0%,#6a3725 52%,#7c5a24 100%)!important;
+  border-bottom:1px solid rgba(200,54,43,.22)!important;
+}
+#page-events .hero-banner.events-photo-hero.events-marquee-hero::after{
+  content:''!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:2!important;
+  pointer-events:none!important;
+  opacity:1!important;
+  background:
+    linear-gradient(90deg,rgba(26,20,16,.28),rgba(200,54,43,.08) 48%,rgba(184,135,58,.15)),
+    repeating-linear-gradient(45deg,rgba(255,248,232,.025) 0 1px,transparent 1px 42px)!important;
+}
+#page-events .events-marquee-bg{
+  position:absolute!important;
+  inset:0!important;
+  z-index:1!important;
+  display:flex!important;
+  align-items:center!important;
+  overflow:hidden!important;
+}
+#page-events .events-marquee-track{
+  display:flex!important;
+  align-items:center!important;
+  gap:26px!important;
+  width:max-content!important;
+  padding:0 26px!important;
+  animation:talkongEventsMarquee 54s linear infinite!important;
+  will-change:transform!important;
+}
+#page-events .events-marquee-track:hover{animation-play-state:paused!important;}
+#page-events .events-marquee-card{
+  flex:0 0 auto!important;
+  width:clamp(330px,34vw,560px)!important;
+  height:clamp(220px,23vw,340px)!important;
+  margin:0!important;
+  border-radius:22px!important;
+  overflow:hidden!important;
+  background:rgba(255,248,232,.08)!important;
+  border:1px solid rgba(255,248,232,.20)!important;
+  box-shadow:0 22px 48px rgba(0,0,0,.24)!important;
+}
+#page-events .events-marquee-card img{
+  width:100%!important;
+  height:100%!important;
+  display:block!important;
+  object-fit:cover!important;
+  object-position:center center!important;
+  filter:none!important;
+  opacity:1!important;
+  transform:none!important;
+}
+#page-events .events-photo-hero .events-marquee-title{
+  position:relative!important;
+  z-index:5!important;
+  width:min(760px,calc(100% - 48px))!important;
+  max-width:760px!important;
+  margin:0 auto!important;
+  padding:28px 36px 30px!important;
+  text-align:center!important;
+  border-radius:18px!important;
+  border:1px solid rgba(255,248,232,.28)!important;
+  background:linear-gradient(135deg,rgba(34,24,18,.70),rgba(154,36,24,.42))!important;
+  box-shadow:0 22px 56px rgba(0,0,0,.26),inset 0 1px 0 rgba(255,248,232,.12)!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+#page-events .events-photo-hero .hero-badge{
+  margin-left:auto!important;
+  margin-right:auto!important;
+  color:rgba(255,248,232,.88)!important;
+  border-color:rgba(255,248,232,.40)!important;
+  background:rgba(255,248,232,.14)!important;
+}
+#page-events .events-photo-hero .hero-title{
+  color:#fff8e8!important;
+  font-size:clamp(48px,5.4vw,78px)!important;
+  line-height:1.06!important;
+  text-shadow:0 3px 14px rgba(0,0,0,.34)!important;
+}
+#page-events .events-photo-hero .hero-subtitle{
+  color:rgba(255,248,232,.94)!important;
+  text-shadow:0 2px 9px rgba(0,0,0,.28)!important;
+}
+#page-events .events-hero-photo-bg,
+#page-events .events-hero-stage,
+#page-events .events-hero-dots,
+#page-events .events-hero-slide{display:none!important;}
+@keyframes talkongEventsMarquee{
+  0%{transform:translate3d(0,0,0);}
+  100%{transform:translate3d(calc(-50% - 13px),0,0);}
+}
+@media(max-width:760px){
+  #page-events .hero-banner.events-photo-hero.events-marquee-hero{
+    min-height:360px!important;
+    padding:48px 0 48px!important;
+  }
+  #page-events .events-marquee-track{gap:18px!important;padding:0 18px!important;animation-duration:46s!important;}
+  #page-events .events-marquee-card{width:300px!important;height:205px!important;border-radius:16px!important;}
+  #page-events .events-photo-hero .events-marquee-title{
+    width:calc(100% - 32px)!important;
+    padding:22px 18px 24px!important;
+    border-radius:14px!important;
+    background:linear-gradient(135deg,rgba(34,24,18,.72),rgba(154,36,24,.46))!important;
+  }
+  #page-events .events-photo-hero .hero-title{font-size:clamp(38px,11vw,52px)!important;}
+  #page-events .events-photo-hero .hero-subtitle{font-size:13px!important;line-height:1.65!important;}
+}
+@media(prefers-reduced-motion:reduce){
+  #page-events .events-marquee-track{animation:none!important;}
+}
+</style>

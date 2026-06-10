@@ -1,0 +1,15 @@
+2026-06-10 活動頁照片標題背景更新
+
+修改內容：
+1. 在活動頁 hero 標題區新增 5 張活動照片滾動展示背景。
+2. 將照片轉換為 WebP 並限制最大寬度 1600px，以兼顧清晰度與載入速度。
+3. 增加暖色朦朧遮罩、輕微模糊與半透明文字底板，統一色調並凸顯標題。
+4. 補充手機端布局：降低高度、縮小標題、保持照片滿版裁切不變形。
+5. 支援 prefers-reduced-motion：用戶系統關閉動效時顯示第一張靜態照片。
+
+新增資源：
+/assets/events/event-hero-01.webp
+/assets/events/event-hero-02.webp
+/assets/events/event-hero-03.webp
+/assets/events/event-hero-04.webp
+/assets/events/event-hero-05.webp
