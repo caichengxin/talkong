@@ -697,7 +697,9 @@ nav.scrolled{box-shadow:0 2px 28px rgba(24,18,10,.08);}
   margin-bottom:16px;transform:rotate(-3deg);
   box-shadow:2px 2px 0 rgba(154,36,24,.3);
 }
-.team-name{font-family:var(--brush);font-size:28px;color:#fff8e8;margin-bottom:6px;letter-spacing:.02em;}
+.team-name{font-family:var(--brush);font-size:28px;color:#fff8e8;margin-bottom:8px;letter-spacing:.02em;line-height:1.12;}
+.team-name .name-first{display:block;font-size:30px;}
+.team-name .name-full{display:block;margin-top:4px;font-family:var(--latin);font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,248,232,.82);line-height:1.35;word-break:keep-all;overflow-wrap:normal;}
 .team-bg{font-family:var(--hand);font-size:18px;color:var(--hk-red-l);letter-spacing:.02em;}
 .team-body{padding:28px 34px 32px;}
 .team-role-label{font-family:var(--hand);font-size:18px;color:var(--hk-red);margin-bottom:14px;}
@@ -1000,6 +1002,9 @@ html[lang="en"] .vc-zh-tw{font-family:var(--hand);font-weight:600;font-size:clam
   .hero-title-en{font-size:22px;}
   .neon-1,.neon-2,.neon-3{display:none;}
   .split,.biz-grid,.reg-box,.phil-grid,.team-grid{grid-template-columns:1fr;}
+  .team-head{padding:32px 28px;}
+  .team-name .name-first{font-size:30px;}
+  .team-name .name-full{font-size:13px;letter-spacing:.07em;}
   .split.flip{direction:ltr;}
   .theme-grid{grid-template-columns:1fr 1fr;}
   .reg-box{padding:36px;}
@@ -2118,6 +2123,12 @@ input, textarea, select{
   .brand-name .cn{font-size:25px!important;}
 }
 
+
+@media(max-width:560px){
+  .team-head{padding:28px 22px;}
+  .team-name .name-first{font-size:28px;}
+  .team-name .name-full{font-size:12px;letter-spacing:.055em;max-width:100%;}
+}
 </style>
 
 <style id="mobile-overflow-logo-fix">
@@ -3534,7 +3545,7 @@ nav,.page,.hero-banner,.section,.site-footer,.mob-tab-bar{
         <div class="team-card fu">
           <div class="team-head">
             <div class="team-av">ST</div>
-            <div class="team-name">Susan TSOI Wai Shan</div>
+            <div class="team-name"><span class="name-first">Susan</span><span class="name-full">TSOI Wai Shan</span></div>
             <div class="team-bg" data-i18n="s-bg">財務及金融科技榮譽工商管理</div>
           </div>
           <div class="team-body">
@@ -3549,7 +3560,7 @@ nav,.page,.hero-banner,.section,.site-footer,.mob-tab-bar{
         <div class="team-card fu d1">
           <div class="team-head">
             <div class="team-av">CL</div>
-            <div class="team-name">Candise LI Sze Wai</div>
+            <div class="team-name"><span class="name-first">Candise</span><span class="name-full">LI Sze Wai</span></div>
             <div class="team-bg" data-i18n="c-bg">心理學與精神健康</div>
           </div>
           <div class="team-body">
