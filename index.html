@@ -2122,6 +2122,17 @@ input, textarea, select{
   .team-name .name-first{font-size:28px;}
   .team-name .name-full{font-size:12px;letter-spacing:.055em;max-width:100%;}
 }
+
+/* Team name two-line fix: keep full legal name visible on light cards */
+.team-name{display:block;line-height:1.12;}
+.team-name .name-first{display:block;color:var(--tk-green-dark)!important;}
+.team-name .name-full{display:block!important;margin-top:5px;color:var(--tk-green-dark)!important;opacity:.78;font-family:var(--latin);font-size:14px;font-weight:700;letter-spacing:.045em;text-transform:none!important;line-height:1.25;white-space:normal;word-break:keep-all;overflow-wrap:normal;}
+@media (max-width:640px){
+  .team-name{line-height:1.1;}
+  .team-name .name-first{font-size:28px;}
+  .team-name .name-full{font-size:12.5px;letter-spacing:.035em;margin-top:5px;line-height:1.25;}
+}
+
 </style>
 
 <style id="mobile-overflow-logo-fix">
